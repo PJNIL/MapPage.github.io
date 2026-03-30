@@ -478,7 +478,7 @@
   "types": {
     "t_town": {
       "label": "마을",
-      "color": "#4a9eff"
+      "color": "#ffdd00"
     }
   },
   "factions": {
