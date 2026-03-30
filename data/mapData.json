@@ -557,7 +557,7 @@
     "Jangunmyo": {
       "id": "Jangunmyo",
       "name": "장군묘",
-      "type": "t_1774845049845",
+      "type": "t_dungeon",
       "pvp": "",
       "x": 76.1,
       "y": 45.9,
@@ -823,6 +823,10 @@
     "t_1774845560682": {
       "label": "미공개",
       "color": "#7a7a7a"
+    },
+    "t_dungeon": {
+      "label": "던전 및 콘텐츠",
+      "color": "#a78bfa"
     }
   },
   "factions": {
