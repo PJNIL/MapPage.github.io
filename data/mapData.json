@@ -5,8 +5,8 @@
       "name": "하남성",
       "type": "t_field",
       "pvp": "안전",
-      "x": 79.4,
-      "y": 46.1,
+      "x": 79.7,
+      "y": 49.3,
       "image": "Image/1001_Main.png",
       "factions": [
         "fac_mncl36h1"
