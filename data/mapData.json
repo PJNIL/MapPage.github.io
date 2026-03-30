@@ -14,7 +14,8 @@
       "scenario": "",
       "connected": [
         "Sorimsa1002",
-        "Shaanxi1003"
+        "Shaanxi1003",
+        "Jangunmyo"
       ],
       "monsters": [
         {
@@ -494,12 +495,32 @@
       ],
       "monsters": [],
       "npcs": []
+    },
+    "Jangunmyo": {
+      "id": "Jangunmyo",
+      "name": "장군묘",
+      "type": "t_1774845049845",
+      "pvp": "",
+      "x": 76.1,
+      "y": 45.9,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [
+        "Hanam1001"
+      ],
+      "monsters": [],
+      "npcs": []
     }
   },
   "types": {
     "t_town": {
       "label": "마을",
       "color": "#ffdd00"
+    },
+    "t_1774845049845": {
+      "label": "인스턴스",
+      "color": "#8a92a8"
     }
   },
   "factions": {
