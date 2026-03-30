@@ -516,8 +516,6 @@ function renderConnections(){
 
 function selectRegion(id){
   selectedId=id; renderMarkers(); renderConnections(); renderDetail();
-  const r=mapData[id];
-  if(r){const c=document.getElementById('map-container');panX=c.clientWidth/2-(r.x/100*mapImgW)*scale;panY=c.clientHeight/2-(r.y/100*mapImgH)*scale;applyTransform();}
 }
 
 function renderDetail(){
