@@ -13,7 +13,8 @@
       ],
       "scenario": "",
       "connected": [
-        "Sorimsa1002"
+        "Sorimsa1002",
+        "Shaanxi1003"
       ],
       "monsters": [
         {
@@ -473,6 +474,26 @@
           "img": ""
         }
       ]
+    },
+    "Shaanxi1003": {
+      "id": "Shaanxi1003",
+      "name": "섬서성",
+      "type": "t_town",
+      "pvp": "",
+      "x": 50,
+      "y": 50,
+      "image": "Image/Main_1003.png",
+      "factions": [
+        "f_1774844917045",
+        "f_1774844912801",
+        "f_1774844910373"
+      ],
+      "scenario": "",
+      "connected": [
+        "Hanam1001"
+      ],
+      "monsters": [],
+      "npcs": []
     }
   },
   "types": {
@@ -493,6 +514,18 @@
     "fac_mncl3m2l": {
       "label": "천명회",
       "color": "#00000"
+    },
+    "f_1774844910373": {
+      "label": "화산파"
+    },
+    "f_1774844912801": {
+      "label": "무당파"
+    },
+    "f_1774844914725": {
+      "label": "개방"
+    },
+    "f_1774844917045": {
+      "label": "하오문"
     }
   }
 }
