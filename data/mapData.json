@@ -44,7 +44,7 @@
     "name": "그림자 늪",
     "x": 79.8,
     "y": 46.5,
-    "image": "image/1001_Main.png",
+    "image": "Image/1001_Main.png",
     "faction": "neutral",
     "scenario": "어둠의 마법사들이 지배하는 저주받은 늪지대. 독안개와 언데드가 떠돌며, 금지된 의식이 행해진다.",
     "connected": []
