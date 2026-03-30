@@ -364,25 +364,28 @@ async function syncGoogleSheet() {
   if(!ghConfig.gsApiKey || !ghConfig.gsSheetId) return showToast("설정창에서 Google Sheets API 설정을 완료해주세요.", true);
   
   const rId = mapData[selectedId].id;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${ghConfig.gsSheetId}/values/'${rId}'!A21:M?key=${ghConfig.gsApiKey}`;
+  // 한글 시트명이나 공백이 포함될 경우를 대비한 완전한 URL 인코딩 적용
+  const encodedRange = encodeURIComponent(`'${rId}'!A21:M`);
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${ghConfig.gsSheetId}/values/${encodedRange}?key=${ghConfig.gsApiKey}`;
   
   const btn = document.getElementById('btn-gs-sync');
   if(btn) { btn.textContent = '⏳ 동기화 중...'; btn.style.pointerEvents='none'; }
   
   try {
     const res = await fetch(url);
-    if(res.status === 404) throw new Error(`스프레드시트에서 시트명 "${rId}"를 찾을 수 없습니다.`);
-    if(res.status === 429) throw new Error(`API 할당량 초과. 잠시 후 다시 시도하세요.`);
-    if(!res.ok) throw new Error(`HTTP ${res.status} 오류 발생`);
+    
+    // 400 에러 발생 시 구글 서버가 보낸 상세 에러 메시지를 추출하여 화면에 출력
+    if(!res.ok) {
+      const errData = await res.json().catch(()=>({}));
+      throw new Error(`API 거부 사유: ${errData.error?.message || res.status}`);
+    }
     
     const data = await res.json();
     const rows = data.values || [];
     
     let monsters = [], npcs = [];
-    // 0번째 인덱스는 A21(헤더)이므로 1번째 인덱스(A22)부터 순회
     for(let i=1; i<rows.length; i++) {
       const r = rows[i];
-      // 방어 로직: 배열 길이 부족 대비 빈 문자열 처리
       if(r[0] || r[1]) monsters.push({ idx: r[0]||'', name: r[1]||'', type: r[2]||'', file: r[3]||'', img: r[4]||'' });
       if(r[8] || r[9]) npcs.push({ idx: r[8]||'', name: r[9]||'', type: r[10]||'', file: r[11]||'', img: r[12]||'' });
     }
@@ -392,6 +395,7 @@ async function syncGoogleSheet() {
     markDirty(); renderEditorDetail(); showToast(`✅ 시트 "${rId}" 데이터 연동 성공!`);
   } catch(e) {
     showToast("❌ " + e.message, true);
+    console.error("동기화 오류 상세:", e);
   } finally {
     if(btn) { btn.textContent = '☁️ 시트 데이터 동기화'; btn.style.pointerEvents='auto'; }
   }
