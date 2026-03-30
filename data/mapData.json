@@ -1,5 +1,47 @@
 {
   "regions": {
+    "1": {
+      "id": "1",
+      "name": "청해성",
+      "type": "t_town",
+      "pvp": "",
+      "x": 47.1,
+      "y": 41,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "2": {
+      "id": "2",
+      "name": "사천성",
+      "type": "t_town",
+      "pvp": "",
+      "x": 58.8,
+      "y": 62.5,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "3": {
+      "id": "3",
+      "name": "호북성",
+      "type": "t_town",
+      "pvp": "",
+      "x": 77.1,
+      "y": 59.7,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
     "Hanam1001": {
       "id": "Hanam1001",
       "name": "하남성",
@@ -528,11 +570,53 @@
       ],
       "monsters": [],
       "npcs": []
+    },
+    "Gansu": {
+      "id": "Gansu",
+      "name": "감숙성",
+      "type": "t_town",
+      "pvp": "",
+      "x": 62.2,
+      "y": 42.2,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "region_mncp3218": {
+      "id": "region_mncp3218",
+      "name": "산서성",
+      "type": "t_town",
+      "pvp": "",
+      "x": 77.2,
+      "y": 32.8,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "region_mncp3dsa": {
+      "id": "region_mncp3dsa",
+      "name": "하북성",
+      "type": "t_town",
+      "pvp": "",
+      "x": 84.7,
+      "y": 25.7,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
     }
   },
   "types": {
     "t_town": {
-      "label": "마을",
+      "label": "메인 필드",
       "color": "#ffdd00"
     },
     "t_1774845049845": {
