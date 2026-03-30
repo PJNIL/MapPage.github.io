@@ -266,7 +266,8 @@
       ],
       "scenario": "",
       "connected": [
-        "Hanam1001"
+        "Hanam1001",
+        "MaboolBongInji"
       ],
       "monsters": [
         {
@@ -508,6 +509,22 @@
       "scenario": "",
       "connected": [
         "Hanam1001"
+      ],
+      "monsters": [],
+      "npcs": []
+    },
+    "MaboolBongInji": {
+      "id": "MaboolBongInji",
+      "name": "마불봉인지",
+      "type": "t_1774845049845",
+      "pvp": "",
+      "x": 80.8,
+      "y": 39,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [
+        "Sorimsa1002"
       ],
       "monsters": [],
       "npcs": []
