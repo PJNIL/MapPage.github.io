@@ -1,21 +1,5 @@
 {
   "regions": {
-    "1002_Sorimsa": {
-      "id": "1002_Sorimsa",
-      "name": "소림사",
-      "type": "",
-      "pvp": "",
-      "x": 82.6,
-      "y": 40.7,
-      "image": "Image/1002_Main.png",
-      "factions": [
-        "fac_mncl36h1"
-      ],
-      "scenario": "",
-      "connected": [
-        "1001_Hanam"
-      ]
-    },
     "1001_Hanam": {
       "id": "1001_Hanam",
       "name": "하남성",
@@ -29,7 +13,23 @@
       ],
       "scenario": "",
       "connected": [
-        "1002_Sorimsa"
+        "1002____"
+      ]
+    },
+    "1002____": {
+      "id": "1002____",
+      "name": "소림사",
+      "type": "",
+      "pvp": "",
+      "x": 82.6,
+      "y": 40.7,
+      "image": "Image/1002_Main.png",
+      "factions": [
+        "fac_mncl36h1"
+      ],
+      "scenario": "",
+      "connected": [
+        "1001_Hanam"
       ]
     }
   },
