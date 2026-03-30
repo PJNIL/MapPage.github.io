@@ -15,8 +15,8 @@
   "crossroad": {
     "id": "crossroad",
     "name": "십자로 마을",
-    "x": 38,
-    "y": 45,
+    "x": 38.6,
+    "y": 10.7,
     "image": "images/crossroad.png",
     "faction": "neutral",
     "scenario": "대륙의 동서남북을 잇는 교역의 중심지. 다양한 세력의 상인과 모험가들이 뒤섞이는 자유 도시.",
