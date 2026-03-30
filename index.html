@@ -337,9 +337,22 @@ function switchGlobalTab(tab){
   currentGlobalTab=tab;
   document.getElementById('gtab-map').className='gtab-btn'+(tab==='map'?' active':'');
   document.getElementById('gtab-dungeon').className='gtab-btn'+(tab==='dungeon'?' dungeon-active':'');
-  const mv=document.getElementById('map-view'),dv=document.getElementById('dungeon-view');
-  if(tab==='map'){mv.classList.remove('hidden');dv.classList.remove('visible');document.getElementById('panel-title').textContent=mode==='viewer'?'Region Details':'Region Editor';selectedId=null;renderDetail();}
-  else{mv.classList.add('hidden');dv.classList.add('visible');document.getElementById('panel-title').textContent='Dungeon Details';selectedId=null;renderDungeonBrowser();renderDetail();}
+  document.getElementById('gtab-story').className='gtab-btn'+(tab==='story'?' story-active':'');
+  
+  const mv=document.getElementById('map-view'), dv=document.getElementById('dungeon-view'), sv=document.getElementById('story-view'), dp=document.getElementById('detail-panel');
+  
+  // 패널 초기화
+  mv.classList.add('hidden'); dv.classList.remove('visible'); sv.classList.remove('visible');
+  dp.style.display = 'flex'; // 디테일 패널 기본 표시
+  
+  if(tab==='map'){
+    mv.classList.remove('hidden'); document.getElementById('panel-title').textContent=mode==='viewer'?'Region Details':'Region Editor'; selectedId=null; renderDetail();
+  } else if(tab==='dungeon'){
+    dv.classList.add('visible'); document.getElementById('panel-title').textContent='Dungeon Details'; selectedId=null; renderDungeonBrowser(); renderDetail();
+  } else if(tab==='story'){
+    sv.classList.add('visible'); 
+    dp.style.display = 'none'; // 스토리 탭에서는 우측 디테일 패널을 숨겨 공간을 넓게 씁니다.
+  }
 }
 
 function renderDungeonBrowser(){
