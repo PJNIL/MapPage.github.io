@@ -821,8 +821,213 @@
       "factions": [],
       "scenario": "",
       "connected": [],
-      "monsters": [],
-      "npcs": []
+      "monsters": [
+        {
+          "idx": "2021",
+          "name": "고산 늑대",
+          "type": "일반 몬스터",
+          "file": "Npc_2021_MountainWolf",
+          "img": ""
+        },
+        {
+          "idx": "2022",
+          "name": "숭산 곰",
+          "type": "일반 몬스터",
+          "file": "Npc_2022_MountainBear",
+          "img": ""
+        },
+        {
+          "idx": "2023",
+          "name": "육조전 사미승",
+          "type": "일반 몬스터",
+          "file": "Npc_2023_GrayTempleFist",
+          "img": ""
+        },
+        {
+          "idx": "2024",
+          "name": "육조전 무승",
+          "type": "일반 몬스터",
+          "file": "Npc_2024_GrayTempleStaff",
+          "img": ""
+        },
+        {
+          "idx": "2025",
+          "name": "육조전 연공승",
+          "type": "일반 몬스터",
+          "file": "Npc_2025_GrayTempleSword",
+          "img": ""
+        },
+        {
+          "idx": "2026",
+          "name": "보현전 사미승",
+          "type": "일반 몬스터",
+          "file": "Npc_2026_YellowTempleFist",
+          "img": ""
+        },
+        {
+          "idx": "2027",
+          "name": "보현전 무승",
+          "type": "일반 몬스터",
+          "file": "Npc_2027_YellowTempleStaff",
+          "img": ""
+        },
+        {
+          "idx": "2028",
+          "name": "보현전 연공승",
+          "type": "일반 몬스터",
+          "file": "Npc_2028_YellowTempleSpear",
+          "img": ""
+        },
+        {
+          "idx": "2029",
+          "name": "거각록",
+          "type": "일반 몬스터",
+          "file": "Npc_2029_Moose",
+          "img": ""
+        },
+        {
+          "idx": "2030",
+          "name": "천명회 단원",
+          "type": "일반 몬스터",
+          "file": "Npc_2030_CheonmyeongFollower",
+          "img": ""
+        },
+        {
+          "idx": "2031",
+          "name": "혈지주",
+          "type": "일반 몬스터",
+          "file": "Npc_2031_BloodSpider",
+          "img": ""
+        },
+        {
+          "idx": "2032",
+          "name": "귀면지주",
+          "type": "일반 몬스터",
+          "file": "Npc_2032_GhostSpider",
+          "img": ""
+        },
+        {
+          "idx": "2033",
+          "name": "문수전 호원승",
+          "type": "일반 몬스터",
+          "file": "Npc_2033_BlueTempleStaff",
+          "img": ""
+        },
+        {
+          "idx": "2034",
+          "name": "문수전 교두승",
+          "type": "일반 몬스터",
+          "file": "Npc_2034_BlueTempleSpear",
+          "img": ""
+        },
+        {
+          "idx": "2035",
+          "name": "문수전 장경승",
+          "type": "일반 몬스터",
+          "file": "Npc_2035_BlueTempleSword",
+          "img": ""
+        },
+        {
+          "idx": "2036",
+          "name": "긴나라전 호원승",
+          "type": "일반 몬스터",
+          "file": "Npc_2036_GreenTempleStaff",
+          "img": ""
+        },
+        {
+          "idx": "2037",
+          "name": "긴나라전 교두승",
+          "type": "일반 몬스터",
+          "file": "Npc_2037_GreenTempleSword",
+          "img": ""
+        },
+        {
+          "idx": "2038",
+          "name": "긴나라전 장경승",
+          "type": "일반 몬스터",
+          "file": "Npc_2038_GreenTempleSpear",
+          "img": ""
+        },
+        {
+          "idx": "2039",
+          "name": "백의전 금강승",
+          "type": "일반 몬스터",
+          "file": "Npc_2039_WhiteTempleFist",
+          "img": ""
+        },
+        {
+          "idx": "2040",
+          "name": "백의전 나한승",
+          "type": "일반 몬스터",
+          "file": "Npc_2040_WhiteTempleSword",
+          "img": ""
+        },
+        {
+          "idx": "2041",
+          "name": "백의전 호법승",
+          "type": "일반 몬스터",
+          "file": "Npc_2041_WhiteTempleBeads",
+          "img": ""
+        },
+        {
+          "idx": "2042",
+          "name": "지장왕전 금강승",
+          "type": "일반 몬스터",
+          "file": "Npc_2042_RedTempleFist",
+          "img": ""
+        },
+        {
+          "idx": "2043",
+          "name": "지장왕전 나한승",
+          "type": "일반 몬스터",
+          "file": "Npc_2043_RedTempleSpear",
+          "img": ""
+        },
+        {
+          "idx": "2044",
+          "name": "지장왕전 호법승",
+          "type": "일반 몬스터",
+          "file": "Npc_2044_RedTempleBeads",
+          "img": ""
+        },
+        {
+          "idx": "2045",
+          "name": "천명회 궁병",
+          "type": "일반 몬스터",
+          "file": "Npc_2045_CheonmyeongArcher",
+          "img": ""
+        },
+        {
+          "idx": "2046",
+          "name": "천명회 검수",
+          "type": "일반 몬스터",
+          "file": "Npc_2046_CheonmyeongSword",
+          "img": ""
+        }
+      ],
+      "npcs": [
+        {
+          "idx": "113",
+          "name": "소림사 방장",
+          "type": "대화용",
+          "file": "미제작",
+          "img": ""
+        },
+        {
+          "idx": "114",
+          "name": "지객승",
+          "type": "대화용",
+          "file": "미제작",
+          "img": ""
+        },
+        {
+          "idx": "115",
+          "name": "동자승",
+          "type": "대화용",
+          "file": "미제작",
+          "img": ""
+        }
+      ]
     }
   },
   "types": {
