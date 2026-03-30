@@ -10,247 +10,115 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg-primary: #0d0f12;
-    --bg-secondary: #141720;
-    --bg-tertiary: #1a1e2a;
-    --bg-elevated: #1f2435;
-    --bg-hover: #252b3d;
-    --border-dim: #2a3045;
-    --border-active: #3d4663;
-    --text-primary: #e2e6ef;
-    --text-secondary: #8a92a8;
-    --text-dim: #555d74;
-    --accent-blue: #4a9eff;
-    --accent-blue-dim: #2a5a99;
-    --accent-green: #34d399;
-    --accent-green-dim: #1a7a55;
-    --accent-red: #f87171;
-    --accent-red-dim: #7f1d1d;
-    --accent-amber: #fbbf24;
+    --bg-primary: #0d0f12; --bg-secondary: #141720; --bg-tertiary: #1a1e2a;
+    --bg-hover: #252b3d; --border-dim: #2a3045; --border-active: #3d4663;
+    --text-primary: #e2e6ef; --text-secondary: #8a92a8; --text-dim: #555d74;
+    --accent-blue: #4a9eff; --accent-green: #34d399; --accent-green-dim: #1a7a55;
+    --accent-red: #f87171; --accent-red-dim: #7f1d1d; --accent-amber: #fbbf24;
     --marker-size: 28px;
-    --panel-width: 40%;
-    --transition-fast: 0.15s ease;
-    --transition-med: 0.25s ease;
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --marker-font-size: 13px; /* [추가] 폰트 사이즈 변수 */
+    --panel-width: 40%; --transition-fast: 0.15s ease;
+    --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
   }
 
   html, body {
-    width: 100%; height: 100%;
-    overflow: hidden;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 13px;
-    line-height: 1.5;
+    width: 100%; height: 100%; overflow: hidden;
+    background: var(--bg-primary); color: var(--text-primary);
+    font-family: 'Noto Sans KR', sans-serif; font-size: 13px; line-height: 1.5;
   }
 
   #app { display: flex; width: 100%; height: 100%; }
 
-  #map-panel {
-    flex: 1; position: relative; overflow: hidden;
-    background: var(--bg-secondary);
-    border-right: 1px solid var(--border-dim);
-  }
+  #map-panel { flex: 1; position: relative; overflow: hidden; background: var(--bg-secondary); border-right: 1px solid var(--border-dim); }
+  #detail-panel { width: var(--panel-width); min-width: 340px; max-width: 520px; display: flex; flex-direction: column; background: var(--bg-primary); overflow: hidden; }
 
-  #detail-panel {
-    width: var(--panel-width); min-width: 340px; max-width: 520px;
-    display: flex; flex-direction: column;
-    background: var(--bg-primary); overflow: hidden;
-  }
-
-  /* ── Top Bar ── */
-  #topbar {
-    position: absolute; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 16px;
-    background: linear-gradient(180deg, rgba(13,15,18,0.95) 0%, rgba(13,15,18,0.0) 100%);
-    pointer-events: none;
-  }
+  /* Top Bar */
+  #topbar { position: absolute; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: linear-gradient(180deg, rgba(13,15,18,0.95) 0%, rgba(13,15,18,0.0) 100%); pointer-events: none; }
   #topbar > * { pointer-events: auto; }
-  #topbar .title-area { display: flex; align-items: center; gap: 10px; }
-  #topbar .title-area .logo {
-    width: 22px; height: 22px; background: var(--accent-blue); border-radius: 5px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; color: #fff;
-  }
-  #topbar h1 {
-    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;
-    color: var(--text-secondary); letter-spacing: 0.5px;
-  }
+  .title-area { display: flex; align-items: center; gap: 10px; }
+  .logo { width: 22px; height: 22px; background: var(--accent-blue); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px; color: #fff; }
+  h1 { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.5px; margin:0; }
   .topbar-right { display: flex; align-items: center; gap: 10px; }
 
-  /* Sync Status */
-  .sync-status {
-    display: flex; align-items: center; gap: 6px;
-    padding: 5px 12px; border-radius: 20px;
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.3px; border: 1px solid; transition: all var(--transition-med); cursor: default;
-  }
-  .sync-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .sync-status.connected { border-color: var(--accent-green-dim); color: var(--accent-green); }
-  .sync-status.connected .sync-dot { background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
-  .sync-status.disconnected { border-color: var(--border-dim); color: var(--text-dim); }
-  .sync-status.disconnected .sync-dot { background: var(--text-dim); }
-  .sync-status.saving { border-color: var(--accent-amber); color: var(--accent-amber); }
-  .sync-status.saving .sync-dot { background: var(--accent-amber); animation: pulse 1s infinite; }
-  .sync-status.error { border-color: var(--accent-red-dim); color: var(--accent-red); }
-  .sync-status.error .sync-dot { background: var(--accent-red); }
+  /* [추가] Filter Bar */
+  #filter-bar { position: absolute; top: 56px; left: 16px; z-index: 90; display: flex; gap: 6px; flex-wrap: wrap; max-width: 60%; pointer-events: auto; }
+  .filter-btn { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; font-family: 'Noto Sans KR', sans-serif; background: rgba(26,30,42,0.8); border: 1px solid var(--border-dim); color: var(--text-dim); cursor: pointer; transition: all var(--transition-fast); backdrop-filter: blur(4px); }
+  .filter-btn.active { border-color: var(--c); background: var(--c); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+
+  .sync-status { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; border: 1px solid; transition: all 0.25s; }
+  .sync-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .sync-status.connected { border-color: var(--accent-green-dim); color: var(--accent-green); } .sync-status.connected .sync-dot { background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
+  .sync-status.disconnected { border-color: var(--border-dim); color: var(--text-dim); } .sync-status.disconnected .sync-dot { background: var(--text-dim); }
+  .sync-status.saving { border-color: var(--accent-amber); color: var(--accent-amber); } .sync-status.saving .sync-dot { background: var(--accent-amber); animation: pulse 1s infinite; }
+  .sync-status.error { border-color: var(--accent-red-dim); color: var(--accent-red); } .sync-status.error .sync-dot { background: var(--accent-red); }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  .btn-icon {
-    width: 32px; height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-dim);
-    border-radius: 6px; color: var(--text-secondary); font-size: 16px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: all var(--transition-fast);
-  }
+  .btn-icon { width: 32px; height: 32px; background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: 6px; color: var(--text-secondary); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all var(--transition-fast); }
   .btn-icon:hover { border-color: var(--border-active); color: var(--text-primary); background: var(--bg-hover); }
-
-  .unsaved-dot {
-    width: 8px; height: 8px; background: var(--accent-amber); border-radius: 50%;
-    display: none; box-shadow: 0 0 6px var(--accent-amber);
-  }
+  .unsaved-dot { width: 8px; height: 8px; background: var(--accent-amber); border-radius: 50%; display: none; box-shadow: 0 0 6px var(--accent-amber); }
   .unsaved-dot.visible { display: block; }
-
-  .mode-toggle {
-    display: flex; background: var(--bg-tertiary); border: 1px solid var(--border-dim);
-    border-radius: 6px; overflow: hidden;
-  }
-  .mode-toggle button {
-    padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500;
-    background: transparent; color: var(--text-dim); border: none; cursor: pointer;
-    transition: all var(--transition-fast); letter-spacing: 0.3px;
-  }
+  .mode-toggle { display: flex; background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: 6px; overflow: hidden; }
+  .mode-toggle button { padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; background: transparent; color: var(--text-dim); border: none; cursor: pointer; transition: all var(--transition-fast); }
   .mode-toggle button.active { background: var(--accent-blue); color: #fff; }
   .mode-toggle button:hover:not(.active) { color: var(--text-primary); background: var(--bg-hover); }
 
   /* Map */
   #map-container { width: 100%; height: 100%; position: relative; overflow: hidden; cursor: grab; }
-  #map-container.panning { cursor: grabbing; }
-  #map-container.edit-mode { cursor: crosshair; }
-  #map-container.edit-mode.panning { cursor: grabbing; }
+  #map-container.panning { cursor: grabbing; } #map-container.edit-mode { cursor: crosshair; } #map-container.edit-mode.panning { cursor: grabbing; }
   #map-viewport { position: absolute; transform-origin: 0 0; will-change: transform; }
   #world-image { display: block; user-select: none; -webkit-user-drag: none; }
-
   #connections-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
   #connections-svg line { stroke: var(--accent-blue-dim); stroke-width: 1.5; stroke-dasharray: 6 4; opacity: 0.5; }
   #connections-svg line.highlight { stroke: var(--accent-blue); stroke-width: 2.5; stroke-dasharray: none; opacity: 0.9; }
 
-  .map-marker {
-    position: absolute; z-index: 10; transform: translate(-50%, -100%);
-    cursor: pointer; transition: filter var(--transition-fast); user-select: none;
-  }
+  .map-marker { position: absolute; z-index: 10; transform: translate(-50%, -100%); cursor: pointer; transition: filter var(--transition-fast); user-select: none; }
   .map-marker:hover { filter: brightness(1.3); z-index: 15; }
   .map-marker.selected { z-index: 20; filter: drop-shadow(0 0 8px var(--accent-blue)); }
   .map-marker.dragging { z-index: 50; cursor: grabbing; transition: none; filter: drop-shadow(0 0 12px var(--accent-amber)); }
   .marker-pin { position: relative; width: var(--marker-size); height: calc(var(--marker-size) * 1.35); }
-  .marker-pin svg { width: 100%; height: 100%; }
-  .marker-label {
-    position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%);
-    white-space: nowrap; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 700;
-    color: var(--text-primary); text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,1);
-    pointer-events: none;
-  }
+  .marker-pin svg { width: 100%; height: 100%; transition: fill var(--transition-fast); }
+  .marker-label { position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: 'Noto Sans KR', sans-serif; font-size: var(--marker-font-size); font-weight: 700; color: var(--text-primary); text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,1); pointer-events: none; }
 
-  .zoom-controls {
-    position: absolute; bottom: 16px; left: 16px; z-index: 100;
-    display: flex; flex-direction: column; gap: 2px;
-    background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: var(--radius-md); overflow: hidden;
-  }
-  .zoom-controls button {
-    width: 36px; height: 36px; background: transparent; border: none; color: var(--text-secondary);
-    font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: all var(--transition-fast); font-family: 'JetBrains Mono', monospace;
-  }
+  .zoom-controls { position: absolute; bottom: 16px; left: 16px; z-index: 100; display: flex; flex-direction: column; gap: 2px; background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: var(--radius-md); overflow: hidden; }
+  .zoom-controls button { width: 36px; height: 36px; background: transparent; border: none; color: var(--text-secondary); font-size: 18px; cursor: pointer; transition: all var(--transition-fast); }
   .zoom-controls button:hover { background: var(--bg-hover); color: var(--text-primary); }
-  .zoom-controls button + button { border-top: 1px solid var(--border-dim); }
-  .zoom-level {
-    position: absolute; bottom: 16px; left: 62px; z-index: 100;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim);
-    background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: var(--radius-sm); padding: 4px 8px;
-  }
+  .zoom-level { position: absolute; bottom: 16px; left: 62px; z-index: 100; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: var(--radius-sm); padding: 4px 8px; }
 
   /* Panel */
-  .panel-header {
-    padding: 14px 20px; border-bottom: 1px solid var(--border-dim);
-    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
-  }
-  .panel-header h2 {
-    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
-    color: var(--text-secondary); letter-spacing: 0.5px; text-transform: uppercase;
-  }
+  .panel-header { padding: 14px 20px; border-bottom: 1px solid var(--border-dim); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .panel-header h2 { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; margin:0; }
   .panel-actions { display: flex; gap: 6px; flex-wrap: wrap; }
   .panel-body { flex: 1; overflow-y: auto; padding: 20px; scrollbar-gutter: stable; }
-  .panel-body::-webkit-scrollbar { width: 6px; }
-  .panel-body::-webkit-scrollbar-track { background: transparent; }
-  .panel-body::-webkit-scrollbar-thumb { background: var(--border-dim); border-radius: 3px; }
+  .panel-body::-webkit-scrollbar { width: 6px; } .panel-body::-webkit-scrollbar-track { background: transparent; } .panel-body::-webkit-scrollbar-thumb { background: var(--border-dim); border-radius: 3px; }
 
-  .empty-state {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    height: 100%; color: var(--text-dim); text-align: center; gap: 12px;
-  }
+  .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-dim); text-align: center; gap: 12px; }
   .empty-state .icon { font-size: 40px; opacity: 0.3; }
-  .empty-state p { font-size: 12px; line-height: 1.6; }
 
-  .detail-image-wrap {
-    width: 100%; height: 260px; border-radius: var(--radius-md); overflow: hidden;
-    background: var(--bg-tertiary); border: 1px solid var(--border-dim); margin-bottom: 16px;
-    position: relative; transition: border-color var(--transition-fast);
-  }
+  .detail-image-wrap { width: 100%; height: 260px; border-radius: var(--radius-md); overflow: hidden; background: var(--bg-tertiary); border: 1px solid var(--border-dim); margin-bottom: 16px; cursor: pointer; transition: border-color var(--transition-fast); }
   .detail-image-wrap:hover { border-color: var(--accent-blue); }
   .detail-image-wrap img { width: 100%; height: 100%; object-fit: contain; }
-  .detail-image-wrap .no-image {
-    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-    color: var(--text-dim); font-size: 12px; font-family: 'JetBrains Mono', monospace;
-  }
-  
   .detail-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
   .detail-id { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); margin-bottom: 16px; }
   .detail-section { margin-bottom: 16px; }
-  .detail-label {
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
-    color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
-  }
+  .detail-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px; }
   .detail-value { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
   
   .badge-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-  .info-badge {
-    display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
-    border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid;
-  }
+  .info-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid; }
   .faction-dot { width: 8px; height: 8px; border-radius: 50%; }
   
-  .connected-list { display: flex; flex-wrap: wrap; gap: 6px; }
-  .connected-btn {
-    padding: 5px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-dim);
-    border-radius: var(--radius-sm); color: var(--text-secondary); font-size: 12px; cursor: pointer;
-    transition: all var(--transition-fast); font-family: 'Noto Sans KR', sans-serif;
-  }
-  .connected-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(74,158,255,0.08); }
-
   /* Forms */
   .form-group { margin-bottom: 14px; }
-  .form-group label {
-    display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
-    color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;
-  }
-  .form-input, .form-textarea, .form-select {
-    width: 100%; background: var(--bg-tertiary); border: 1px solid var(--border-dim);
-    border-radius: var(--radius-sm); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif;
-    font-size: 13px; padding: 8px 10px; outline: none; transition: border-color var(--transition-fast);
-  }
+  .form-group label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; margin-bottom: 5px; }
+  .form-input, .form-textarea, .form-select { width: 100%; background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: var(--radius-sm); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif; font-size: 13px; padding: 8px 10px; outline: none; transition: border-color 0.15s; }
   .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--accent-blue); }
-  .form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
-  .form-input::placeholder, .form-textarea::placeholder { color: var(--text-dim); }
-  .form-row { display: flex; gap: 10px; }
-  .form-row .form-group { flex: 1; }
+  .form-textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+  .form-row { display: flex; gap: 10px; align-items: center; }
+  .form-row .form-group { flex: 1; margin-bottom: 0; }
+  input[type="color"] { padding: 2px; width: 36px; height: 36px; cursor: pointer; border: 1px solid var(--border-dim); border-radius: var(--radius-sm); background: var(--bg-tertiary); flex-shrink: 0; }
 
   /* Buttons */
-  .btn {
-    padding: 7px 14px; border-radius: var(--radius-sm); font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid;
-    transition: all var(--transition-fast); display: inline-flex; align-items: center; gap: 5px; letter-spacing: 0.3px;
-  }
+  .btn { padding: 7px 14px; border-radius: var(--radius-sm); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid; transition: all var(--transition-fast); display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
   .btn-primary { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
   .btn-primary:hover { background: #5aabff; }
   .btn-success { background: var(--accent-green-dim); border-color: var(--accent-green); color: var(--accent-green); }
@@ -258,88 +126,49 @@
   .btn-danger { background: var(--accent-red-dim); border-color: var(--accent-red); color: var(--accent-red); }
   .btn-danger:hover { background: #991b1b; }
   .btn-ghost { background: transparent; border-color: var(--border-dim); color: var(--text-secondary); }
-  .btn-ghost:hover { border-color: var(--border-active); background: var(--bg-hover); }
+  .btn-ghost:hover { border-color: var(--border-active); background: var(--bg-hover); color: var(--text-primary); }
   .btn-sm { padding: 5px 10px; font-size: 10px; }
-  .btn-block { width: 100%; justify-content: center; }
-  .btn-save { background: linear-gradient(135deg, var(--accent-green-dim), #1a6644); border-color: var(--accent-green); color: var(--accent-green); }
-  .btn-save:hover { background: linear-gradient(135deg, #1d8f62, #1a7a55); }
-  .btn-save.saving { pointer-events: none; opacity: 0.7; }
+  .btn-block { width: 100%; }
+  .btn-icon-sm { width: 24px; height: 24px; font-size: 12px; padding: 0; border-radius: 4px; border: 1px solid transparent; background: transparent; color: var(--text-dim); cursor: pointer; }
+  .btn-icon-sm:hover { color: var(--text-primary); background: var(--bg-hover); border-color: var(--border-dim); }
 
   .separator { height: 1px; background: var(--border-dim); margin: 16px 0; }
 
-  .stats-bar {
-    padding: 8px 20px; border-top: 1px solid var(--border-dim);
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
-    display: flex; gap: 16px; flex-shrink: 0;
-  }
+  .stats-bar { padding: 8px 20px; border-top: 1px solid var(--border-dim); font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); display: flex; gap: 16px; flex-shrink: 0; }
   .stats-bar span em { font-style: normal; color: var(--text-secondary); }
 
-  /* Toast */
-  #toast {
-    position: fixed; bottom: 24px; left: 50%;
-    transform: translateX(-50%) translateY(80px); z-index: 9999;
-    padding: 10px 24px; background: var(--accent-green); color: #000;
-    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600;
-    border-radius: var(--radius-md); opacity: 0;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;
-  }
-  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  #toast.error { background: var(--accent-red); color: #fff; }
+  /* Data Tables (Monsters/NPCs) */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 10px; }
+  .data-table th, .data-table td { border: 1px solid var(--border-dim); padding: 4px 8px; text-align: left; }
+  .data-table th { background: var(--bg-tertiary); color: var(--text-dim); font-weight: 600; }
+  .data-table td { color: var(--text-secondary); }
 
-  .edit-indicator {
-    position: absolute; top: 50px; left: 50%; transform: translateX(-50%); z-index: 100;
-    padding: 5px 16px; background: rgba(251, 191, 36, 0.15); border: 1px solid var(--accent-amber);
-    border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
-    color: var(--accent-amber); display: none; pointer-events: none;
-  }
-  .edit-indicator.visible { display: block; }
-
-  /* Modal */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 10000;
-    background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
-  }
+  /* Modals & Toasts */
+  .modal-overlay { position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
   .modal-overlay.open { opacity: 1; pointer-events: auto; }
-  .modal {
-    background: var(--bg-secondary); border: 1px solid var(--border-dim); border-radius: var(--radius-lg);
-    width: 480px; max-width: 92vw; max-height: 88vh; overflow-y: auto;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-    transform: translateY(20px); transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  .modal { background: var(--bg-secondary); border: 1px solid var(--border-dim); border-radius: var(--radius-lg); width: 500px; max-width: 92vw; max-height: 88vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(0,0,0,0.6); transform: translateY(20px); transition: transform 0.25s; }
   .modal-overlay.open .modal { transform: translateY(0); }
-  .modal-head {
-    padding: 20px 24px 0; display: flex; align-items: center; justify-content: space-between;
-  }
-  .modal-head h3 { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; }
-  .modal-close {
-    width: 28px; height: 28px; background: transparent; border: none; color: var(--text-dim);
-    font-size: 20px; cursor: pointer; border-radius: 4px;
-    display: flex; align-items: center; justify-content: center; transition: all var(--transition-fast);
-  }
+  .modal-head { padding: 20px 24px 0; display: flex; align-items: center; justify-content: space-between; }
+  .modal-head h3 { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; margin:0; }
+  .modal-close { width: 28px; height: 28px; background: transparent; border: none; color: var(--text-dim); font-size: 20px; cursor: pointer; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
   .modal-close:hover { background: var(--bg-hover); color: var(--text-primary); }
   .modal-body { padding: 20px 24px 24px; }
 
-  /* [추가] Image Lightbox Modal */
-  #lightbox-modal {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
-    z-index: 20000; display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity var(--transition-med);
-  }
+  #lightbox-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
   #lightbox-modal.open { opacity: 1; pointer-events: auto; }
-  #lightbox-modal img {
-    max-width: 90vw; max-height: 90vh; object-fit: contain;
-    border-radius: var(--radius-md); box-shadow: 0 10px 50px rgba(0,0,0,0.9);
-  }
-  .lightbox-close {
-    position: absolute; top: 24px; right: 24px; width: 44px; height: 44px;
-    background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 50%; font-size: 24px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-  }
-  .lightbox-close:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
+  #lightbox-modal img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: var(--radius-md); box-shadow: 0 10px 50px rgba(0,0,0,0.9); }
+  .lightbox-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; font-size: 24px; cursor: pointer; }
+  
+  #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); z-index: 9999; padding: 10px 24px; background: var(--accent-green); color: #000; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; border-radius: var(--radius-md); opacity: 0; transition: all 0.35s; pointer-events: none; }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); } #toast.error { background: var(--accent-red); color: #fff; }
+  .edit-indicator { position: absolute; top: 50px; left: 50%; transform: translateX(-50%); z-index: 100; padding: 5px 16px; background: rgba(251, 191, 36, 0.15); border: 1px solid var(--accent-amber); border-radius: 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: var(--accent-amber); display: none; pointer-events: none; }
+  .edit-indicator.visible { display: block; }
+  
+  .config-section { background: var(--bg-tertiary); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border-dim); margin-bottom: 16px; }
+  .config-title { font-size: 11px; color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-weight: 700; margin-bottom: 10px; }
+  
+  .meta-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .meta-item:last-child { border-bottom: none; }
 </style>
 </head>
 <body>
@@ -347,24 +176,18 @@
 <div id="app">
   <div id="map-panel">
     <div id="topbar">
-      <div class="title-area">
-        <div class="logo">W</div>
-        <h1>WORLD MAP EDITOR</h1>
-      </div>
+      <div class="title-area"><div class="logo">W</div><h1>WORLD MAP EDITOR</h1></div>
       <div class="topbar-right">
-        <div class="sync-status disconnected" id="sync-status" title="GitHub 동기화 상태">
-          <div class="sync-dot"></div>
-          <span id="sync-label">연결 안됨</span>
-        </div>
-        <div class="unsaved-dot" id="unsaved-dot" title="저장하지 않은 변경사항"></div>
-        <button class="btn-icon" onclick="openSettings()" title="GitHub 설정">⚙</button>
+        <div class="sync-status disconnected" id="sync-status"><div class="sync-dot"></div><span id="sync-label">연결 안됨</span></div>
+        <div class="unsaved-dot" id="unsaved-dot"></div>
+        <button class="btn-icon" onclick="openSettings()">⚙</button>
         <div class="mode-toggle">
           <button id="btn-viewer" class="active" onclick="setMode('viewer')">VIEWER</button>
           <button id="btn-editor" onclick="setMode('editor')">EDITOR</button>
         </div>
       </div>
     </div>
-    <div class="edit-indicator" id="edit-indicator">⚠ EDIT MODE — 마커를 드래그하여 위치를 조정하세요</div>
+    <div id="filter-bar"></div> <div class="edit-indicator" id="edit-indicator">⚠ EDIT MODE — 마커를 드래그하여 위치를 조정하세요</div>
     <div id="map-container">
       <div id="map-viewport">
         <img id="world-image" src="Worldmap.png" alt="World Map" draggable="false">
@@ -373,9 +196,7 @@
       </div>
     </div>
     <div class="zoom-controls">
-      <button onclick="zoomIn()" title="Zoom In">+</button>
-      <button onclick="zoomOut()" title="Zoom Out">−</button>
-      <button onclick="zoomReset()" title="Reset">⌂</button>
+      <button onclick="zoomIn()">+</button><button onclick="zoomOut()">−</button><button onclick="zoomReset()">⌂</button>
     </div>
     <div class="zoom-level" id="zoom-level">100%</div>
   </div>
@@ -386,7 +207,7 @@
       <div class="panel-actions" id="panel-actions"></div>
     </div>
     <div class="panel-body" id="panel-body">
-      <div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>
+      <div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하세요</p></div>
     </div>
     <div class="stats-bar">
       <span>Regions: <em id="stat-count">0</em></span>
@@ -397,52 +218,60 @@
 
 <div class="modal-overlay" id="settings-modal">
   <div class="modal">
-    <div class="modal-head">
-      <h3>⚙ GitHub 동기화 설정</h3>
-      <button class="modal-close" onclick="closeSettings()">×</button>
-    </div>
+    <div class="modal-head"><h3>⚙ 환경 설정</h3><button class="modal-close" onclick="closeSettings()">×</button></div>
     <div class="modal-body">
-      <div class="form-group">
-        <label>Personal Access Token</label>
-        <input class="form-input" id="cfg-token" type="password" placeholder="github_pat_xxxxx...">
+      <div class="config-section">
+        <div class="config-title">GITHUB 동기화 (저장소 연동)</div>
+        <div class="form-group"><label>Personal Access Token</label><input class="form-input" id="cfg-token" type="password"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Owner</label><input class="form-input" id="cfg-owner"></div>
+          <div class="form-group"><label>Repo</label><input class="form-input" id="cfg-repo"></div>
+        </div>
+        <div class="form-row" style="margin-top:10px;">
+          <div class="form-group"><label>파일 경로</label><input class="form-input" id="cfg-path" placeholder="data/mapData.json" value="data/mapData.json"></div>
+          <div class="form-group"><label>브랜치</label><input class="form-input" id="cfg-branch" placeholder="main" value="main"></div>
+        </div>
       </div>
-      <div class="form-row">
-        <div class="form-group"><label>Owner</label><input class="form-input" id="cfg-owner" placeholder="username"></div>
-        <div class="form-group"><label>Repo</label><input class="form-input" id="cfg-repo" placeholder="my-worldmap"></div>
+      
+      <div class="config-section">
+        <div class="config-title">GOOGLE SHEETS API (데이터 불러오기)</div>
+        <div class="form-group"><label>API Key (웹사이트 제한 필수)</label><input class="form-input" id="cfg-gs-key" type="password"></div>
+        <div class="form-group"><label>Spreadsheet ID</label><input class="form-input" id="cfg-gs-id" placeholder="1RH5uCwe..."></div>
       </div>
-      <div class="form-group"><label>파일 경로</label><input class="form-input" id="cfg-path" placeholder="data/mapData.json" value="data/mapData.json"></div>
-      <div class="form-group"><label>브랜치</label><input class="form-input" id="cfg-branch" placeholder="main" value="main"></div>
-    </div>
-    <div style="padding: 0 24px 24px; display: flex; gap: 8px; justify-content: flex-end;">
-      <button class="btn btn-primary" onclick="saveSettings()">저장</button>
+
+      <div class="config-section">
+        <div class="config-title">UI 설정</div>
+        <div class="form-group">
+          <label>마커 글자 크기: <span id="font-size-val">13</span>px</label>
+          <input type="range" id="cfg-font" min="8" max="24" value="13" style="width:100%" oninput="document.getElementById('font-size-val').textContent=this.value; document.documentElement.style.setProperty('--marker-font-size', this.value+'px');">
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; justify-content: flex-end;">
+        <button class="btn btn-primary" onclick="saveSettings()">저장</button>
+      </div>
     </div>
   </div>
 </div>
 
-<div id="lightbox-modal" onclick="if(event.target===this)closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">×</button>
-  <img id="lightbox-img" src="" alt="Enlarged View">
-</div>
-
+<div id="lightbox-modal" onclick="if(event.target===this)closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">×</button><img id="lightbox-img" src="" alt=""></div>
 <div id="toast"></div>
 
 <script>
 // ════════════════════════════════════════════════════════════════
-//  천상비2M 기본 맵 데이터 (스프레드시트 구조 반영, factions 배열 적용)
+//  데이터 구조 마이그레이션 (type 승격, faction 강등)
 // ════════════════════════════════════════════════════════════════
 const DEFAULT_MAP_DATA = {
-  "1001": { id:"1001", name:"하남성", type:"필드", pvp:"안전 지역", x:45, y:45, image:"", factions:["neutral"], scenario:"안전 지역 / 주요 필드", connected:["1002","1003","1004"] },
-  "1002": { id:"1002", name:"소림사", type:"필드", pvp:"안전 지역", x:35, y:35, image:"", factions:["neutral"], scenario:"안전 지역", connected:["1001"] },
-  "1003": { id:"1003", name:"섬서성", type:"필드", pvp:"안전 지역", x:25, y:50, image:"", factions:["neutral"], scenario:"안전 지역", connected:["1001"] },
-  "1004": { id:"1004", name:"호북성", type:"필드", pvp:"안전 지역", x:55, y:60, image:"", factions:["neutral"], scenario:"일반 필드", connected:["1001"] }
+  "1001": { id:"1001", name:"하남성", type:"t_field", pvp:"안전 지역", x:45, y:45, image:"", factions:["f_neutral"], scenario:"안전 지역 / 주요 필드", connected:["1002","1003","1004"], monsters:[], npcs:[] },
+  "1002": { id:"1002", name:"소림사", type:"t_field", pvp:"안전 지역", x:35, y:35, image:"", factions:["f_neutral"], scenario:"안전 지역", connected:["1001"], monsters:[], npcs:[] },
+  "1003": { id:"1003", name:"섬서성", type:"t_field", pvp:"안전 지역", x:25, y:50, image:"", factions:["f_neutral"], scenario:"안전 지역", connected:["1001"], monsters:[], npcs:[] },
+  "1004": { id:"1004", name:"호북성", type:"t_field", pvp:"안전 지역", x:55, y:60, image:"", factions:["f_neutral"], scenario:"일반 필드", connected:["1001"], monsters:[], npcs:[] }
 };
 
 let mapData = {};
-let factionMeta = {
-  neutral: { label: '기본(중립)', color: '#555d74' }
-};
+let typeMeta = { "t_field": { label: "필드", color: "#555d74" }, "t_town": { label: "마을", color: "#4a9eff" } };
+let factionMeta = { "f_neutral": { label: "기본(중립)" } };
 
-// ── State ──
 let mode = 'viewer', selectedId = null, mapImgW = 1920, mapImgH = 1080;
 let hasUnsavedChanges = false, fileSha = null;
 let scale = 1, panX = 0, panY = 0, isPanning = false;
@@ -450,10 +279,11 @@ let panStartX, panStartY, panStartPanX, panStartPanY;
 const MIN_SCALE = 0.3, MAX_SCALE = 4;
 let dragTarget = null, dragStarted = false, dragStartX, dragStartY;
 
-let ghConfig = { token:'', owner:'', repo:'', path:'data/mapData.json', branch:'main' };
+let ghConfig = { token:'', owner:'', repo:'', path:'data/mapData.json', branch:'main', gsApiKey:'', gsSheetId:'', fontSize:13 };
+let activeTypeFilters = new Set(); // 활성화된 필터 셋
 
 // ════════════════════════════════════════
-//  GitHub API 연동
+//  GitHub & API
 // ════════════════════════════════════════
 function isGhOk(){ return ghConfig.token && ghConfig.owner && ghConfig.repo && ghConfig.path; }
 function ghUrl(){ return `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/${ghConfig.path}`; }
@@ -465,77 +295,105 @@ async function loadFromGithub(){
   try{
     const res = await fetch(`${ghUrl()}?ref=${ghConfig.branch}&_=${Date.now()}`,{headers:ghHdr(),cache:'no-store'});
     if(res.status===404){ setSyncStatus('connected','연결됨 (새 파일)'); return false; }
-    if(!res.ok){ throw new Error(`HTTP ${res.status}`); }
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     fileSha = data.sha;
     const raw = atob(data.content.replace(/\n/g,''));
-    const decoded = new TextDecoder().decode(Uint8Array.from(raw, c=>c.charCodeAt(0)));
-    const loaded = JSON.parse(decoded);
+    const loaded = JSON.parse(new TextDecoder().decode(Uint8Array.from(raw, c=>c.charCodeAt(0))));
     
     Object.keys(mapData).forEach(k=>delete mapData[k]);
     if(loaded.regions) {
       Object.assign(mapData, loaded.regions);
-      if(loaded.factions) {
-        Object.keys(factionMeta).forEach(k=>delete factionMeta[k]);
-        Object.assign(factionMeta, loaded.factions);
-      }
+      if(loaded.types) { Object.keys(typeMeta).forEach(k=>delete typeMeta[k]); Object.assign(typeMeta, loaded.types); }
+      if(loaded.factions) { Object.keys(factionMeta).forEach(k=>delete factionMeta[k]); Object.assign(factionMeta, loaded.factions); }
     } else {
-      Object.assign(mapData, loaded); // 구버전 호환
+      Object.assign(mapData, loaded); // 구버전 대응
     }
 
-    // [중요] 단일 faction -> factions 배열로 마이그레이션 (호환성 보장)
+    // 마이그레이션 방어 로직
     Object.values(mapData).forEach(v => {
-      if (v.faction && !v.factions) {
-        v.factions = [v.faction];
-        delete v.faction;
-      } else if (!v.factions) {
-        v.factions = ['neutral'];
+      if(!v.type) v.type = "t_field";
+      if(!v.factions) {
+        if(v.faction) { v.factions = [v.faction]; delete v.faction; }
+        else v.factions = [];
       }
     });
 
-    setSyncStatus('connected','동기화됨');
-    hasUnsavedChanges = false; updateUnsavedDot();
+    setSyncStatus('connected','동기화됨'); hasUnsavedChanges = false; updateUnsavedDot();
+    activeTypeFilters = new Set(Object.keys(typeMeta)); // 필터 초기화
+    renderFilterBar();
     return true;
-  }catch(e){
-    setSyncStatus('error','로드 실패');
-    return false;
-  }
+  }catch(e){ setSyncStatus('error','로드 실패'); return false; }
 }
 
 async function saveToGithub(){
-  if(!isGhOk()){ openSettings(); showToast('먼저 GitHub 연결을 설정해주세요.',true); return; }
+  if(!isGhOk()){ openSettings(); showToast('GitHub 연결을 설정해주세요.',true); return; }
   setSyncStatus('saving','저장 중...');
-  const btn=document.getElementById('btn-save-github');
-  if(btn){btn.classList.add('saving');btn.textContent='⏳ 저장 중...';}
+  const btn=document.getElementById('btn-save-github'); if(btn){btn.classList.add('saving');btn.textContent='⏳ 저장 중...';}
   try{
     const cleanRegions={};
     Object.entries(mapData).forEach(([k,v])=>{
-      cleanRegions[k]={
-        id:v.id, name:v.name, type:v.type||'', pvp:v.pvp||'', 
-        x:Math.round(v.x*10)/10, y:Math.round(v.y*10)/10, 
-        image:v.image, factions:v.factions||[], scenario:v.scenario, connected:v.connected||[]
-      };
+      cleanRegions[k]={ id:v.id, name:v.name, type:v.type||'', pvp:v.pvp||'', x:Math.round(v.x*10)/10, y:Math.round(v.y*10)/10, image:v.image, factions:v.factions||[], scenario:v.scenario, connected:v.connected||[], monsters:v.monsters||[], npcs:v.npcs||[] };
     });
     
-    const payload = { regions: cleanRegions, factions: factionMeta };
+    // typeMeta와 factionMeta 동시 저장
+    const payload = { regions: cleanRegions, types: typeMeta, factions: factionMeta };
     const json=JSON.stringify(payload,null,2);
     const b64=btoa(unescape(encodeURIComponent(json)));
     
-    try{ const cr=await fetch(`${ghUrl()}?ref=${ghConfig.branch}&_=${Date.now()}`,{headers:ghHdr(),cache:'no-store'}); if(cr.ok){fileSha=(await cr.json()).sha;}else if(cr.status===404){fileSha=null;} }catch(e){}
-    const body={message:`Update Map & Factions — ${new Date().toLocaleString('ko-KR')}`,content:b64,branch:ghConfig.branch};
+    try{ const cr=await fetch(`${ghUrl()}?ref=${ghConfig.branch}&_=${Date.now()}`,{headers:ghHdr(),cache:'no-store'}); if(cr.ok) fileSha=(await cr.json()).sha; else if(cr.status===404) fileSha=null; }catch(e){}
+    const body={message:`Update Map Data — ${new Date().toLocaleString('ko-KR')}`,content:b64,branch:ghConfig.branch};
     if(fileSha) body.sha=fileSha;
     
     const res=await fetch(ghUrl(),{method:'PUT',headers:{...ghHdr(),'Content-Type':'application/json'},body:JSON.stringify(body)});
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
     fileSha=(await res.json()).content.sha;
-    hasUnsavedChanges=false; updateUnsavedDot();
-    setSyncStatus('connected','동기화됨');
-    showToast('✅ GitHub에 저장 완료!');
+    hasUnsavedChanges=false; updateUnsavedDot(); setSyncStatus('connected','동기화됨'); showToast('✅ GitHub 저장 완료');
   }catch(e){
-    setSyncStatus('error','저장 실패');
-    showToast('저장 실패: '+e.message,true);
+    setSyncStatus('error','저장 실패'); showToast('저장 실패: '+e.message,true);
   }finally{
-    if(btn){btn.classList.remove('saving');btn.textContent='💾 저장';}
+    if(btn){btn.classList.remove('saving');btn.textContent='💾 전체 저장';}
+  }
+}
+
+// ════════════════════════════════════════
+//  Google Sheets 연동 (단일 지역 On-Demand)
+// ════════════════════════════════════════
+async function syncGoogleSheet() {
+  if(!selectedId || !mapData[selectedId]) return;
+  if(!ghConfig.gsApiKey || !ghConfig.gsSheetId) return showToast("설정창에서 Google Sheets API 설정을 완료해주세요.", true);
+  
+  const rId = mapData[selectedId].id;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${ghConfig.gsSheetId}/values/${rId}!A21:M?key=${ghConfig.gsApiKey}`;
+  
+  const btn = document.getElementById('btn-gs-sync');
+  if(btn) { btn.textContent = '⏳ 동기화 중...'; btn.style.pointerEvents='none'; }
+  
+  try {
+    const res = await fetch(url);
+    if(res.status === 404) throw new Error(`스프레드시트에서 시트명 "${rId}"를 찾을 수 없습니다.`);
+    if(res.status === 429) throw new Error(`API 할당량 초과. 잠시 후 다시 시도하세요.`);
+    if(!res.ok) throw new Error(`HTTP ${res.status} 오류 발생`);
+    
+    const data = await res.json();
+    const rows = data.values || [];
+    
+    let monsters = [], npcs = [];
+    // 0번째 인덱스는 A21(헤더)이므로 1번째 인덱스(A22)부터 순회
+    for(let i=1; i<rows.length; i++) {
+      const r = rows[i];
+      // 방어 로직: 배열 길이 부족 대비 빈 문자열 처리
+      if(r[0] || r[1]) monsters.push({ idx: r[0]||'', name: r[1]||'', type: r[2]||'', file: r[3]||'', img: r[4]||'' });
+      if(r[8] || r[9]) npcs.push({ idx: r[8]||'', name: r[9]||'', type: r[10]||'', file: r[11]||'', img: r[12]||'' });
+    }
+    
+    mapData[selectedId].monsters = monsters;
+    mapData[selectedId].npcs = npcs;
+    markDirty(); renderEditorDetail(); showToast(`✅ 시트 "${rId}" 데이터 연동 성공!`);
+  } catch(e) {
+    showToast("❌ " + e.message, true);
+  } finally {
+    if(btn) { btn.textContent = '☁️ 시트 데이터 동기화'; btn.style.pointerEvents='auto'; }
   }
 }
 
@@ -543,31 +401,33 @@ function setSyncStatus(s,l){ const el=document.getElementById('sync-status'); el
 function markDirty(){ hasUnsavedChanges=true; updateUnsavedDot(); if(isGhOk()) setSyncStatus('connected','변경사항 있음'); }
 function updateUnsavedDot(){ document.getElementById('unsaved-dot').classList.toggle('visible',hasUnsavedChanges); }
 
-// ── Settings ──
-function loadGhCfg(){ try{ const s=localStorage.getItem('wm_gh_cfg'); if(s) ghConfig={...ghConfig,...JSON.parse(s)}; }catch(e){} }
+function loadGhCfg(){ 
+  try{ const s=localStorage.getItem('wm_gh_cfg'); if(s){ ghConfig={...ghConfig,...JSON.parse(s)}; document.documentElement.style.setProperty('--marker-font-size', ghConfig.fontSize+'px'); } }catch(e){} 
+}
 function openSettings(){
   document.getElementById('cfg-token').value=ghConfig.token; document.getElementById('cfg-owner').value=ghConfig.owner;
   document.getElementById('cfg-repo').value=ghConfig.repo; document.getElementById('cfg-path').value=ghConfig.path;
-  document.getElementById('cfg-branch').value=ghConfig.branch; document.getElementById('settings-modal').classList.add('open');
+  document.getElementById('cfg-branch').value=ghConfig.branch; 
+  document.getElementById('cfg-gs-key').value=ghConfig.gsApiKey; document.getElementById('cfg-gs-id').value=ghConfig.gsSheetId;
+  document.getElementById('cfg-font').value=ghConfig.fontSize; document.getElementById('font-size-val').textContent=ghConfig.fontSize;
+  document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettings(){ document.getElementById('settings-modal').classList.remove('open'); }
 function saveSettings(){
   ghConfig.token=document.getElementById('cfg-token').value.trim(); ghConfig.owner=document.getElementById('cfg-owner').value.trim();
   ghConfig.repo=document.getElementById('cfg-repo').value.trim(); ghConfig.path=document.getElementById('cfg-path').value.trim()||'data/mapData.json';
-  ghConfig.branch=document.getElementById('cfg-branch').value.trim()||'main'; localStorage.setItem('wm_gh_cfg',JSON.stringify(ghConfig));
+  ghConfig.branch=document.getElementById('cfg-branch').value.trim()||'main';
+  ghConfig.gsApiKey=document.getElementById('cfg-gs-key').value.trim(); ghConfig.gsSheetId=document.getElementById('cfg-gs-id').value.trim();
+  ghConfig.fontSize=parseInt(document.getElementById('cfg-font').value)||13;
+  localStorage.setItem('wm_gh_cfg',JSON.stringify(ghConfig));
   closeSettings();
   if(isGhOk()){ loadFromGithub().then(loaded=>{ if(loaded) renderAll(); }); }
 }
-document.getElementById('settings-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeSettings();});
 
-// ════════════════════════════════════════
-//  Init & Render
-// ════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', async()=>{
-  loadGhCfg();
-  Object.assign(mapData, JSON.parse(JSON.stringify(DEFAULT_MAP_DATA)));
+  loadGhCfg(); Object.assign(mapData, JSON.parse(JSON.stringify(DEFAULT_MAP_DATA)));
+  activeTypeFilters = new Set(Object.keys(typeMeta)); renderFilterBar();
   if(isGhOk()) await loadFromGithub();
-
   const img=document.getElementById('world-image');
   img.onload=()=>{ mapImgW=img.naturalWidth||1920; mapImgH=img.naturalHeight||1080; initViewport(); renderAll(); };
   if(img.complete&&img.naturalWidth>0){mapImgW=img.naturalWidth;mapImgH=img.naturalHeight;initViewport();renderAll();}
@@ -577,61 +437,57 @@ window.addEventListener('DOMContentLoaded', async()=>{
 function initViewport(){
   const vp=document.getElementById('map-viewport'), img=document.getElementById('world-image'), c=document.getElementById('map-container');
   img.style.width=mapImgW+'px'; img.style.height=mapImgH+'px'; vp.style.width=mapImgW+'px'; vp.style.height=mapImgH+'px';
-  scale=Math.min(c.clientWidth/mapImgW,c.clientHeight/mapImgH)*0.9;
-  panX=(c.clientWidth-mapImgW*scale)/2; panY=(c.clientHeight-mapImgH*scale)/2; applyTransform();
+  scale=Math.min(c.clientWidth/mapImgW,c.clientHeight/mapImgH)*0.9; panX=(c.clientWidth-mapImgW*scale)/2; panY=(c.clientHeight-mapImgH*scale)/2; applyTransform();
 }
-function applyTransform(){
-  document.getElementById('map-viewport').style.transform=`translate(${panX}px,${panY}px) scale(${scale})`;
-  document.getElementById('zoom-level').textContent=Math.round(scale*100)+'%';
-}
-
+function applyTransform(){ document.getElementById('map-viewport').style.transform=`translate(${panX}px,${panY}px) scale(${scale})`; document.getElementById('zoom-level').textContent=Math.round(scale*100)+'%'; }
 function setupPanZoom(){
   const c=document.getElementById('map-container');
   c.addEventListener('pointerdown',e=>{
-    if(e.button===1||(e.button===0&&!isMarkerEl(e.target))){
-      if(mode==='editor'&&isMarkerEl(e.target))return;
-      isPanning=true; panStartX=e.clientX; panStartY=e.clientY; panStartPanX=panX; panStartPanY=panY;
-      c.classList.add('panning'); c.setPointerCapture(e.pointerId);
-    }
+    if(e.button===1||(e.button===0&&!isMarkerEl(e.target))){ if(mode==='editor'&&isMarkerEl(e.target))return; isPanning=true; panStartX=e.clientX; panStartY=e.clientY; panStartPanX=panX; panStartPanY=panY; c.classList.add('panning'); c.setPointerCapture(e.pointerId); }
   });
-  c.addEventListener('pointermove',e=>{
-    if(isPanning){panX=panStartPanX+(e.clientX-panStartX);panY=panStartPanY+(e.clientY-panStartY);applyTransform();return;}
-    if(dragTarget)handleDragMove(e);
-  });
+  c.addEventListener('pointermove',e=>{ if(isPanning){panX=panStartPanX+(e.clientX-panStartX);panY=panStartPanY+(e.clientY-panStartY);applyTransform();return;} if(dragTarget)handleDragMove(e); });
   c.addEventListener('pointerup',e=>{ if(isPanning){isPanning=false;c.classList.remove('panning');} if(dragTarget)handleDragEnd(e); });
-  c.addEventListener('wheel',e=>{
-    e.preventDefault(); const r=c.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top, old=scale;
-    scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*(e.deltaY>0?0.9:1.1)));
-    panX=mx-(mx-panX)*(scale/old); panY=my-(my-panY)*(scale/old); applyTransform();
-  },{passive:false});
+  c.addEventListener('wheel',e=>{ e.preventDefault(); const r=c.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top, old=scale; scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*(e.deltaY>0?0.9:1.1))); panX=mx-(mx-panX)*(scale/old); panY=my-(my-panY)*(scale/old); applyTransform(); },{passive:false});
 }
 function isMarkerEl(el){return el.closest('.map-marker')!==null;}
 function zoomIn(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.min(MAX_SCALE,scale*1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
 function zoomOut(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.max(MIN_SCALE,scale/1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
 function zoomReset(){initViewport();}
 
-function renderAll(){renderMarkers();renderConnections();updateStats();if(selectedId&&!mapData[selectedId])selectedId=null;renderDetail();}
+// ════════════════════════════════════════
+//  렌더링 & 필터 처리
+// ════════════════════════════════════════
+function renderFilterBar() {
+  const bar = document.getElementById('filter-bar'); bar.innerHTML = '';
+  Object.entries(typeMeta).forEach(([k,v]) => {
+    const btn = document.createElement('button');
+    btn.className = `filter-btn ${activeTypeFilters.has(k) ? 'active' : ''}`;
+    btn.style.setProperty('--c', v.color); btn.textContent = v.label;
+    btn.onclick = () => {
+      if(activeTypeFilters.has(k)) activeTypeFilters.delete(k); else activeTypeFilters.add(k);
+      btn.classList.toggle('active', activeTypeFilters.has(k)); renderMarkers(); renderConnections();
+    };
+    bar.appendChild(btn);
+  });
+}
+
+function renderAll(){ renderFilterBar(); renderMarkers(); renderConnections(); updateStats(); if(selectedId&&!mapData[selectedId])selectedId=null; renderDetail(); }
 
 function renderMarkers(){
   const layer=document.getElementById('markers-layer'); layer.innerHTML='';
   Object.values(mapData).forEach(region=>{
+    if(!activeTypeFilters.has(region.type)) return; // 필터링: 숨김 처리
+    
     const el=document.createElement('div');
     el.className='map-marker'+(region.id===selectedId?' selected':''); el.dataset.id=region.id;
     el.style.left=(region.x/100*mapImgW)+'px'; el.style.top=(region.y/100*mapImgH)+'px';
     
-    // [수정점 2] 마커 색상은 배열의 가장 첫 번째 세력을 기준으로 지정
-    const facs = region.factions || [];
-    const primaryFac = facs.length > 0 ? facs[0] : 'neutral';
-    const col = factionMeta[primaryFac]?.color || '#555d74';
+    // [수정점] 마커 색상은 이제 분류(typeMeta)를 따라감
+    const col = typeMeta[region.type]?.color || '#555d74';
     
     el.innerHTML=`<div class="marker-pin"><svg viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.268 21.732 0 14 0z" fill="${col}"/><circle cx="14" cy="13" r="6" fill="rgba(0,0,0,0.3)"/><circle cx="14" cy="13" r="4" fill="#fff" opacity="0.9"/></svg></div><div class="marker-label">${region.name}</div>`;
     el.addEventListener('pointerdown',e=>{if(mode==='editor'){e.stopPropagation();handleDragStart(e,region.id);}});
-    el.addEventListener('click',()=>{
-      if(!dragTarget) {
-        if(selectedId === region.id) { selectedId = null; renderAll(); }
-        else { selectRegion(region.id); }
-      }
-    });
+    el.addEventListener('click',()=>{ if(!dragTarget) { if(selectedId === region.id) { selectedId = null; renderAll(); } else { selectRegion(region.id); } } });
     layer.appendChild(el);
   });
 }
@@ -641,8 +497,9 @@ function renderConnections(){
   svg.setAttribute('width',mapImgW);svg.setAttribute('height',mapImgH); svg.style.width=mapImgW+'px';svg.style.height=mapImgH+'px';svg.innerHTML='';
   const drawn=new Set();
   Object.values(mapData).forEach(r=>{
+    if(!activeTypeFilters.has(r.type)) return; // 시작점 숨김
     (r.connected||[]).forEach(tid=>{
-      const t=mapData[tid];if(!t)return;
+      const t=mapData[tid]; if(!t || !activeTypeFilters.has(t.type)) return; // 도착점 숨김
       const k=[r.id,tid].sort().join('|');if(drawn.has(k))return;drawn.add(k);
       const line=document.createElementNS('http://www.w3.org/2000/svg','line');
       line.setAttribute('x1',r.x/100*mapImgW);line.setAttribute('y1',r.y/100*mapImgH);
@@ -663,7 +520,7 @@ function renderDetail(){
   const body=document.getElementById('panel-body'), actions=document.getElementById('panel-actions');
   if(!selectedId||!mapData[selectedId]){
     if(mode==='editor'){
-      actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button>`;
+      actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 전체 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규 지역</button>`;
       body.innerHTML=`<div class="empty-state"><div class="icon">✏️</div><p>마커를 클릭하여 편집하거나<br>새 지역을 추가하세요</p><button class="btn btn-success" onclick="addRegion()" style="margin-top:8px;">+ 신규 지역 추가</button></div>`;
     }else{
       actions.innerHTML=''; body.innerHTML=`<div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>`;
@@ -673,30 +530,35 @@ function renderDetail(){
   if(mode==='viewer')renderViewerDetail();else renderEditorDetail();
 }
 
+// Data Table 렌더링 헬퍼
+function generateTable(arr) {
+  if(!arr || arr.length === 0) return '<div class="detail-value" style="color:var(--text-dim)">데이터 없음</div>';
+  const trs = arr.map(i => `<tr><td>${i.name||'-'}</td><td>${i.type||'-'}</td></tr>`).join('');
+  return `<table class="data-table"><thead><tr><th>이름</th><th>타입</th></tr></thead><tbody>${trs}</tbody></table>`;
+}
+
 function renderViewerDetail(){
   const r=mapData[selectedId],body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
+  const tMeta = typeMeta[r.type] || { label: '알 수 없음', color: '#555d74' };
   
-  // [수정점 2] 다중 세력 뱃지 렌더링
-  const facs = r.factions || [];
-  const factionBadges = facs.map(fId => {
-    const fm = factionMeta[fId] || factionMeta.neutral;
-    return `<div class="info-badge" style="border-color:${fm.color};color:${fm.color}"><div class="faction-dot" style="background:${fm.color}"></div>${fm.label}</div>`;
+  const factionBadges = (r.factions||[]).map(fId => {
+    const fm = factionMeta[fId]; return fm ? `<div class="info-badge" style="border-color:var(--border-dim);color:var(--text-secondary)">🛡 ${fm.label}</div>` : '';
   }).join('');
-
   const conn=(r.connected||[]).map(cid=>{const cr=mapData[cid];return cr?`<button class="connected-btn" onclick="selectRegion('${cid}')">${cr.name}</button>`:''}).join('');
   
-  // [수정점 1] 이미지 클릭 시 모달 호출 (onclick 이벤트 추가)
   body.innerHTML=`
-    <div class="detail-image-wrap" style="cursor:pointer;" onclick="openLightbox('${r.image}')" title="크게 보기">
+    <div class="detail-image-wrap" onclick="openLightbox('${r.image}')" title="크게 보기">
       <img src="${r.image}" alt="${r.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=no-image>${r.image||'No Image'}</div>'">
     </div>
     <div class="detail-name">${r.name}</div><div class="detail-id">ID: ${r.id}</div>
     <div class="badge-row">
-      ${factionBadges}
-      ${r.type ? `<div class="info-badge" style="border-color:var(--border-active);color:var(--text-primary)">🗺 ${r.type}</div>` : ''}
+      <div class="info-badge" style="border-color:${tMeta.color};color:${tMeta.color}"><div class="faction-dot" style="background:${tMeta.color}"></div>${tMeta.label}</div>
       ${r.pvp ? `<div class="info-badge" style="border-color:var(--accent-red-dim);color:var(--accent-red)">⚔ ${r.pvp}</div>` : ''}
+      ${factionBadges}
     </div>
     <div class="detail-section"><div class="detail-label">시나리오 / 특징</div><div class="detail-value">${r.scenario||'—'}</div></div>
+    <div class="detail-section"><div class="detail-label">등장 몬스터</div>${generateTable(r.monsters)}</div>
+    <div class="detail-section"><div class="detail-label">등장 NPC</div>${generateTable(r.npcs)}</div>
     <div class="detail-section"><div class="detail-label">연결된 지역</div><div class="connected-list">${conn||'<span class="detail-value">없음</span>'}</div></div>`;
   actions.innerHTML='';
 }
@@ -704,105 +566,122 @@ function renderViewerDetail(){
 function renderEditorDetail(){
   const r=mapData[selectedId],body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
   
-  // [수정점 2] 세력 체크박스 목록 생성
+  // 분류(Type) Options
+  const tOpts = Object.entries(typeMeta).map(([k,v])=>`<option value="${k}" ${r.type===k?'selected':''}>${v.label}</option>`).join('');
+  const curColor = typeMeta[r.type]?.color || '#ffffff';
+
+  // 세력(Faction) Checkboxes
   const facs = r.factions || [];
   const fCheckboxes = Object.entries(factionMeta).map(([k,v])=>`
-    <label style="display:flex;align-items:center;gap:6px;padding:4px 0;cursor:pointer;font-size:12px;color:var(--text-secondary);">
-      <input type="checkbox" ${facs.includes(k)?'checked':''} value="${k}" onchange="toggleFaction('${k}',this.checked)">
-      <div class="faction-dot" style="background:${v.color}"></div>${v.label}
-    </label>
+    <div class="meta-item">
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;flex:1;"><input type="checkbox" ${facs.includes(k)?'checked':''} value="${k}" onchange="toggleFaction('${k}',this.checked)"> ${v.label}</label>
+      <button class="btn-icon-sm" onclick="renameFaction('${k}')" title="이름 변경">✏️</button><button class="btn-icon-sm" onclick="deleteFaction('${k}')" title="삭제">🗑️</button>
+    </div>
   `).join('');
 
   const allIds=Object.keys(mapData).filter(id=>id!==selectedId);
   const cSet=new Set(r.connected||[]);
-  const cBoxes=allIds.map(id=>{const rr=mapData[id];return`<label style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer;font-size:12px;color:var(--text-secondary);"><input type="checkbox" ${cSet.has(id)?'checked':''} value="${id}" onchange="toggleConnection('${id}',this.checked)">${rr.name} <span style="color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:10px">(${id})</span></label>`;}).join('');
+  const cBoxes=allIds.map(id=>{const rr=mapData[id];return`<label style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer;"><input type="checkbox" ${cSet.has(id)?'checked':''} value="${id}" onchange="toggleConnection('${id}',this.checked)">${rr.name}</label>`;}).join('');
   
   body.innerHTML=`
-    <div class="form-group"><label>지역 ID (스프레드시트 인덱스)</label><input class="form-input" value="${r.id}" onchange="updateRegionId('${r.id}', this.value)"></div>
+    <div class="form-group"><label>지역 ID (스프레드시트 시트명 일치)</label><input class="form-input" value="${r.id}" onchange="updateRegionId('${r.id}', this.value)"></div>
+    <div class="form-group"><label>지역 이름</label><input class="form-input" value="${r.name}" oninput="updateField('name',this.value)"></div>
     <div class="form-row">
-      <div class="form-group"><label>지역 이름</label><input class="form-input" value="${r.name}" oninput="updateField('name',this.value)"></div>
-      <div class="form-group"><label>분류 (타입)</label><input class="form-input" value="${r.type||''}" placeholder="필드, 마을 등" oninput="updateField('type',this.value)"></div>
-    </div>
-    <div class="form-row">
+      <div class="form-group">
+        <label>분류 (마커 색상 결정)</label>
+        <div style="display:flex;gap:5px;align-items:center;">
+          <select class="form-select" onchange="updateField('type',this.value)">${tOpts}</select>
+          <input type="color" value="${curColor}" onchange="updateTypeColor('${r.type}', this.value)" title="이 분류의 색상 변경">
+          <button class="btn btn-ghost btn-sm" onclick="manageType('${r.type}')" title="관리">⚙️</button>
+        </div>
+      </div>
       <div class="form-group"><label>PVP 여부</label><input class="form-input" value="${r.pvp||''}" placeholder="안전, 일반 등" oninput="updateField('pvp',this.value)"></div>
-      <div class="form-group"><label>이미지 경로</label><input class="form-input" value="${r.image}" placeholder="images/region.png" oninput="updateField('image',this.value)"></div>
     </div>
+    
+    <div class="form-group"><label>이미지 경로</label><input class="form-input" value="${r.image}" placeholder="images/region.png" oninput="updateField('image',this.value)"></div>
     
     <div class="form-group">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-        <label style="margin:0;">세력 (다중 선택 가능)</label>
-        <button class="btn btn-ghost btn-sm" onclick="addNewFaction()">+ 세력 추가</button>
+        <label style="margin:0;">세력 (다중 선택)</label><button class="btn btn-ghost btn-sm" onclick="addFaction()">+ 추가</button>
       </div>
-      <div style="background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:var(--radius-sm);padding:8px 10px;max-height:140px;overflow-y:auto; display:flex; flex-direction:column; gap:2px;">
-        ${fCheckboxes}
-      </div>
+      <div style="background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:var(--radius-sm);padding:4px 10px;max-height:120px;overflow-y:auto;">${fCheckboxes}</div>
     </div>
 
     <div class="form-group"><label>시나리오 / 컨셉</label><textarea class="form-textarea" oninput="updateField('scenario',this.value)">${r.scenario||''}</textarea></div>
-    <div class="form-group"><label>연결된 지역</label><div style="background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:var(--radius-sm);padding:8px 10px;max-height:160px;overflow-y:auto;">${cBoxes||'<span style="color:var(--text-dim);font-size:12px;">다른 지역 없음</span>'}</div></div>
+    
+    <div class="form-group">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+        <label style="margin:0;">스프레드시트 데이터 (NPC/몬스터)</label>
+        <button class="btn btn-primary btn-sm" id="btn-gs-sync" onclick="syncGoogleSheet()">☁️ 시트 데이터 동기화</button>
+      </div>
+      <div style="font-size:11px;color:var(--text-dim);">동기화 시 시트명과 지역 ID가 일치해야 합니다. (현재 NPC: ${r.npcs?.length||0}명, 몬스터: ${r.monsters?.length||0}종)</div>
+    </div>
+
+    <div class="form-group"><label>연결된 지역</label><div style="background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:var(--radius-sm);padding:8px 10px;max-height:120px;overflow-y:auto;">${cBoxes||'<span style="color:var(--text-dim);font-size:12px;">다른 지역 없음</span>'}</div></div>
     <div class="separator"></div>
     <button class="btn btn-danger btn-block" onclick="deleteRegion()">🗑 현재 지역 삭제</button>`;
-  actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button>`;
+  actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 전체 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규 지역</button>`;
 }
 
-// ── Edit Ops ──
-function updateField(f,v){if(!selectedId||!mapData[selectedId])return;mapData[selectedId][f]=v;markDirty();if(f==='name')renderMarkers();}
+// ── Edit Ops (무결성 유지 포함) ──
+function updateField(f,v){if(!selectedId||!mapData[selectedId])return;mapData[selectedId][f]=v;markDirty();if(f==='name'||f==='type')renderMarkers();}
 
-// [추가] 다중 세력(factions 배열) 업데이트
-function toggleFaction(fId, isChecked) {
-  if(!selectedId||!mapData[selectedId])return;
-  const r = mapData[selectedId];
-  if(!r.factions) r.factions = [];
-  
-  if(isChecked) {
-    if(!r.factions.includes(fId)) r.factions.push(fId);
-  } else {
-    r.factions = r.factions.filter(id => id !== fId);
+// [기능] 분류(Type) 관리
+function updateTypeColor(tId, hex) { if(typeMeta[tId]) { typeMeta[tId].color = hex; markDirty(); renderFilterBar(); renderMarkers(); } }
+function manageType(tId) {
+  const meta = typeMeta[tId];
+  const act = prompt(`분류 관리 [${meta.label}]\n1: 이름 변경\n2: 새 분류 추가\n3: 이 분류 삭제\n원하는 번호를 입력하세요:`);
+  if(act === '1') { const n = prompt('새 이름을 입력하세요:', meta.label); if(n){ meta.label=n.trim(); markDirty(); renderAll(); } }
+  else if(act === '2') {
+    const n = prompt('새로 추가할 분류 이름을 입력하세요:');
+    if(n) { const nid = 't_'+Date.now(); typeMeta[nid]={label:n.trim(), color:'#8a92a8'}; activeTypeFilters.add(nid); markDirty(); renderAll(); }
   }
-  markDirty(); renderMarkers();
+  else if(act === '3') {
+    if(Object.keys(typeMeta).length <= 1) return alert('최소 1개의 분류는 남아있어야 합니다.');
+    if(confirm(`"${meta.label}" 분류를 삭제하시겠습니까? 이 분류를 가진 지역은 다른 분류로 초기화됩니다.`)) {
+      delete typeMeta[tId]; activeTypeFilters.delete(tId);
+      const fallback = Object.keys(typeMeta)[0];
+      Object.values(mapData).forEach(r => { if(r.type === tId) r.type = fallback; });
+      markDirty(); renderAll(); showToast('분류가 삭제되었습니다.');
+    }
+  }
+}
+
+// [기능] 세력(Faction) 관리
+function toggleFaction(fId, isChecked) {
+  const r = mapData[selectedId]; if(!r.factions) r.factions = [];
+  if(isChecked) { if(!r.factions.includes(fId)) r.factions.push(fId); } else r.factions = r.factions.filter(id => id !== fId);
+  markDirty();
+}
+function addFaction() { const n = prompt('새 세력 이름:'); if(n) { factionMeta['f_'+Date.now()] = {label:n.trim()}; markDirty(); renderEditorDetail(); } }
+function renameFaction(fId) { const n = prompt('새 이름:', factionMeta[fId].label); if(n) { factionMeta[fId].label = n.trim(); markDirty(); renderEditorDetail(); } }
+function deleteFaction(fId) {
+  if(!confirm(`"${factionMeta[fId].label}" 세력을 삭제하시겠습니까? 연관된 모든 지역에서 제거됩니다.`)) return;
+  delete factionMeta[fId];
+  Object.values(mapData).forEach(r => { if(r.factions) r.factions = r.factions.filter(id => id !== fId); });
+  markDirty(); renderEditorDetail();
 }
 
 function updateRegionId(oldId, newId) {
-  newId = newId.trim().replace(/[^a-zA-Z0-9_]/g, '_');
-  if (!newId || newId === oldId) return;
+  newId = newId.trim().replace(/[^a-zA-Z0-9_]/g, '_'); if (!newId || newId === oldId) return;
   if (mapData[newId]) { showToast('이미 존재하는 ID입니다.', true); renderEditorDetail(); return; }
-  
-  mapData[newId] = { ...mapData[oldId], id: newId };
-  delete mapData[oldId];
-  Object.values(mapData).forEach(r => {
-    if (r.connected && r.connected.includes(oldId)) r.connected = r.connected.map(id => id === oldId ? newId : id);
-  });
+  mapData[newId] = { ...mapData[oldId], id: newId }; delete mapData[oldId];
+  Object.values(mapData).forEach(r => { if (r.connected && r.connected.includes(oldId)) r.connected = r.connected.map(id => id === oldId ? newId : id); });
   selectedId = newId; markDirty(); renderAll(); showToast('✅ ID가 변경되었습니다.');
 }
 
-function addNewFaction() {
-  const name = prompt('새로운 세력 이름을 입력하세요:'); if(!name) return;
-  const color = prompt('세력의 색상 코드를 입력하세요 (예: #ff0000, gold):', '#ffffff');
-  const id = 'fac_' + Date.now().toString(36);
-  factionMeta[id] = { label: name, color: color };
-  markDirty(); renderEditorDetail(); renderMarkers(); showToast('✅ 새 세력이 추가되었습니다.');
-}
-
 function toggleConnection(tid,chk){
-  if(!selectedId||!mapData[selectedId])return;
   const r=mapData[selectedId]; if(!r.connected)r.connected=[];
-  if(chk){
-    if(!r.connected.includes(tid))r.connected.push(tid);
-    if(!mapData[tid].connected)mapData[tid].connected=[];
-    if(!mapData[tid].connected.includes(selectedId))mapData[tid].connected.push(selectedId);
-  }else{
-    r.connected=r.connected.filter(id=>id!==tid);
-    if(mapData[tid]?.connected)mapData[tid].connected=mapData[tid].connected.filter(id=>id!==selectedId);
-  }
+  if(chk){ if(!r.connected.includes(tid))r.connected.push(tid); if(!mapData[tid].connected)mapData[tid].connected=[]; if(!mapData[tid].connected.includes(selectedId))mapData[tid].connected.push(selectedId); }
+  else{ r.connected=r.connected.filter(id=>id!==tid); if(mapData[tid]?.connected)mapData[tid].connected=mapData[tid].connected.filter(id=>id!==selectedId); }
   markDirty();renderConnections();updateStats();
 }
 
 function addRegion(){
-  let nid='region_'+Date.now().toString(36);
-  const p=prompt('새 지역 ID (영문, 숫자, _):',nid);
-  if(!p)return; nid=p.trim().replace(/[^a-zA-Z0-9_]/g,'_');
-  if(mapData[nid]){alert('이미 존재하는 ID입니다.');return;}
-  mapData[nid]={id:nid,name:'새 지역',type:'',pvp:'',x:50,y:50,image:'',factions:['neutral'],scenario:'',connected:[]};
+  let nid='region_'+Date.now().toString(36); const p=prompt('새 지역 ID (영문/숫자. 구글시트명과 일치 권장):',nid);
+  if(!p)return; nid=p.trim().replace(/[^a-zA-Z0-9_]/g,'_'); if(mapData[nid]) return alert('이미 존재하는 ID입니다.');
+  const defType = Object.keys(typeMeta)[0];
+  mapData[nid]={id:nid,name:'새 지역',type:defType,pvp:'',x:50,y:50,image:'',factions:[],scenario:'',connected:[],monsters:[],npcs:[]};
   selectedId=nid; markDirty(); renderAll(); showToast('새 지역이 추가되었습니다');
 }
 
@@ -817,13 +696,10 @@ function handleDragStart(e,id){if(mode!=='editor')return;dragTarget=id;dragStart
 function handleDragMove(e){
   if(!dragTarget)return;
   if(!dragStarted&&Math.abs(e.clientX-dragStartX)+Math.abs(e.clientY-dragStartY)<5)return;
-  dragStarted=true;
-  const c=document.getElementById('map-container'),r=c.getBoundingClientRect();
+  dragStarted=true; const c=document.getElementById('map-container'),r=c.getBoundingClientRect();
   const xP=Math.max(0,Math.min(100,(e.clientX-r.left-panX)/scale/mapImgW*100)), yP=Math.max(0,Math.min(100,(e.clientY-r.top-panY)/scale/mapImgH*100));
   mapData[dragTarget].x=xP; mapData[dragTarget].y=yP;
-  const m=document.querySelector(`.map-marker[data-id="${dragTarget}"]`);
-  if(m){m.style.left=(xP/100*mapImgW)+'px';m.style.top=(yP/100*mapImgH)+'px';m.classList.add('dragging');}
-  renderConnections();
+  const m=document.querySelector(`.map-marker[data-id="${dragTarget}"]`); if(m){m.style.left=(xP/100*mapImgW)+'px';m.style.top=(yP/100*mapImgH)+'px';m.classList.add('dragging');} renderConnections();
 }
 function handleDragEnd(e){
   if(!dragTarget)return;
@@ -833,8 +709,7 @@ function handleDragEnd(e){
 }
 
 function setMode(m){
-  mode=m;
-  document.getElementById('btn-viewer').classList.toggle('active',m==='viewer'); document.getElementById('btn-editor').classList.toggle('active',m==='editor');
+  mode=m; document.getElementById('btn-viewer').classList.toggle('active',m==='viewer'); document.getElementById('btn-editor').classList.toggle('active',m==='editor');
   document.getElementById('edit-indicator').classList.toggle('visible',m==='editor'); document.getElementById('map-container').classList.toggle('edit-mode',m==='editor');
   document.getElementById('panel-title').textContent=m==='viewer'?'Region Details':'Region Editor'; renderDetail();
 }
@@ -845,24 +720,12 @@ function updateStats(){
   document.getElementById('stat-count').textContent=n;document.getElementById('stat-conn').textContent=cs.size;
 }
 
-// [추가] Lightbox 제어 함수
-function openLightbox(src) {
-  if(!src) return;
-  const m = document.getElementById('lightbox-modal');
-  document.getElementById('lightbox-img').src = src;
-  m.classList.add('open');
-}
-function closeLightbox() {
-  const m = document.getElementById('lightbox-modal');
-  m.classList.remove('open');
-  setTimeout(() => document.getElementById('lightbox-img').src = '', 250); // 트랜지션 후 소스 제거
-}
+// Lightbox
+function openLightbox(src) { if(!src) return; const m = document.getElementById('lightbox-modal'); document.getElementById('lightbox-img').src = src; m.classList.add('open'); }
+function closeLightbox() { const m = document.getElementById('lightbox-modal'); m.classList.remove('open'); setTimeout(() => document.getElementById('lightbox-img').src = '', 250); }
 
 let toastTimer;
-function showToast(msg,err){
-  const t=document.getElementById('toast');t.textContent=msg;t.className=err?'error':'';
-  clearTimeout(toastTimer);requestAnimationFrame(()=>{t.classList.add('show');toastTimer=setTimeout(()=>t.classList.remove('show'),3000);});
-}
+function showToast(msg,err){ const t=document.getElementById('toast');t.textContent=msg;t.className=err?'error':''; clearTimeout(toastTimer);requestAnimationFrame(()=>{t.classList.add('show');toastTimer=setTimeout(()=>t.classList.remove('show'),3000);}); }
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();if(hasUnsavedChanges)saveToGithub();}});
 </script>
 </body>
