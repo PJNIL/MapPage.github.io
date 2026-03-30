@@ -798,7 +798,7 @@
     "region_mncp6wnn": {
       "id": "region_mncp6wnn",
       "name": "황족 자치구",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 71.1,
       "y": 87.8,
@@ -818,6 +818,10 @@
     "t_1774845049845": {
       "label": "인스턴스",
       "color": "#7300ff"
+    },
+    "t_1774845560682": {
+      "label": "미공개",
+      "color": "#8a92a8"
     }
   },
   "factions": {
