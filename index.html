@@ -1091,8 +1091,22 @@ function renderDetail() {
   const actions = document.getElementById('panel-actions');
 
   if (!selectedId || !mapData[selectedId]) {
-    body.innerHTML = `<div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>`;
-    actions.innerHTML = '';
+    if (mode === 'editor') {
+      actions.innerHTML = `
+        <button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규 지역</button>
+        <button class="btn btn-primary btn-sm" onclick="copyDataCode()">📋 데이터 코드 복사</button>
+      `;
+      body.innerHTML = `
+        <div class="empty-state">
+          <div class="icon">✏️</div>
+          <p>마커를 클릭하여 편집하거나<br>아래 버튼으로 새 지역을 추가하세요</p>
+          <button class="btn btn-success" onclick="addRegion()" style="margin-top:8px;font-size:13px;padding:10px 24px;">+ 신규 지역 추가</button>
+        </div>
+      `;
+    } else {
+      actions.innerHTML = '';
+      body.innerHTML = `<div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>`;
+    }
     return;
   }
 
@@ -1418,18 +1432,7 @@ function setMode(m) {
   document.getElementById('edit-indicator').classList.toggle('visible', m === 'editor');
   document.getElementById('map-container').classList.toggle('edit-mode', m === 'editor');
 
-  if (m === 'viewer') {
-    document.getElementById('panel-title').textContent = 'Region Details';
-    document.getElementById('panel-actions').innerHTML = '';
-  } else {
-    document.getElementById('panel-title').textContent = 'Region Editor';
-    if (!selectedId) {
-      document.getElementById('panel-actions').innerHTML = `
-        <button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규 지역</button>
-        <button class="btn btn-primary btn-sm" onclick="copyDataCode()">📋 데이터 코드 복사</button>
-      `;
-    }
-  }
+  document.getElementById('panel-title').textContent = m === 'viewer' ? 'Region Details' : 'Region Editor';
   renderDetail();
 }
 
