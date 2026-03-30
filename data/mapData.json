@@ -1,7 +1,7 @@
 {
   "regions": {
-    "1001_Hanam": {
-      "id": "1001_Hanam",
+    "Hanam1001": {
+      "id": "Hanam1001",
       "name": "하남성",
       "type": "t_field",
       "pvp": "안전",
@@ -13,13 +13,13 @@
       ],
       "scenario": "",
       "connected": [
-        "1002____"
+        "Sorimsa1002"
       ],
       "monsters": [],
       "npcs": []
     },
-    "1002____": {
-      "id": "1002____",
+    "Sorimsa1002": {
+      "id": "Sorimsa1002",
       "name": "소림사",
       "type": "t_field",
       "pvp": "",
@@ -31,7 +31,7 @@
       ],
       "scenario": "",
       "connected": [
-        "1001_Hanam"
+        "Hanam1001"
       ],
       "monsters": [],
       "npcs": []
