@@ -15,8 +15,241 @@
       "connected": [
         "Sorimsa1002"
       ],
-      "monsters": [],
-      "npcs": []
+      "monsters": [
+        {
+          "idx": "2001",
+          "name": "토끼",
+          "type": "일반 몬스터",
+          "file": "Npc_2001_HareMale",
+          "img": ""
+        },
+        {
+          "idx": "2002",
+          "name": "암사슴",
+          "type": "일반 몬스터",
+          "file": "Npc_2002_RedDeerDoe",
+          "img": ""
+        },
+        {
+          "idx": "2003",
+          "name": "숫사슴",
+          "type": "일반 몬스터",
+          "file": "Npc_2003_RedDeerStag",
+          "img": ""
+        },
+        {
+          "idx": "2004",
+          "name": "능사",
+          "type": "일반 몬스터",
+          "file": "Npc_2004_WolfSnake",
+          "img": ""
+        },
+        {
+          "idx": "2005",
+          "name": "여우",
+          "type": "일반 몬스터",
+          "file": "Npc_2005_FoxMale",
+          "img": ""
+        },
+        {
+          "idx": "2006",
+          "name": "멧돼지",
+          "type": "일반 몬스터",
+          "file": "Npc_2006_BoarMale",
+          "img": ""
+        },
+        {
+          "idx": "2007",
+          "name": "늑대",
+          "type": "일반 몬스터",
+          "file": "Npc_2007_WolfMale",
+          "img": ""
+        },
+        {
+          "idx": "2008",
+          "name": "아랑",
+          "type": "일반 몬스터",
+          "file": "Npc_2008_Ahrang",
+          "img": ""
+        },
+        {
+          "idx": "2009",
+          "name": "혈랑",
+          "type": "일반 몬스터",
+          "file": "Npc_2009_BloodAhrang",
+          "img": ""
+        },
+        {
+          "idx": "2010",
+          "name": "흑두사",
+          "type": "일반 몬스터",
+          "file": "Npc_2010_BlackWolfSnake",
+          "img": ""
+        },
+        {
+          "idx": "2011",
+          "name": "녹림채 졸개",
+          "type": "일반 몬스터",
+          "file": "Npc_2011_GreenwoodPawn",
+          "img": ""
+        },
+        {
+          "idx": "2012",
+          "name": "녹림채 궁병",
+          "type": "일반 몬스터",
+          "file": "Npc_2012_GreenwoodArcher",
+          "img": ""
+        },
+        {
+          "idx": "2013",
+          "name": "녹림채 창병",
+          "type": "일반 몬스터",
+          "file": "Npc_2013_GreenwoodSpearman",
+          "img": ""
+        },
+        {
+          "idx": "2014",
+          "name": "녹림채 투병",
+          "type": "일반 몬스터",
+          "file": "Npc_2014_GreenwoodThrower",
+          "img": ""
+        },
+        {
+          "idx": "2015",
+          "name": "녹림채 전투병",
+          "type": "일반 몬스터",
+          "file": "Npc_2015_GreenwoodWarrior",
+          "img": ""
+        },
+        {
+          "idx": "2016",
+          "name": "녹림채 정예병",
+          "type": "일반 몬스터",
+          "file": "Npc_2016_GreenwoodElitePawn",
+          "img": ""
+        },
+        {
+          "idx": "2017",
+          "name": "녹림채 정예 궁병",
+          "type": "일반 몬스터",
+          "file": "Npc_2017_GreenwoodEliteArcher",
+          "img": ""
+        },
+        {
+          "idx": "2018",
+          "name": "녹림채 정예 전투병",
+          "type": "일반 몬스터",
+          "file": "Npc_2018_GreenwoodEliteWarrior",
+          "img": ""
+        },
+        {
+          "idx": "2019",
+          "name": "사강시",
+          "type": "일반 몬스터",
+          "file": "Npc_2019_DeathJiangshi",
+          "img": ""
+        },
+        {
+          "idx": "2020",
+          "name": "혈강시",
+          "type": "일반 몬스터",
+          "file": "Npc_2020_BloodJiangshi",
+          "img": ""
+        },
+        {
+          "idx": "1001",
+          "name": "북망강시황",
+          "type": "필드 보스 몬스터",
+          "file": "Npc_1001_boss_BookMang_KangSiWang",
+          "img": ""
+        }
+      ],
+      "npcs": [
+        {
+          "idx": "101",
+          "name": "왕대협",
+          "type": "대화용",
+          "file": "Npc_0101_WangDaeHyeup",
+          "img": ""
+        },
+        {
+          "idx": "102",
+          "name": "월녀",
+          "type": "방파 상인\n(원래는 정벌단)",
+          "file": "Npc_0102_Wolnyeo",
+          "img": ""
+        },
+        {
+          "idx": "103",
+          "name": "연화",
+          "type": "대화용",
+          "file": "Npc_0103_Yeonhwa",
+          "img": ""
+        },
+        {
+          "idx": "104",
+          "name": "당혜",
+          "type": "대화용\n(원래는 월던)",
+          "file": "Npc_0104_Danghye",
+          "img": ""
+        },
+        {
+          "idx": "105",
+          "name": "설연",
+          "type": "강호 상인",
+          "file": "Npc_0105_Seolyeon",
+          "img": ""
+        },
+        {
+          "idx": "106",
+          "name": "유월",
+          "type": "이벤트 상인\n(원래는 대화용)",
+          "file": "Npc_0106_Yuwol",
+          "img": ""
+        },
+        {
+          "idx": "107",
+          "name": "선녀",
+          "type": "이벤트 버프",
+          "file": "Npc_0107_Seonnyeo",
+          "img": ""
+        },
+        {
+          "idx": "108",
+          "name": "평판 상인",
+          "type": "패시브 무공 및 \n버프 아이템 상인",
+          "file": "Npc_0108_Storeputation",
+          "img": ""
+        },
+        {
+          "idx": "109",
+          "name": "도구상",
+          "type": "도구 상인",
+          "file": "Npc_0109_Dogusang",
+          "img": ""
+        },
+        {
+          "idx": "110",
+          "name": "표국무사",
+          "type": "창고",
+          "file": "Npc_0110_Pyogugmusa",
+          "img": ""
+        },
+        {
+          "idx": "111",
+          "name": "점소이",
+          "type": "객잔 상인",
+          "file": "Npc_0111_Jeomsoi",
+          "img": ""
+        },
+        {
+          "idx": "112",
+          "name": "대장장이",
+          "type": "무기 상인",
+          "file": "Npc_0112_Blacksmith",
+          "img": ""
+        }
+      ]
     },
     "Sorimsa1002": {
       "id": "Sorimsa1002",
