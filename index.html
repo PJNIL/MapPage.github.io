@@ -537,8 +537,31 @@ function renderDetail(){
 // Data Table 렌더링 헬퍼
 function generateTable(arr) {
   if(!arr || arr.length === 0) return '<div class="detail-value" style="color:var(--text-dim)">데이터 없음</div>';
-  const trs = arr.map(i => `<tr><td>${i.name||'-'}</td><td>${i.type||'-'}</td></tr>`).join('');
-  return `<table class="data-table"><thead><tr><th>이름</th><th>타입</th></tr></thead><tbody>${trs}</tbody></table>`;
+  
+  const trs = arr.map(i => {
+    return `
+      <tr>
+        <td style="font-family:'JetBrains Mono',monospace; color:var(--text-dim); text-align:center;">${i.idx||'-'}</td>
+        <td style="font-weight: 600;">${i.name||'-'}</td>
+        <td>${i.type||'-'}</td>
+        <td style="font-family:'JetBrains Mono',monospace; color:var(--text-dim); font-size:10px; word-break:break-all;">${i.file||'-'}</td>
+      </tr>
+    `;
+  }).join('');
+  
+  return `
+    <table class="data-table" style="table-layout: fixed; width: 100%;">
+      <thead>
+        <tr>
+          <th style="width: 15%; text-align:center;">인덱스</th>
+          <th style="width: 35%;">이름</th>
+          <th style="width: 20%;">타입</th>
+          <th style="width: 30%;">파일명</th>
+        </tr>
+      </thead>
+      <tbody>${trs}</tbody>
+    </table>
+  `;
 }
 
 function renderViewerDetail(){
