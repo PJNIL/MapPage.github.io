@@ -479,9 +479,9 @@
       "id": "Shaanxi1003",
       "name": "섬서성",
       "type": "t_town",
-      "pvp": "",
-      "x": 50,
-      "y": 50,
+      "pvp": "불가능",
+      "x": 70.7,
+      "y": 47.4,
       "image": "Image/Main_1003.png",
       "factions": [
         "f_1774844917045",
