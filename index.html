@@ -195,12 +195,15 @@
   .detail-image-wrap {
     width: 100%; height: 260px; border-radius: var(--radius-md); overflow: hidden;
     background: var(--bg-tertiary); border: 1px solid var(--border-dim); margin-bottom: 16px;
+    position: relative; transition: border-color var(--transition-fast);
   }
+  .detail-image-wrap:hover { border-color: var(--accent-blue); }
   .detail-image-wrap img { width: 100%; height: 100%; object-fit: contain; }
   .detail-image-wrap .no-image {
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
     color: var(--text-dim); font-size: 12px; font-family: 'JetBrains Mono', monospace;
   }
+  
   .detail-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
   .detail-id { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); margin-bottom: 16px; }
   .detail-section { margin-bottom: 16px; }
@@ -241,7 +244,6 @@
   .form-input::placeholder, .form-textarea::placeholder { color: var(--text-dim); }
   .form-row { display: flex; gap: 10px; }
   .form-row .form-group { flex: 1; }
-  .addon-group { display: flex; gap: 5px; }
 
   /* Buttons */
   .btn {
@@ -318,6 +320,26 @@
   }
   .modal-close:hover { background: var(--bg-hover); color: var(--text-primary); }
   .modal-body { padding: 20px 24px 24px; }
+
+  /* [추가] Image Lightbox Modal */
+  #lightbox-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
+    z-index: 20000; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity var(--transition-med);
+  }
+  #lightbox-modal.open { opacity: 1; pointer-events: auto; }
+  #lightbox-modal img {
+    max-width: 90vw; max-height: 90vh; object-fit: contain;
+    border-radius: var(--radius-md); box-shadow: 0 10px 50px rgba(0,0,0,0.9);
+  }
+  .lightbox-close {
+    position: absolute; top: 24px; right: 24px; width: 44px; height: 44px;
+    background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%; font-size: 24px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
 </style>
 </head>
 <body>
@@ -397,17 +419,22 @@
   </div>
 </div>
 
+<div id="lightbox-modal" onclick="if(event.target===this)closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img id="lightbox-img" src="" alt="Enlarged View">
+</div>
+
 <div id="toast"></div>
 
 <script>
 // ════════════════════════════════════════════════════════════════
-//  천상비2M 기본 맵 데이터 (스프레드시트 구조 반영)
+//  천상비2M 기본 맵 데이터 (스프레드시트 구조 반영, factions 배열 적용)
 // ════════════════════════════════════════════════════════════════
 const DEFAULT_MAP_DATA = {
-  "1001": { id:"1001", name:"하남성", type:"필드", pvp:"안전 지역", x:45, y:45, image:"", faction:"neutral", scenario:"안전 지역 / 주요 필드", connected:["1002","1003","1004"] },
-  "1002": { id:"1002", name:"소림사", type:"필드", pvp:"안전 지역", x:35, y:35, image:"", faction:"neutral", scenario:"안전 지역", connected:["1001"] },
-  "1003": { id:"1003", name:"섬서성", type:"필드", pvp:"안전 지역", x:25, y:50, image:"", faction:"neutral", scenario:"안전 지역", connected:["1001"] },
-  "1004": { id:"1004", name:"호북성", type:"필드", pvp:"안전 지역", x:55, y:60, image:"", faction:"neutral", scenario:"일반 필드", connected:["1001"] }
+  "1001": { id:"1001", name:"하남성", type:"필드", pvp:"안전 지역", x:45, y:45, image:"", factions:["neutral"], scenario:"안전 지역 / 주요 필드", connected:["1002","1003","1004"] },
+  "1002": { id:"1002", name:"소림사", type:"필드", pvp:"안전 지역", x:35, y:35, image:"", factions:["neutral"], scenario:"안전 지역", connected:["1001"] },
+  "1003": { id:"1003", name:"섬서성", type:"필드", pvp:"안전 지역", x:25, y:50, image:"", factions:["neutral"], scenario:"안전 지역", connected:["1001"] },
+  "1004": { id:"1004", name:"호북성", type:"필드", pvp:"안전 지역", x:55, y:60, image:"", factions:["neutral"], scenario:"일반 필드", connected:["1001"] }
 };
 
 let mapData = {};
@@ -426,7 +453,7 @@ let dragTarget = null, dragStarted = false, dragStartX, dragStartY;
 let ghConfig = { token:'', owner:'', repo:'', path:'data/mapData.json', branch:'main' };
 
 // ════════════════════════════════════════
-//  GitHub API 연동 및 데이터 처리 (세력 데이터 포함 구조)
+//  GitHub API 연동
 // ════════════════════════════════════════
 function isGhOk(){ return ghConfig.token && ghConfig.owner && ghConfig.repo && ghConfig.path; }
 function ghUrl(){ return `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/${ghConfig.path}`; }
@@ -445,7 +472,6 @@ async function loadFromGithub(){
     const decoded = new TextDecoder().decode(Uint8Array.from(raw, c=>c.charCodeAt(0)));
     const loaded = JSON.parse(decoded);
     
-    // 데이터 래핑 호환성 체크 (이전 버전 호환)
     Object.keys(mapData).forEach(k=>delete mapData[k]);
     if(loaded.regions) {
       Object.assign(mapData, loaded.regions);
@@ -456,6 +482,16 @@ async function loadFromGithub(){
     } else {
       Object.assign(mapData, loaded); // 구버전 호환
     }
+
+    // [중요] 단일 faction -> factions 배열로 마이그레이션 (호환성 보장)
+    Object.values(mapData).forEach(v => {
+      if (v.faction && !v.factions) {
+        v.factions = [v.faction];
+        delete v.faction;
+      } else if (!v.factions) {
+        v.factions = ['neutral'];
+      }
+    });
 
     setSyncStatus('connected','동기화됨');
     hasUnsavedChanges = false; updateUnsavedDot();
@@ -474,9 +510,13 @@ async function saveToGithub(){
   try{
     const cleanRegions={};
     Object.entries(mapData).forEach(([k,v])=>{
-      cleanRegions[k]={id:v.id, name:v.name, type:v.type||'', pvp:v.pvp||'', x:Math.round(v.x*10)/10, y:Math.round(v.y*10)/10, image:v.image, faction:v.faction, scenario:v.scenario, connected:v.connected||[]};
+      cleanRegions[k]={
+        id:v.id, name:v.name, type:v.type||'', pvp:v.pvp||'', 
+        x:Math.round(v.x*10)/10, y:Math.round(v.y*10)/10, 
+        image:v.image, factions:v.factions||[], scenario:v.scenario, connected:v.connected||[]
+      };
     });
-    // 세력 데이터와 함께 Wrapping 하여 저장
+    
     const payload = { regions: cleanRegions, factions: factionMeta };
     const json=JSON.stringify(payload,null,2);
     const b64=btoa(unescape(encodeURIComponent(json)));
@@ -578,12 +618,16 @@ function renderMarkers(){
     const el=document.createElement('div');
     el.className='map-marker'+(region.id===selectedId?' selected':''); el.dataset.id=region.id;
     el.style.left=(region.x/100*mapImgW)+'px'; el.style.top=(region.y/100*mapImgH)+'px';
-    const col=factionMeta[region.faction]?.color||'#555d74';
+    
+    // [수정점 2] 마커 색상은 배열의 가장 첫 번째 세력을 기준으로 지정
+    const facs = region.factions || [];
+    const primaryFac = facs.length > 0 ? facs[0] : 'neutral';
+    const col = factionMeta[primaryFac]?.color || '#555d74';
+    
     el.innerHTML=`<div class="marker-pin"><svg viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.268 21.732 0 14 0z" fill="${col}"/><circle cx="14" cy="13" r="6" fill="rgba(0,0,0,0.3)"/><circle cx="14" cy="13" r="4" fill="#fff" opacity="0.9"/></svg></div><div class="marker-label">${region.name}</div>`;
     el.addEventListener('pointerdown',e=>{if(mode==='editor'){e.stopPropagation();handleDragStart(e,region.id);}});
     el.addEventListener('click',()=>{
       if(!dragTarget) {
-        // [수정점 3] 선택 상태 토글 기능
         if(selectedId === region.id) { selectedId = null; renderAll(); }
         else { selectRegion(region.id); }
       }
@@ -631,13 +675,24 @@ function renderDetail(){
 
 function renderViewerDetail(){
   const r=mapData[selectedId],body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
-  const fm=factionMeta[r.faction]||factionMeta.neutral;
+  
+  // [수정점 2] 다중 세력 뱃지 렌더링
+  const facs = r.factions || [];
+  const factionBadges = facs.map(fId => {
+    const fm = factionMeta[fId] || factionMeta.neutral;
+    return `<div class="info-badge" style="border-color:${fm.color};color:${fm.color}"><div class="faction-dot" style="background:${fm.color}"></div>${fm.label}</div>`;
+  }).join('');
+
   const conn=(r.connected||[]).map(cid=>{const cr=mapData[cid];return cr?`<button class="connected-btn" onclick="selectRegion('${cid}')">${cr.name}</button>`:''}).join('');
+  
+  // [수정점 1] 이미지 클릭 시 모달 호출 (onclick 이벤트 추가)
   body.innerHTML=`
-    <div class="detail-image-wrap"><img src="${r.image}" alt="${r.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=no-image>${r.image||'No Image'}</div>'"></div>
+    <div class="detail-image-wrap" style="cursor:pointer;" onclick="openLightbox('${r.image}')" title="크게 보기">
+      <img src="${r.image}" alt="${r.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=no-image>${r.image||'No Image'}</div>'">
+    </div>
     <div class="detail-name">${r.name}</div><div class="detail-id">ID: ${r.id}</div>
     <div class="badge-row">
-      <div class="info-badge" style="border-color:${fm.color};color:${fm.color}"><div class="faction-dot" style="background:${fm.color}"></div>${fm.label}</div>
+      ${factionBadges}
       ${r.type ? `<div class="info-badge" style="border-color:var(--border-active);color:var(--text-primary)">🗺 ${r.type}</div>` : ''}
       ${r.pvp ? `<div class="info-badge" style="border-color:var(--accent-red-dim);color:var(--accent-red)">⚔ ${r.pvp}</div>` : ''}
     </div>
@@ -648,12 +703,20 @@ function renderViewerDetail(){
 
 function renderEditorDetail(){
   const r=mapData[selectedId],body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
-  const fOpts=Object.entries(factionMeta).map(([k,v])=>`<option value="${k}" ${r.faction===k?'selected':''}>${v.label} (${k})</option>`).join('');
+  
+  // [수정점 2] 세력 체크박스 목록 생성
+  const facs = r.factions || [];
+  const fCheckboxes = Object.entries(factionMeta).map(([k,v])=>`
+    <label style="display:flex;align-items:center;gap:6px;padding:4px 0;cursor:pointer;font-size:12px;color:var(--text-secondary);">
+      <input type="checkbox" ${facs.includes(k)?'checked':''} value="${k}" onchange="toggleFaction('${k}',this.checked)">
+      <div class="faction-dot" style="background:${v.color}"></div>${v.label}
+    </label>
+  `).join('');
+
   const allIds=Object.keys(mapData).filter(id=>id!==selectedId);
   const cSet=new Set(r.connected||[]);
   const cBoxes=allIds.map(id=>{const rr=mapData[id];return`<label style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer;font-size:12px;color:var(--text-secondary);"><input type="checkbox" ${cSet.has(id)?'checked':''} value="${id}" onchange="toggleConnection('${id}',this.checked)">${rr.name} <span style="color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:10px">(${id})</span></label>`;}).join('');
   
-  // [수정점 0] 지역 ID 수정 가능하도록 disabled 해제 및 onchange 연동
   body.innerHTML=`
     <div class="form-group"><label>지역 ID (스프레드시트 인덱스)</label><input class="form-input" value="${r.id}" onchange="updateRegionId('${r.id}', this.value)"></div>
     <div class="form-row">
@@ -664,13 +727,17 @@ function renderEditorDetail(){
       <div class="form-group"><label>PVP 여부</label><input class="form-input" value="${r.pvp||''}" placeholder="안전, 일반 등" oninput="updateField('pvp',this.value)"></div>
       <div class="form-group"><label>이미지 경로</label><input class="form-input" value="${r.image}" placeholder="images/region.png" oninput="updateField('image',this.value)"></div>
     </div>
+    
     <div class="form-group">
-      <label>세력</label>
-      <div class="addon-group">
-        <select class="form-select" onchange="updateField('faction',this.value)">${fOpts}</select>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+        <label style="margin:0;">세력 (다중 선택 가능)</label>
         <button class="btn btn-ghost btn-sm" onclick="addNewFaction()">+ 세력 추가</button>
       </div>
+      <div style="background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:var(--radius-sm);padding:8px 10px;max-height:140px;overflow-y:auto; display:flex; flex-direction:column; gap:2px;">
+        ${fCheckboxes}
+      </div>
     </div>
+
     <div class="form-group"><label>시나리오 / 컨셉</label><textarea class="form-textarea" oninput="updateField('scenario',this.value)">${r.scenario||''}</textarea></div>
     <div class="form-group"><label>연결된 지역</label><div style="background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:var(--radius-sm);padding:8px 10px;max-height:160px;overflow-y:auto;">${cBoxes||'<span style="color:var(--text-dim);font-size:12px;">다른 지역 없음</span>'}</div></div>
     <div class="separator"></div>
@@ -679,9 +746,22 @@ function renderEditorDetail(){
 }
 
 // ── Edit Ops ──
-function updateField(f,v){if(!selectedId||!mapData[selectedId])return;mapData[selectedId][f]=v;markDirty();if(f==='name'||f==='faction')renderMarkers();}
+function updateField(f,v){if(!selectedId||!mapData[selectedId])return;mapData[selectedId][f]=v;markDirty();if(f==='name')renderMarkers();}
 
-// [추가] 지역 ID 변경 시 연결선 무결성 유지 로직
+// [추가] 다중 세력(factions 배열) 업데이트
+function toggleFaction(fId, isChecked) {
+  if(!selectedId||!mapData[selectedId])return;
+  const r = mapData[selectedId];
+  if(!r.factions) r.factions = [];
+  
+  if(isChecked) {
+    if(!r.factions.includes(fId)) r.factions.push(fId);
+  } else {
+    r.factions = r.factions.filter(id => id !== fId);
+  }
+  markDirty(); renderMarkers();
+}
+
 function updateRegionId(oldId, newId) {
   newId = newId.trim().replace(/[^a-zA-Z0-9_]/g, '_');
   if (!newId || newId === oldId) return;
@@ -689,25 +769,18 @@ function updateRegionId(oldId, newId) {
   
   mapData[newId] = { ...mapData[oldId], id: newId };
   delete mapData[oldId];
-  
   Object.values(mapData).forEach(r => {
-    if (r.connected && r.connected.includes(oldId)) {
-      r.connected = r.connected.map(id => id === oldId ? newId : id);
-    }
+    if (r.connected && r.connected.includes(oldId)) r.connected = r.connected.map(id => id === oldId ? newId : id);
   });
-  
-  selectedId = newId; markDirty(); renderAll(); showToast('✅ ID가 성공적으로 변경되었습니다.');
+  selectedId = newId; markDirty(); renderAll(); showToast('✅ ID가 변경되었습니다.');
 }
 
-// [추가] 세력 동적 추가
 function addNewFaction() {
-  const name = prompt('새로운 세력 이름을 입력하세요:');
-  if(!name) return;
+  const name = prompt('새로운 세력 이름을 입력하세요:'); if(!name) return;
   const color = prompt('세력의 색상 코드를 입력하세요 (예: #ff0000, gold):', '#ffffff');
   const id = 'fac_' + Date.now().toString(36);
   factionMeta[id] = { label: name, color: color };
-  markDirty(); renderEditorDetail(); renderMarkers();
-  showToast('✅ 새 세력이 추가되었습니다.');
+  markDirty(); renderEditorDetail(); renderMarkers(); showToast('✅ 새 세력이 추가되었습니다.');
 }
 
 function toggleConnection(tid,chk){
@@ -729,7 +802,7 @@ function addRegion(){
   const p=prompt('새 지역 ID (영문, 숫자, _):',nid);
   if(!p)return; nid=p.trim().replace(/[^a-zA-Z0-9_]/g,'_');
   if(mapData[nid]){alert('이미 존재하는 ID입니다.');return;}
-  mapData[nid]={id:nid,name:'새 지역',type:'',pvp:'',x:50,y:50,image:'',faction:'neutral',scenario:'',connected:[]};
+  mapData[nid]={id:nid,name:'새 지역',type:'',pvp:'',x:50,y:50,image:'',factions:['neutral'],scenario:'',connected:[]};
   selectedId=nid; markDirty(); renderAll(); showToast('새 지역이 추가되었습니다');
 }
 
@@ -771,6 +844,20 @@ function updateStats(){
   Object.values(mapData).forEach(r=>(r.connected||[]).forEach(c=>cs.add([r.id,c].sort().join('|'))));
   document.getElementById('stat-count').textContent=n;document.getElementById('stat-conn').textContent=cs.size;
 }
+
+// [추가] Lightbox 제어 함수
+function openLightbox(src) {
+  if(!src) return;
+  const m = document.getElementById('lightbox-modal');
+  document.getElementById('lightbox-img').src = src;
+  m.classList.add('open');
+}
+function closeLightbox() {
+  const m = document.getElementById('lightbox-modal');
+  m.classList.remove('open');
+  setTimeout(() => document.getElementById('lightbox-img').src = '', 250); // 트랜지션 후 소스 제거
+}
+
 let toastTimer;
 function showToast(msg,err){
   const t=document.getElementById('toast');t.textContent=msg;t.className=err?'error':'';
