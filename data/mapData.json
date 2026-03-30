@@ -1,0 +1,97 @@
+{
+  "elvenwood": {
+    "id": "elvenwood",
+    "name": "엘븐우드 숲",
+    "x": 22,
+    "y": 28,
+    "image": "images/elvenwood.png",
+    "faction": "nature",
+    "scenario": "고대 엘프들이 은둔한 신비의 숲. 세계수의 가지가 하늘을 뒤덮고, 자연의 정령들이 서식한다.",
+    "connected": [
+      "crossroad",
+      "crystal_lake"
+    ]
+  },
+  "crossroad": {
+    "id": "crossroad",
+    "name": "십자로 마을",
+    "x": 38,
+    "y": 45,
+    "image": "images/crossroad.png",
+    "faction": "neutral",
+    "scenario": "대륙의 동서남북을 잇는 교역의 중심지. 다양한 세력의 상인과 모험가들이 뒤섞이는 자유 도시.",
+    "connected": [
+      "elvenwood",
+      "ironkeep",
+      "ashlands",
+      "crystal_lake"
+    ]
+  },
+  "ironkeep": {
+    "id": "ironkeep",
+    "name": "아이언킵 요새",
+    "x": 57.8,
+    "y": 24.9,
+    "image": "images/ironkeep.png",
+    "faction": "alliance",
+    "scenario": "강철 동맹의 군사 본거지. 난공불락의 성벽과 거대한 대장간이 있으며, 왕국 방위의 최전선이다.",
+    "connected": [
+      "crossroad",
+      "shadowmere"
+    ]
+  },
+  "shadowmere": {
+    "id": "shadowmere",
+    "name": "그림자 늪",
+    "x": 75,
+    "y": 55,
+    "image": "images/shadowmere.png",
+    "faction": "dark",
+    "scenario": "어둠의 마법사들이 지배하는 저주받은 늪지대. 독안개와 언데드가 떠돌며, 금지된 의식이 행해진다.",
+    "connected": [
+      "ironkeep",
+      "ashlands"
+    ]
+  },
+  "ashlands": {
+    "id": "ashlands",
+    "name": "잿빛 황야",
+    "x": 55,
+    "y": 70,
+    "image": "images/ashlands.png",
+    "faction": "horde",
+    "scenario": "화산 폭발로 황폐해진 전쟁의 땅. 오크 부족 연합이 점거하고 있으며, 용암 지형이 천연 요새 역할을 한다.",
+    "connected": [
+      "crossroad",
+      "shadowmere",
+      "frostpeak"
+    ]
+  },
+  "crystal_lake": {
+    "id": "crystal_lake",
+    "name": "수정 호수",
+    "x": 25,
+    "y": 60,
+    "image": "images/crystal_lake.png",
+    "faction": "ancient",
+    "scenario": "고대 문명의 유적이 잠들어있는 신성한 호수. 수면 아래 거대한 도시의 잔해가 빛나고 있다.",
+    "connected": [
+      "elvenwood",
+      "crossroad",
+      "frostpeak"
+    ]
+  },
+  "frostpeak": {
+    "id": "frostpeak",
+    "name": "서리봉 정상",
+    "x": 42,
+    "y": 82,
+    "image": "images/frostpeak.png",
+    "faction": "frost",
+    "scenario": "만년설이 덮인 대륙 최고봉. 얼음 드래곤의 둥지이자 고대 예언이 새겨진 빙하 신전이 있다.",
+    "connected": [
+      "crystal_lake",
+      "ashlands"
+    ]
+  }
+}
