@@ -364,7 +364,7 @@ async function syncGoogleSheet() {
   if(!ghConfig.gsApiKey || !ghConfig.gsSheetId) return showToast("설정창에서 Google Sheets API 설정을 완료해주세요.", true);
   
   const rId = mapData[selectedId].id;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${ghConfig.gsSheetId}/values/${rId}!A21:M?key=${ghConfig.gsApiKey}`;
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${ghConfig.gsSheetId}/values/'${rId}'!A21:M?key=${ghConfig.gsApiKey}`;
   
   const btn = document.getElementById('btn-gs-sync');
   if(btn) { btn.textContent = '⏳ 동기화 중...'; btn.style.pointerEvents='none'; }
