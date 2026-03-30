@@ -4,7 +4,7 @@
       "id": "Hanam1001",
       "name": "하남성",
       "type": "t_town",
-      "pvp": "안전",
+      "pvp": "PVP불가능",
       "x": 79.7,
       "y": 49.3,
       "image": "Image/1001_Main.png",
