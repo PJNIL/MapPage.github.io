@@ -58,7 +58,9 @@
       "x": 88.5,
       "y": 38.4,
       "image": "",
-      "factions": [],
+      "factions": [
+        "f_1774844914725"
+      ],
       "scenario": "",
       "connected": [],
       "monsters": [],
@@ -698,7 +700,9 @@
       "x": 76.2,
       "y": 73.5,
       "image": "",
-      "factions": [],
+      "factions": [
+        "f_1774844917045"
+      ],
       "scenario": "",
       "connected": [],
       "monsters": [],
@@ -726,7 +730,9 @@
       "x": 87.1,
       "y": 57.2,
       "image": "",
-      "factions": [],
+      "factions": [
+        "f_1774855740531"
+      ],
       "scenario": "",
       "connected": [],
       "monsters": [],
@@ -740,7 +746,9 @@
       "x": 92.5,
       "y": 54,
       "image": "",
-      "factions": [],
+      "factions": [
+        "f_1774855774245"
+      ],
       "scenario": "",
       "connected": [],
       "monsters": [],
@@ -782,7 +790,9 @@
       "x": 57,
       "y": 85.7,
       "image": "",
-      "factions": [],
+      "factions": [
+        "f_1774855755619"
+      ],
       "scenario": "",
       "connected": [],
       "monsters": [],
