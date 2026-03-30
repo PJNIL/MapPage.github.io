@@ -810,8 +810,8 @@
       "monsters": [],
       "npcs": []
     },
-    "region_mncs0qv6": {
-      "id": "region_mncs0qv6",
+    "Jangunmyo0101": {
+      "id": "Jangunmyo0101",
       "name": "장군묘(던전)",
       "type": "t_dungeon",
       "pvp": "",
