@@ -112,7 +112,7 @@
       "x": 79.4,
       "y": 46.1,
       "image": "Image/1001_Main.png",
-      "faction": "fac_mncl36h1",
+      "faction": "fac_mnclfocs",
       "scenario": "",
       "connected": []
     }
@@ -129,6 +129,10 @@
     "fac_mncl3m2l": {
       "label": "천명회",
       "color": "#00000"
+    },
+    "fac_mnclfocs": {
+      "label": "ㅇㄹㅇㄹ",
+      "color": "#ffffff"
     }
   }
 }
