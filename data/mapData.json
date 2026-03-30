@@ -3,8 +3,8 @@
     "1001_Hanam": {
       "id": "1001_Hanam",
       "name": "하남성",
-      "type": "",
-      "pvp": "",
+      "type": "t_field",
+      "pvp": "안전",
       "x": 79.4,
       "y": 46.1,
       "image": "Image/1001_Main.png",
@@ -14,12 +14,14 @@
       "scenario": "",
       "connected": [
         "1002____"
-      ]
+      ],
+      "monsters": [],
+      "npcs": []
     },
     "1002____": {
       "id": "1002____",
       "name": "소림사",
-      "type": "",
+      "type": "t_field",
       "pvp": "",
       "x": 82.6,
       "y": 40.7,
@@ -30,7 +32,19 @@
       "scenario": "",
       "connected": [
         "1001_Hanam"
-      ]
+      ],
+      "monsters": [],
+      "npcs": []
+    }
+  },
+  "types": {
+    "t_field": {
+      "label": "필드",
+      "color": "#14d23c"
+    },
+    "t_town": {
+      "label": "마을",
+      "color": "#4a9eff"
     }
   },
   "factions": {
@@ -45,10 +59,6 @@
     "fac_mncl3m2l": {
       "label": "천명회",
       "color": "#00000"
-    },
-    "fac_mnclfocs": {
-      "label": "ㅇㄹㅇㄹ",
-      "color": "#ffffff"
     }
   }
 }
