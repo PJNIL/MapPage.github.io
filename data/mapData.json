@@ -3,7 +3,7 @@
     "1": {
       "id": "1",
       "name": "청해성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 47.1,
       "y": 41,
@@ -17,7 +17,7 @@
     "2": {
       "id": "2",
       "name": "사천성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 58.8,
       "y": 62.5,
@@ -31,7 +31,7 @@
     "3": {
       "id": "3",
       "name": "호북성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 77.1,
       "y": 59.7,
@@ -45,7 +45,7 @@
     "4": {
       "id": "4",
       "name": "산동성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 88.5,
       "y": 38.4,
@@ -588,7 +588,7 @@
     "Gansu": {
       "id": "Gansu",
       "name": "감숙성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 62.2,
       "y": 42.2,
@@ -602,7 +602,7 @@
     "region_mncp3218": {
       "id": "region_mncp3218",
       "name": "산서성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 77.2,
       "y": 32.8,
@@ -616,7 +616,7 @@
     "region_mncp3dsa": {
       "id": "region_mncp3dsa",
       "name": "하북성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 84.7,
       "y": 25.7,
@@ -630,7 +630,7 @@
     "region_mncp3lkw": {
       "id": "region_mncp3lkw",
       "name": "신강",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 26.6,
       "y": 23.8,
@@ -644,7 +644,7 @@
     "region_mncp3u78": {
       "id": "region_mncp3u78",
       "name": "티베트",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 30.6,
       "y": 58.8,
@@ -658,7 +658,7 @@
     "region_mncp48jk": {
       "id": "region_mncp48jk",
       "name": "귀주성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 68.1,
       "y": 74.6,
@@ -672,7 +672,7 @@
     "region_mncp4iq6": {
       "id": "region_mncp4iq6",
       "name": "호남성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 76.2,
       "y": 73.5,
@@ -686,7 +686,7 @@
     "region_mncp4taz": {
       "id": "region_mncp4taz",
       "name": "강서성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 83.8,
       "y": 71.6,
@@ -700,7 +700,7 @@
     "region_mncp52b1": {
       "id": "region_mncp52b1",
       "name": "안휘성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 87.1,
       "y": 57.2,
@@ -714,7 +714,7 @@
     "region_mncp5fgi": {
       "id": "region_mncp5fgi",
       "name": "강소성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 92.2,
       "y": 50.9,
@@ -728,7 +728,7 @@
     "region_mncp5lx2": {
       "id": "region_mncp5lx2",
       "name": "절강성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 92.5,
       "y": 68.8,
@@ -742,7 +742,7 @@
     "region_mncp5s0i": {
       "id": "region_mncp5s0i",
       "name": "요녕성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 97.8,
       "y": 15.7,
@@ -756,7 +756,7 @@
     "region_mncp5y12": {
       "id": "region_mncp5y12",
       "name": "운남성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 57,
       "y": 85.7,
@@ -770,7 +770,7 @@
     "region_mncp64ie": {
       "id": "region_mncp64ie",
       "name": "광동성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 79.1,
       "y": 88.4,
@@ -784,7 +784,7 @@
     "region_mncp6dht": {
       "id": "region_mncp6dht",
       "name": "복건성",
-      "type": "t_town",
+      "type": "t_1774845560682",
       "pvp": "",
       "x": 88.7,
       "y": 80,
