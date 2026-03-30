@@ -88,5 +88,15 @@
       "crystal_lake",
       "ashlands"
     ]
+  },
+  "1002_Sorimsa": {
+    "id": "1002_Sorimsa",
+    "name": "소림사",
+    "x": 82.6,
+    "y": 40.7,
+    "image": "",
+    "faction": "neutral",
+    "scenario": "",
+    "connected": []
   }
 }
