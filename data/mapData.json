@@ -8,7 +8,9 @@
       "x": 26,
       "y": 16.9,
       "image": "images/elvenwood.png",
-      "faction": "nature",
+      "factions": [
+        "nature"
+      ],
       "scenario": "고대 엘프들이 은둔한 신비의 숲. 세계수의 가지가 하늘을 뒤덮고, 자연의 정령들이 서식한다.",
       "connected": [
         "crossroad",
@@ -23,7 +25,9 @@
       "x": 58.7,
       "y": 27.1,
       "image": "images/crossroad.png",
-      "faction": "neutral",
+      "factions": [
+        "neutral"
+      ],
       "scenario": "대륙의 동서남북을 잇는 교역의 중심지. 다양한 세력의 상인과 모험가들이 뒤섞이는 자유 도시.",
       "connected": [
         "elvenwood",
@@ -40,7 +44,9 @@
       "x": 70.1,
       "y": 43.2,
       "image": "images/ironkeep.png",
-      "faction": "alliance",
+      "factions": [
+        "alliance"
+      ],
       "scenario": "강철 동맹의 군사 본거지. 난공불락의 성벽과 거대한 대장간이 있으며, 왕국 방위의 최전선이다.",
       "connected": [
         "crossroad"
@@ -54,7 +60,9 @@
       "x": 59.5,
       "y": 58,
       "image": "images/ashlands.png",
-      "faction": "horde",
+      "factions": [
+        "horde"
+      ],
       "scenario": "화산 폭발로 황폐해진 전쟁의 땅. 오크 부족 연합이 점거하고 있으며, 용암 지형이 천연 요새 역할을 한다.",
       "connected": [
         "crossroad",
@@ -69,7 +77,9 @@
       "x": 31.4,
       "y": 53.7,
       "image": "images/crystal_lake.png",
-      "faction": "ancient",
+      "factions": [
+        "ancient"
+      ],
       "scenario": "고대 문명의 유적이 잠들어있는 신성한 호수. 수면 아래 거대한 도시의 잔해가 빛나고 있다.",
       "connected": [
         "elvenwood",
@@ -85,7 +95,9 @@
       "x": 57.4,
       "y": 81.8,
       "image": "images/frostpeak.png",
-      "faction": "frost",
+      "factions": [
+        "frost"
+      ],
       "scenario": "만년설이 덮인 대륙 최고봉. 얼음 드래곤의 둥지이자 고대 예언이 새겨진 빙하 신전이 있다.",
       "connected": [
         "crystal_lake",
@@ -100,7 +112,9 @@
       "x": 82.6,
       "y": 40.7,
       "image": "",
-      "faction": "neutral",
+      "factions": [
+        "neutral"
+      ],
       "scenario": "",
       "connected": []
     },
@@ -112,7 +126,9 @@
       "x": 79.4,
       "y": 46.1,
       "image": "Image/1001_Main.png",
-      "faction": "fac_mnclfocs",
+      "factions": [
+        "fac_mncl36h1"
+      ],
       "scenario": "",
       "connected": []
     }
