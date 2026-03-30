@@ -38,7 +38,9 @@
       "image": "",
       "factions": [],
       "scenario": "",
-      "connected": [],
+      "connected": [
+        "Hanam1001"
+      ],
       "monsters": [],
       "npcs": []
     },
@@ -72,7 +74,8 @@
       "connected": [
         "Sorimsa1002",
         "Shaanxi1003",
-        "Jangunmyo"
+        "Jangunmyo",
+        "3"
       ],
       "monsters": [
         {
@@ -549,7 +552,8 @@
       ],
       "scenario": "",
       "connected": [
-        "Hanam1001"
+        "Hanam1001",
+        "Gansu"
       ],
       "monsters": [],
       "npcs": []
@@ -596,7 +600,9 @@
       "image": "",
       "factions": [],
       "scenario": "",
-      "connected": [],
+      "connected": [
+        "Shaanxi1003"
+      ],
       "monsters": [],
       "npcs": []
     },
