@@ -3,7 +3,7 @@
     "Hanam1001": {
       "id": "Hanam1001",
       "name": "하남성",
-      "type": "t_field",
+      "type": "t_town",
       "pvp": "안전",
       "x": 79.7,
       "y": 49.3,
@@ -254,7 +254,7 @@
     "Sorimsa1002": {
       "id": "Sorimsa1002",
       "name": "소림사",
-      "type": "t_field",
+      "type": "t_town",
       "pvp": "",
       "x": 82.6,
       "y": 40.7,
@@ -476,10 +476,6 @@
     }
   },
   "types": {
-    "t_field": {
-      "label": "필드",
-      "color": "#14d23c"
-    },
     "t_town": {
       "label": "마을",
       "color": "#4a9eff"
