@@ -27,8 +27,6 @@
     --accent-red: #f87171;
     --accent-red-dim: #7f1d1d;
     --accent-amber: #fbbf24;
-    --accent-purple: #a78bfa;
-    --accent-cyan: #22d3ee;
     --marker-size: 28px;
     --panel-width: 40%;
     --transition-fast: 0.15s ease;
@@ -136,20 +134,20 @@
 
   #connections-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
   #connections-svg line { stroke: var(--accent-blue-dim); stroke-width: 1.5; stroke-dasharray: 6 4; opacity: 0.5; }
-  #connections-svg line.highlight { stroke: var(--accent-cyan); stroke-width: 2.5; stroke-dasharray: none; opacity: 0.9; }
+  #connections-svg line.highlight { stroke: var(--accent-blue); stroke-width: 2.5; stroke-dasharray: none; opacity: 0.9; }
 
   .map-marker {
     position: absolute; z-index: 10; transform: translate(-50%, -100%);
     cursor: pointer; transition: filter var(--transition-fast); user-select: none;
   }
   .map-marker:hover { filter: brightness(1.3); z-index: 15; }
-  .map-marker.selected { z-index: 20; filter: drop-shadow(0 0 8px var(--accent-cyan)); }
+  .map-marker.selected { z-index: 20; filter: drop-shadow(0 0 8px var(--accent-blue)); }
   .map-marker.dragging { z-index: 50; cursor: grabbing; transition: none; filter: drop-shadow(0 0 12px var(--accent-amber)); }
   .marker-pin { position: relative; width: var(--marker-size); height: calc(var(--marker-size) * 1.35); }
   .marker-pin svg { width: 100%; height: 100%; }
   .marker-label {
-    position: absolute; top: calc(100% + 2px); left: 50%; transform: translateX(-50%);
-    white-space: nowrap; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
+    position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%);
+    white-space: nowrap; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 700;
     color: var(--text-primary); text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 2px rgba(0,0,0,1);
     pointer-events: none;
   }
@@ -170,11 +168,6 @@
     position: absolute; bottom: 16px; left: 62px; z-index: 100;
     font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim);
     background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: var(--radius-sm); padding: 4px 8px;
-  }
-  .coord-display {
-    position: absolute; bottom: 16px; right: 16px; z-index: 100;
-    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
-    background: rgba(20,23,32,0.85); border: 1px solid var(--border-dim); border-radius: var(--radius-sm); padding: 4px 8px;
   }
 
   /* Panel */
@@ -200,10 +193,10 @@
   .empty-state p { font-size: 12px; line-height: 1.6; }
 
   .detail-image-wrap {
-    width: 100%; aspect-ratio: 16/9; border-radius: var(--radius-md); overflow: hidden;
+    width: 100%; height: 260px; border-radius: var(--radius-md); overflow: hidden;
     background: var(--bg-tertiary); border: 1px solid var(--border-dim); margin-bottom: 16px;
   }
-  .detail-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .detail-image-wrap img { width: 100%; height: 100%; object-fit: contain; }
   .detail-image-wrap .no-image {
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
     color: var(--text-dim); font-size: 12px; font-family: 'JetBrains Mono', monospace;
@@ -216,11 +209,14 @@
     color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
   }
   .detail-value { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
-  .faction-badge {
+  
+  .badge-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .info-badge {
     display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
     border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid;
   }
   .faction-dot { width: 8px; height: 8px; border-radius: 50%; }
+  
   .connected-list { display: flex; flex-wrap: wrap; gap: 6px; }
   .connected-btn {
     padding: 5px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-dim);
@@ -228,12 +224,6 @@
     transition: all var(--transition-fast); font-family: 'Noto Sans KR', sans-serif;
   }
   .connected-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(74,158,255,0.08); }
-  .coord-badges { display: flex; gap: 8px; }
-  .coord-badge {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim);
-    background: var(--bg-tertiary); padding: 3px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border-dim);
-  }
-  .coord-badge span { color: var(--accent-blue); }
 
   /* Forms */
   .form-group { margin-bottom: 14px; }
@@ -241,16 +231,17 @@
     display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
     color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px;
   }
-  .form-input, .form-textarea {
+  .form-input, .form-textarea, .form-select {
     width: 100%; background: var(--bg-tertiary); border: 1px solid var(--border-dim);
     border-radius: var(--radius-sm); color: var(--text-primary); font-family: 'Noto Sans KR', sans-serif;
     font-size: 13px; padding: 8px 10px; outline: none; transition: border-color var(--transition-fast);
   }
-  .form-input:focus, .form-textarea:focus { border-color: var(--accent-blue); }
+  .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--accent-blue); }
   .form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
   .form-input::placeholder, .form-textarea::placeholder { color: var(--text-dim); }
   .form-row { display: flex; gap: 10px; }
   .form-row .form-group { flex: 1; }
+  .addon-group { display: flex; gap: 5px; }
 
   /* Buttons */
   .btn {
@@ -268,12 +259,8 @@
   .btn-ghost:hover { border-color: var(--border-active); background: var(--bg-hover); }
   .btn-sm { padding: 5px 10px; font-size: 10px; }
   .btn-block { width: 100%; justify-content: center; }
-  .btn-save {
-    background: linear-gradient(135deg, var(--accent-green-dim), #1a6644);
-    border-color: var(--accent-green); color: var(--accent-green);
-  }
+  .btn-save { background: linear-gradient(135deg, var(--accent-green-dim), #1a6644); border-color: var(--accent-green); color: var(--accent-green); }
   .btn-save:hover { background: linear-gradient(135deg, #1d8f62, #1a7a55); }
-  .btn-save:active { transform: scale(0.97); }
   .btn-save.saving { pointer-events: none; opacity: 0.7; }
 
   .separator { height: 1px; background: var(--border-dim); margin: 16px 0; }
@@ -305,22 +292,6 @@
   }
   .edit-indicator.visible { display: block; }
 
-  /* Faction colors */
-  .faction-neutral { border-color: var(--text-dim); color: var(--text-secondary); }
-  .faction-neutral .faction-dot { background: var(--text-dim); }
-  .faction-alliance { border-color: var(--accent-blue); color: var(--accent-blue); }
-  .faction-alliance .faction-dot { background: var(--accent-blue); }
-  .faction-horde { border-color: var(--accent-red); color: var(--accent-red); }
-  .faction-horde .faction-dot { background: var(--accent-red); }
-  .faction-nature { border-color: var(--accent-green); color: var(--accent-green); }
-  .faction-nature .faction-dot { background: var(--accent-green); }
-  .faction-dark { border-color: var(--accent-purple); color: var(--accent-purple); }
-  .faction-dark .faction-dot { background: var(--accent-purple); }
-  .faction-ancient { border-color: var(--accent-amber); color: var(--accent-amber); }
-  .faction-ancient .faction-dot { background: var(--accent-amber); }
-  .faction-frost { border-color: var(--accent-cyan); color: var(--accent-cyan); }
-  .faction-frost .faction-dot { background: var(--accent-cyan); }
-
   /* Modal */
   .modal-overlay {
     position: fixed; inset: 0; z-index: 10000;
@@ -347,22 +318,6 @@
   }
   .modal-close:hover { background: var(--bg-hover); color: var(--text-primary); }
   .modal-body { padding: 20px 24px 24px; }
-  .modal-body .form-group { margin-bottom: 16px; }
-  .modal-body .hint { font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
-  .modal-footer { padding: 0 24px 24px; display: flex; gap: 8px; justify-content: flex-end; }
-  .github-guide {
-    background: var(--bg-tertiary); border: 1px solid var(--border-dim); border-radius: var(--radius-md);
-    padding: 14px 16px; margin-bottom: 18px; font-size: 12px; color: var(--text-secondary); line-height: 1.7;
-  }
-  .github-guide strong { color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-  .github-guide code {
-    background: var(--bg-primary); padding: 1px 5px; border-radius: 3px;
-    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-amber);
-  }
-  .connection-test { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-  .test-result { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-  .test-result.ok { color: var(--accent-green); }
-  .test-result.fail { color: var(--accent-red); }
 </style>
 </head>
 <body>
@@ -387,7 +342,7 @@
         </div>
       </div>
     </div>
-    <div class="edit-indicator" id="edit-indicator">⚠ EDIT MODE — Drag markers to reposition</div>
+    <div class="edit-indicator" id="edit-indicator">⚠ EDIT MODE — 마커를 드래그하여 위치를 조정하세요</div>
     <div id="map-container">
       <div id="map-viewport">
         <img id="world-image" src="Worldmap.png" alt="World Map" draggable="false">
@@ -401,7 +356,6 @@
       <button onclick="zoomReset()" title="Reset">⌂</button>
     </div>
     <div class="zoom-level" id="zoom-level">100%</div>
-    <div class="coord-display" id="coord-display">X: 0.0% Y: 0.0%</div>
   </div>
 
   <div id="detail-panel">
@@ -419,7 +373,6 @@
   </div>
 </div>
 
-<!-- Settings Modal -->
 <div class="modal-overlay" id="settings-modal">
   <div class="modal">
     <div class="modal-head">
@@ -427,43 +380,18 @@
       <button class="modal-close" onclick="closeSettings()">×</button>
     </div>
     <div class="modal-body">
-      <div class="github-guide">
-        데이터를 GitHub 저장소에 자동 저장합니다.<br><br>
-        <strong>토큰 발급:</strong> GitHub → Settings → Developer settings →
-        Personal access tokens → <code>Fine-grained tokens</code> →
-        Generate → 대상 저장소 선택 → Permissions에서 <code>Contents: Read and write</code> 체크
-      </div>
       <div class="form-group">
         <label>Personal Access Token</label>
         <input class="form-input" id="cfg-token" type="password" placeholder="github_pat_xxxxx...">
-        <div class="hint">토큰은 이 브라우저의 localStorage에만 저장됩니다.</div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label>Owner (소유자)</label>
-          <input class="form-input" id="cfg-owner" placeholder="username">
-        </div>
-        <div class="form-group">
-          <label>Repo (저장소)</label>
-          <input class="form-input" id="cfg-repo" placeholder="my-worldmap">
-        </div>
+        <div class="form-group"><label>Owner</label><input class="form-input" id="cfg-owner" placeholder="username"></div>
+        <div class="form-group"><label>Repo</label><input class="form-input" id="cfg-repo" placeholder="my-worldmap"></div>
       </div>
-      <div class="form-group">
-        <label>파일 경로</label>
-        <input class="form-input" id="cfg-path" placeholder="data/mapData.json" value="data/mapData.json">
-        <div class="hint">저장소 내 JSON 저장 위치. 없으면 자동 생성됩니다.</div>
-      </div>
-      <div class="form-group">
-        <label>브랜치</label>
-        <input class="form-input" id="cfg-branch" placeholder="main" value="main">
-      </div>
-      <div class="connection-test">
-        <button class="btn btn-ghost btn-sm" onclick="testConnection()">연결 테스트</button>
-        <span class="test-result" id="test-result"></span>
-      </div>
+      <div class="form-group"><label>파일 경로</label><input class="form-input" id="cfg-path" placeholder="data/mapData.json" value="data/mapData.json"></div>
+      <div class="form-group"><label>브랜치</label><input class="form-input" id="cfg-branch" placeholder="main" value="main"></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="clearGithubConfig()">설정 초기화</button>
+    <div style="padding: 0 24px 24px; display: flex; gap: 8px; justify-content: flex-end;">
       <button class="btn btn-primary" onclick="saveSettings()">저장</button>
     </div>
   </div>
@@ -473,19 +401,19 @@
 
 <script>
 // ════════════════════════════════════════════════════════════════
-//  mapData — 기본 데이터 (GitHub 미연결 시 사용)
+//  천상비2M 기본 맵 데이터 (스프레드시트 구조 반영)
 // ════════════════════════════════════════════════════════════════
 const DEFAULT_MAP_DATA = {
-  "elvenwood": { id:"elvenwood", name:"엘븐우드 숲", x:22, y:28, image:"images/elvenwood.png", faction:"nature", scenario:"고대 엘프들이 은둔한 신비의 숲. 세계수의 가지가 하늘을 뒤덮고, 자연의 정령들이 서식한다.", connected:["crossroad","crystal_lake"] },
-  "crossroad": { id:"crossroad", name:"십자로 마을", x:38, y:45, image:"images/crossroad.png", faction:"neutral", scenario:"대륙의 동서남북을 잇는 교역의 중심지. 다양한 세력의 상인과 모험가들이 뒤섞이는 자유 도시.", connected:["elvenwood","ironkeep","ashlands","crystal_lake"] },
-  "ironkeep": { id:"ironkeep", name:"아이언킵 요새", x:60, y:32, image:"images/ironkeep.png", faction:"alliance", scenario:"강철 동맹의 군사 본거지. 난공불락의 성벽과 거대한 대장간이 있으며, 왕국 방위의 최전선이다.", connected:["crossroad","shadowmere"] },
-  "shadowmere": { id:"shadowmere", name:"그림자 늪", x:75, y:55, image:"images/shadowmere.png", faction:"dark", scenario:"어둠의 마법사들이 지배하는 저주받은 늪지대. 독안개와 언데드가 떠돌며, 금지된 의식이 행해진다.", connected:["ironkeep","ashlands"] },
-  "ashlands": { id:"ashlands", name:"잿빛 황야", x:55, y:70, image:"images/ashlands.png", faction:"horde", scenario:"화산 폭발로 황폐해진 전쟁의 땅. 오크 부족 연합이 점거하고 있으며, 용암 지형이 천연 요새 역할을 한다.", connected:["crossroad","shadowmere","frostpeak"] },
-  "crystal_lake": { id:"crystal_lake", name:"수정 호수", x:25, y:60, image:"images/crystal_lake.png", faction:"ancient", scenario:"고대 문명의 유적이 잠들어있는 신성한 호수. 수면 아래 거대한 도시의 잔해가 빛나고 있다.", connected:["elvenwood","crossroad","frostpeak"] },
-  "frostpeak": { id:"frostpeak", name:"서리봉 정상", x:42, y:82, image:"images/frostpeak.png", faction:"frost", scenario:"만년설이 덮인 대륙 최고봉. 얼음 드래곤의 둥지이자 고대 예언이 새겨진 빙하 신전이 있다.", connected:["crystal_lake","ashlands"] }
+  "1001": { id:"1001", name:"하남성", type:"필드", pvp:"안전 지역", x:45, y:45, image:"", faction:"neutral", scenario:"안전 지역 / 주요 필드", connected:["1002","1003","1004"] },
+  "1002": { id:"1002", name:"소림사", type:"필드", pvp:"안전 지역", x:35, y:35, image:"", faction:"neutral", scenario:"안전 지역", connected:["1001"] },
+  "1003": { id:"1003", name:"섬서성", type:"필드", pvp:"안전 지역", x:25, y:50, image:"", faction:"neutral", scenario:"안전 지역", connected:["1001"] },
+  "1004": { id:"1004", name:"호북성", type:"필드", pvp:"안전 지역", x:55, y:60, image:"", faction:"neutral", scenario:"일반 필드", connected:["1001"] }
 };
 
 let mapData = {};
+let factionMeta = {
+  neutral: { label: '기본(중립)', color: '#555d74' }
+};
 
 // ── State ──
 let mode = 'viewer', selectedId = null, mapImgW = 1920, mapImgH = 1080;
@@ -497,19 +425,8 @@ let dragTarget = null, dragStarted = false, dragStartX, dragStartY;
 
 let ghConfig = { token:'', owner:'', repo:'', path:'data/mapData.json', branch:'main' };
 
-const factionMeta = {
-  neutral:{label:'중립',color:'#555d74',cls:'faction-neutral'},
-  alliance:{label:'강철 동맹',color:'#4a9eff',cls:'faction-alliance'},
-  horde:{label:'부족 연합',color:'#f87171',cls:'faction-horde'},
-  nature:{label:'자연의 수호',color:'#34d399',cls:'faction-nature'},
-  dark:{label:'어둠의 결사',color:'#a78bfa',cls:'faction-dark'},
-  ancient:{label:'고대 문명',color:'#fbbf24',cls:'faction-ancient'},
-  frost:{label:'서리 군단',color:'#22d3ee',cls:'faction-frost'},
-};
-function getFactionColor(f){ return factionMeta[f]?.color||'#555d74'; }
-
 // ════════════════════════════════════════
-//  GitHub API
+//  GitHub API 연동 및 데이터 처리 (세력 데이터 포함 구조)
 // ════════════════════════════════════════
 function isGhOk(){ return ghConfig.token && ghConfig.owner && ghConfig.repo && ghConfig.path; }
 function ghUrl(){ return `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/${ghConfig.path}`; }
@@ -521,21 +438,30 @@ async function loadFromGithub(){
   try{
     const res = await fetch(`${ghUrl()}?ref=${ghConfig.branch}&_=${Date.now()}`,{headers:ghHdr(),cache:'no-store'});
     if(res.status===404){ setSyncStatus('connected','연결됨 (새 파일)'); return false; }
-    if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(e.message||`HTTP ${res.status}`); }
+    if(!res.ok){ throw new Error(`HTTP ${res.status}`); }
     const data = await res.json();
     fileSha = data.sha;
     const raw = atob(data.content.replace(/\n/g,''));
     const decoded = new TextDecoder().decode(Uint8Array.from(raw, c=>c.charCodeAt(0)));
     const loaded = JSON.parse(decoded);
+    
+    // 데이터 래핑 호환성 체크 (이전 버전 호환)
     Object.keys(mapData).forEach(k=>delete mapData[k]);
-    Object.assign(mapData, loaded);
+    if(loaded.regions) {
+      Object.assign(mapData, loaded.regions);
+      if(loaded.factions) {
+        Object.keys(factionMeta).forEach(k=>delete factionMeta[k]);
+        Object.assign(factionMeta, loaded.factions);
+      }
+    } else {
+      Object.assign(mapData, loaded); // 구버전 호환
+    }
+
     setSyncStatus('connected','동기화됨');
     hasUnsavedChanges = false; updateUnsavedDot();
     return true;
   }catch(e){
-    console.error('GitHub load error:',e);
     setSyncStatus('error','로드 실패');
-    showToast('GitHub 로드 실패: '+e.message, true);
     return false;
   }
 }
@@ -546,29 +472,28 @@ async function saveToGithub(){
   const btn=document.getElementById('btn-save-github');
   if(btn){btn.classList.add('saving');btn.textContent='⏳ 저장 중...';}
   try{
-    const clean={};
+    const cleanRegions={};
     Object.entries(mapData).forEach(([k,v])=>{
-      clean[k]={id:v.id,name:v.name,x:Math.round(v.x*10)/10,y:Math.round(v.y*10)/10,image:v.image,faction:v.faction,scenario:v.scenario,connected:v.connected||[]};
+      cleanRegions[k]={id:v.id, name:v.name, type:v.type||'', pvp:v.pvp||'', x:Math.round(v.x*10)/10, y:Math.round(v.y*10)/10, image:v.image, faction:v.faction, scenario:v.scenario, connected:v.connected||[]};
     });
-    const json=JSON.stringify(clean,null,2);
+    // 세력 데이터와 함께 Wrapping 하여 저장
+    const payload = { regions: cleanRegions, factions: factionMeta };
+    const json=JSON.stringify(payload,null,2);
     const b64=btoa(unescape(encodeURIComponent(json)));
-    // Refresh SHA
-    try{
-      const cr=await fetch(`${ghUrl()}?ref=${ghConfig.branch}&_=${Date.now()}`,{headers:ghHdr(),cache:'no-store'});
-      if(cr.ok){fileSha=(await cr.json()).sha;}else if(cr.status===404){fileSha=null;}
-    }catch(e){}
-    const body={message:`Update mapData — ${new Date().toLocaleString('ko-KR')}`,content:b64,branch:ghConfig.branch};
+    
+    try{ const cr=await fetch(`${ghUrl()}?ref=${ghConfig.branch}&_=${Date.now()}`,{headers:ghHdr(),cache:'no-store'}); if(cr.ok){fileSha=(await cr.json()).sha;}else if(cr.status===404){fileSha=null;} }catch(e){}
+    const body={message:`Update Map & Factions — ${new Date().toLocaleString('ko-KR')}`,content:b64,branch:ghConfig.branch};
     if(fileSha) body.sha=fileSha;
+    
     const res=await fetch(ghUrl(),{method:'PUT',headers:{...ghHdr(),'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||`HTTP ${res.status}`);}
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
     fileSha=(await res.json()).content.sha;
     hasUnsavedChanges=false; updateUnsavedDot();
     setSyncStatus('connected','동기화됨');
     showToast('✅ GitHub에 저장 완료!');
   }catch(e){
-    console.error('GitHub save error:',e);
     setSyncStatus('error','저장 실패');
-    showToast('GitHub 저장 실패: '+e.message,true);
+    showToast('저장 실패: '+e.message,true);
   }finally{
     if(btn){btn.classList.remove('saving');btn.textContent='💾 저장';}
   }
@@ -578,65 +503,25 @@ function setSyncStatus(s,l){ const el=document.getElementById('sync-status'); el
 function markDirty(){ hasUnsavedChanges=true; updateUnsavedDot(); if(isGhOk()) setSyncStatus('connected','변경사항 있음'); }
 function updateUnsavedDot(){ document.getElementById('unsaved-dot').classList.toggle('visible',hasUnsavedChanges); }
 
-// ── Settings Modal ──
+// ── Settings ──
 function loadGhCfg(){ try{ const s=localStorage.getItem('wm_gh_cfg'); if(s) ghConfig={...ghConfig,...JSON.parse(s)}; }catch(e){} }
 function openSettings(){
-  document.getElementById('cfg-token').value=ghConfig.token;
-  document.getElementById('cfg-owner').value=ghConfig.owner;
-  document.getElementById('cfg-repo').value=ghConfig.repo;
-  document.getElementById('cfg-path').value=ghConfig.path;
-  document.getElementById('cfg-branch').value=ghConfig.branch;
-  document.getElementById('test-result').textContent='';
-  document.getElementById('settings-modal').classList.add('open');
+  document.getElementById('cfg-token').value=ghConfig.token; document.getElementById('cfg-owner').value=ghConfig.owner;
+  document.getElementById('cfg-repo').value=ghConfig.repo; document.getElementById('cfg-path').value=ghConfig.path;
+  document.getElementById('cfg-branch').value=ghConfig.branch; document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettings(){ document.getElementById('settings-modal').classList.remove('open'); }
-
 function saveSettings(){
-  ghConfig.token=document.getElementById('cfg-token').value.trim();
-  ghConfig.owner=document.getElementById('cfg-owner').value.trim();
-  ghConfig.repo=document.getElementById('cfg-repo').value.trim();
-  ghConfig.path=document.getElementById('cfg-path').value.trim()||'data/mapData.json';
-  ghConfig.branch=document.getElementById('cfg-branch').value.trim()||'main';
-  localStorage.setItem('wm_gh_cfg',JSON.stringify(ghConfig));
+  ghConfig.token=document.getElementById('cfg-token').value.trim(); ghConfig.owner=document.getElementById('cfg-owner').value.trim();
+  ghConfig.repo=document.getElementById('cfg-repo').value.trim(); ghConfig.path=document.getElementById('cfg-path').value.trim()||'data/mapData.json';
+  ghConfig.branch=document.getElementById('cfg-branch').value.trim()||'main'; localStorage.setItem('wm_gh_cfg',JSON.stringify(ghConfig));
   closeSettings();
-  if(isGhOk()){
-    loadFromGithub().then(loaded=>{ if(loaded) renderAll(); showToast('✅ GitHub 설정 저장 완료!'); });
-  }else{
-    setSyncStatus('disconnected','연결 안됨');
-    showToast('설정 저장됨. 모든 항목을 입력하면 동기화됩니다.');
-  }
+  if(isGhOk()){ loadFromGithub().then(loaded=>{ if(loaded) renderAll(); }); }
 }
-
-function clearGithubConfig(){
-  if(!confirm('GitHub 연결 설정을 초기화하시겠습니까?')) return;
-  ghConfig={token:'',owner:'',repo:'',path:'data/mapData.json',branch:'main'};
-  localStorage.removeItem('wm_gh_cfg'); fileSha=null;
-  setSyncStatus('disconnected','연결 안됨'); closeSettings();
-  showToast('GitHub 설정이 초기화되었습니다.');
-}
-
-async function testConnection(){
-  const r=document.getElementById('test-result'); r.textContent='테스트 중...'; r.className='test-result';
-  const t=document.getElementById('cfg-token').value.trim();
-  const o=document.getElementById('cfg-owner').value.trim();
-  const rp=document.getElementById('cfg-repo').value.trim();
-  if(!t||!o||!rp){r.textContent='❌ 토큰, Owner, Repo 모두 입력 필요';r.className='test-result fail';return;}
-  try{
-    const res=await fetch(`https://api.github.com/repos/${o}/${rp}`,{headers:{Authorization:`Bearer ${t}`,Accept:'application/vnd.github+json'}});
-    if(res.ok){
-      const d=await res.json();
-      if(d.permissions?.push){r.textContent='✅ 연결 성공! (쓰기 권한 확인됨)';r.className='test-result ok';}
-      else{r.textContent='⚠️ 연결됨, 쓰기 권한 없음. 토큰 Permissions 확인';r.className='test-result fail';}
-    }else if(res.status===404){r.textContent='❌ 저장소 없음. Owner/Repo 확인';r.className='test-result fail';}
-    else if(res.status===401){r.textContent='❌ 인증 실패. 토큰 확인';r.className='test-result fail';}
-    else{r.textContent=`❌ HTTP ${res.status}`;r.className='test-result fail';}
-  }catch(e){r.textContent='❌ 네트워크 오류: '+e.message;r.className='test-result fail';}
-}
-
 document.getElementById('settings-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeSettings();});
 
 // ════════════════════════════════════════
-//  Init
+//  Init & Render
 // ════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', async()=>{
   loadGhCfg();
@@ -645,43 +530,21 @@ window.addEventListener('DOMContentLoaded', async()=>{
 
   const img=document.getElementById('world-image');
   img.onload=()=>{ mapImgW=img.naturalWidth||1920; mapImgH=img.naturalHeight||1080; initViewport(); renderAll(); };
-  img.onerror=()=>{
-    mapImgW=1920; mapImgH=1080;
-    img.style.width=mapImgW+'px'; img.style.height=mapImgH+'px';
-    const c=document.createElement('canvas'); c.width=mapImgW; c.height=mapImgH;
-    const x=c.getContext('2d');
-    const g=x.createLinearGradient(0,0,mapImgW,mapImgH);
-    g.addColorStop(0,'#0f1923');g.addColorStop(0.3,'#162030');g.addColorStop(0.6,'#1a2840');g.addColorStop(1,'#0d1520');
-    x.fillStyle=g; x.fillRect(0,0,mapImgW,mapImgH);
-    x.strokeStyle='rgba(74,158,255,0.06)'; x.lineWidth=1;
-    for(let i=0;i<mapImgW;i+=96){x.beginPath();x.moveTo(i,0);x.lineTo(i,mapImgH);x.stroke();}
-    for(let i=0;i<mapImgH;i+=96){x.beginPath();x.moveTo(0,i);x.lineTo(mapImgW,i);x.stroke();}
-    x.fillStyle='rgba(74,158,255,0.04)';
-    for(let i=0;i<mapImgW;i+=96)for(let j=0;j<mapImgH;j+=96){if((i/96+j/96)%2===0)x.fillRect(i,j,96,96);}
-    x.font='600 14px JetBrains Mono,monospace'; x.fillStyle='rgba(74,158,255,0.15)'; x.textAlign='center';
-    x.fillText('worldmap.png 이미지를 같은 폴더에 배치하세요',mapImgW/2,mapImgH/2);
-    img.src=c.toDataURL(); initViewport(); renderAll();
-  };
   if(img.complete&&img.naturalWidth>0){mapImgW=img.naturalWidth;mapImgH=img.naturalHeight;initViewport();renderAll();}
   setupPanZoom();
-  window.addEventListener('beforeunload',e=>{if(hasUnsavedChanges){e.preventDefault();e.returnValue='';}});
 });
 
 function initViewport(){
-  const vp=document.getElementById('map-viewport'), img=document.getElementById('world-image');
-  img.style.width=mapImgW+'px'; img.style.height=mapImgH+'px';
-  vp.style.width=mapImgW+'px'; vp.style.height=mapImgH+'px';
-  const c=document.getElementById('map-container');
+  const vp=document.getElementById('map-viewport'), img=document.getElementById('world-image'), c=document.getElementById('map-container');
+  img.style.width=mapImgW+'px'; img.style.height=mapImgH+'px'; vp.style.width=mapImgW+'px'; vp.style.height=mapImgH+'px';
   scale=Math.min(c.clientWidth/mapImgW,c.clientHeight/mapImgH)*0.9;
-  panX=(c.clientWidth-mapImgW*scale)/2; panY=(c.clientHeight-mapImgH*scale)/2;
-  applyTransform();
+  panX=(c.clientWidth-mapImgW*scale)/2; panY=(c.clientHeight-mapImgH*scale)/2; applyTransform();
 }
 function applyTransform(){
   document.getElementById('map-viewport').style.transform=`translate(${panX}px,${panY}px) scale(${scale})`;
   document.getElementById('zoom-level').textContent=Math.round(scale*100)+'%';
 }
 
-// ── Pan & Zoom ──
 function setupPanZoom(){
   const c=document.getElementById('map-container');
   c.addEventListener('pointerdown',e=>{
@@ -692,54 +555,46 @@ function setupPanZoom(){
     }
   });
   c.addEventListener('pointermove',e=>{
-    updateCoordDisplay(e);
     if(isPanning){panX=panStartPanX+(e.clientX-panStartX);panY=panStartPanY+(e.clientY-panStartY);applyTransform();return;}
     if(dragTarget)handleDragMove(e);
   });
-  c.addEventListener('pointerup',e=>{
-    if(isPanning){isPanning=false;c.classList.remove('panning');}
-    if(dragTarget)handleDragEnd(e);
-  });
+  c.addEventListener('pointerup',e=>{ if(isPanning){isPanning=false;c.classList.remove('panning');} if(dragTarget)handleDragEnd(e); });
   c.addEventListener('wheel',e=>{
-    e.preventDefault();
-    const r=c.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top, old=scale;
+    e.preventDefault(); const r=c.getBoundingClientRect(), mx=e.clientX-r.left, my=e.clientY-r.top, old=scale;
     scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*(e.deltaY>0?0.9:1.1)));
     panX=mx-(mx-panX)*(scale/old); panY=my-(my-panY)*(scale/old); applyTransform();
   },{passive:false});
 }
 function isMarkerEl(el){return el.closest('.map-marker')!==null;}
-function updateCoordDisplay(e){
-  const c=document.getElementById('map-container'),r=c.getBoundingClientRect();
-  const mx=((e.clientX-r.left-panX)/scale/mapImgW*100).toFixed(1);
-  const my=((e.clientY-r.top-panY)/scale/mapImgH*100).toFixed(1);
-  document.getElementById('coord-display').textContent=`X: ${mx}%  Y: ${my}%`;
-}
 function zoomIn(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.min(MAX_SCALE,scale*1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
 function zoomOut(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.max(MIN_SCALE,scale/1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
 function zoomReset(){initViewport();}
 
-// ── Rendering ──
 function renderAll(){renderMarkers();renderConnections();updateStats();if(selectedId&&!mapData[selectedId])selectedId=null;renderDetail();}
 
 function renderMarkers(){
   const layer=document.getElementById('markers-layer'); layer.innerHTML='';
   Object.values(mapData).forEach(region=>{
     const el=document.createElement('div');
-    el.className='map-marker'+(region.id===selectedId?' selected':'');
-    el.dataset.id=region.id;
+    el.className='map-marker'+(region.id===selectedId?' selected':''); el.dataset.id=region.id;
     el.style.left=(region.x/100*mapImgW)+'px'; el.style.top=(region.y/100*mapImgH)+'px';
-    const col=getFactionColor(region.faction);
+    const col=factionMeta[region.faction]?.color||'#555d74';
     el.innerHTML=`<div class="marker-pin"><svg viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.268 21.732 0 14 0z" fill="${col}"/><circle cx="14" cy="13" r="6" fill="rgba(0,0,0,0.3)"/><circle cx="14" cy="13" r="4" fill="#fff" opacity="0.9"/></svg></div><div class="marker-label">${region.name}</div>`;
     el.addEventListener('pointerdown',e=>{if(mode==='editor'){e.stopPropagation();handleDragStart(e,region.id);}});
-    el.addEventListener('click',()=>{if(!dragTarget)selectRegion(region.id);});
+    el.addEventListener('click',()=>{
+      if(!dragTarget) {
+        // [수정점 3] 선택 상태 토글 기능
+        if(selectedId === region.id) { selectedId = null; renderAll(); }
+        else { selectRegion(region.id); }
+      }
+    });
     layer.appendChild(el);
   });
 }
 
 function renderConnections(){
   const svg=document.getElementById('connections-svg');
-  svg.setAttribute('width',mapImgW);svg.setAttribute('height',mapImgH);
-  svg.style.width=mapImgW+'px';svg.style.height=mapImgH+'px';svg.innerHTML='';
+  svg.setAttribute('width',mapImgW);svg.setAttribute('height',mapImgH); svg.style.width=mapImgW+'px';svg.style.height=mapImgH+'px';svg.innerHTML='';
   const drawn=new Set();
   Object.values(mapData).forEach(r=>{
     (r.connected||[]).forEach(tid=>{
@@ -754,7 +609,6 @@ function renderConnections(){
   });
 }
 
-// ── Selection & Detail ──
 function selectRegion(id){
   selectedId=id; renderMarkers(); renderConnections(); renderDetail();
   const r=mapData[id];
@@ -765,11 +619,10 @@ function renderDetail(){
   const body=document.getElementById('panel-body'), actions=document.getElementById('panel-actions');
   if(!selectedId||!mapData[selectedId]){
     if(mode==='editor'){
-      actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button><button class="btn btn-ghost btn-sm" onclick="copyDataCode()">📋 복사</button>`;
-      body.innerHTML=`<div class="empty-state"><div class="icon">✏️</div><p>마커를 클릭하여 편집하거나<br>새 지역을 추가하세요</p><button class="btn btn-success" onclick="addRegion()" style="margin-top:8px;font-size:13px;padding:10px 24px;">+ 신규 지역 추가</button></div>`;
+      actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button>`;
+      body.innerHTML=`<div class="empty-state"><div class="icon">✏️</div><p>마커를 클릭하여 편집하거나<br>새 지역을 추가하세요</p><button class="btn btn-success" onclick="addRegion()" style="margin-top:8px;">+ 신규 지역 추가</button></div>`;
     }else{
-      actions.innerHTML='';
-      body.innerHTML=`<div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>`;
+      actions.innerHTML=''; body.innerHTML=`<div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>`;
     }
     return;
   }
@@ -783,9 +636,12 @@ function renderViewerDetail(){
   body.innerHTML=`
     <div class="detail-image-wrap"><img src="${r.image}" alt="${r.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=no-image>${r.image||'No Image'}</div>'"></div>
     <div class="detail-name">${r.name}</div><div class="detail-id">ID: ${r.id}</div>
-    <div class="detail-section"><div class="detail-label">좌표</div><div class="coord-badges"><div class="coord-badge">X <span>${r.x.toFixed(1)}%</span></div><div class="coord-badge">Y <span>${r.y.toFixed(1)}%</span></div></div></div>
-    <div class="detail-section"><div class="detail-label">세력</div><div class="faction-badge ${fm.cls}"><div class="faction-dot"></div>${fm.label}</div></div>
-    <div class="detail-section"><div class="detail-label">시나리오 / 컨셉</div><div class="detail-value">${r.scenario||'—'}</div></div>
+    <div class="badge-row">
+      <div class="info-badge" style="border-color:${fm.color};color:${fm.color}"><div class="faction-dot" style="background:${fm.color}"></div>${fm.label}</div>
+      ${r.type ? `<div class="info-badge" style="border-color:var(--border-active);color:var(--text-primary)">🗺 ${r.type}</div>` : ''}
+      ${r.pvp ? `<div class="info-badge" style="border-color:var(--accent-red-dim);color:var(--accent-red)">⚔ ${r.pvp}</div>` : ''}
+    </div>
+    <div class="detail-section"><div class="detail-label">시나리오 / 특징</div><div class="detail-value">${r.scenario||'—'}</div></div>
     <div class="detail-section"><div class="detail-label">연결된 지역</div><div class="connected-list">${conn||'<span class="detail-value">없음</span>'}</div></div>`;
   actions.innerHTML='';
 }
@@ -796,22 +652,63 @@ function renderEditorDetail(){
   const allIds=Object.keys(mapData).filter(id=>id!==selectedId);
   const cSet=new Set(r.connected||[]);
   const cBoxes=allIds.map(id=>{const rr=mapData[id];return`<label style="display:flex;align-items:center;gap:6px;padding:3px 0;cursor:pointer;font-size:12px;color:var(--text-secondary);"><input type="checkbox" ${cSet.has(id)?'checked':''} value="${id}" onchange="toggleConnection('${id}',this.checked)">${rr.name} <span style="color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:10px">(${id})</span></label>`;}).join('');
+  
+  // [수정점 0] 지역 ID 수정 가능하도록 disabled 해제 및 onchange 연동
   body.innerHTML=`
-    <div class="form-group"><label>지역 ID</label><input class="form-input" value="${r.id}" disabled style="opacity:0.5;cursor:not-allowed"></div>
-    <div class="form-group"><label>지역 이름</label><input class="form-input" value="${r.name}" oninput="updateField('name',this.value)"></div>
-    <div class="form-group"><label>이미지 경로</label><input class="form-input" value="${r.image}" placeholder="images/region.png" oninput="updateField('image',this.value)"></div>
-    <div class="form-row"><div class="form-group"><label>X 좌표 (%)</label><input class="form-input" type="number" step="0.1" min="0" max="100" value="${r.x.toFixed(1)}" oninput="updateCoord('x',parseFloat(this.value))"></div><div class="form-group"><label>Y 좌표 (%)</label><input class="form-input" type="number" step="0.1" min="0" max="100" value="${r.y.toFixed(1)}" oninput="updateCoord('y',parseFloat(this.value))"></div></div>
-    <div class="form-group"><label>세력</label><select class="form-input" onchange="updateField('faction',this.value)">${fOpts}</select></div>
+    <div class="form-group"><label>지역 ID (스프레드시트 인덱스)</label><input class="form-input" value="${r.id}" onchange="updateRegionId('${r.id}', this.value)"></div>
+    <div class="form-row">
+      <div class="form-group"><label>지역 이름</label><input class="form-input" value="${r.name}" oninput="updateField('name',this.value)"></div>
+      <div class="form-group"><label>분류 (타입)</label><input class="form-input" value="${r.type||''}" placeholder="필드, 마을 등" oninput="updateField('type',this.value)"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>PVP 여부</label><input class="form-input" value="${r.pvp||''}" placeholder="안전, 일반 등" oninput="updateField('pvp',this.value)"></div>
+      <div class="form-group"><label>이미지 경로</label><input class="form-input" value="${r.image}" placeholder="images/region.png" oninput="updateField('image',this.value)"></div>
+    </div>
+    <div class="form-group">
+      <label>세력</label>
+      <div class="addon-group">
+        <select class="form-select" onchange="updateField('faction',this.value)">${fOpts}</select>
+        <button class="btn btn-ghost btn-sm" onclick="addNewFaction()">+ 세력 추가</button>
+      </div>
+    </div>
     <div class="form-group"><label>시나리오 / 컨셉</label><textarea class="form-textarea" oninput="updateField('scenario',this.value)">${r.scenario||''}</textarea></div>
     <div class="form-group"><label>연결된 지역</label><div style="background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:var(--radius-sm);padding:8px 10px;max-height:160px;overflow-y:auto;">${cBoxes||'<span style="color:var(--text-dim);font-size:12px;">다른 지역 없음</span>'}</div></div>
     <div class="separator"></div>
     <button class="btn btn-danger btn-block" onclick="deleteRegion()">🗑 현재 지역 삭제</button>`;
-  actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button><button class="btn btn-ghost btn-sm" onclick="copyDataCode()">📋 복사</button>`;
+  actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button>`;
 }
 
 // ── Edit Ops ──
 function updateField(f,v){if(!selectedId||!mapData[selectedId])return;mapData[selectedId][f]=v;markDirty();if(f==='name'||f==='faction')renderMarkers();}
-function updateCoord(a,v){if(!selectedId||!mapData[selectedId]||isNaN(v))return;mapData[selectedId][a]=Math.max(0,Math.min(100,v));markDirty();renderMarkers();renderConnections();}
+
+// [추가] 지역 ID 변경 시 연결선 무결성 유지 로직
+function updateRegionId(oldId, newId) {
+  newId = newId.trim().replace(/[^a-zA-Z0-9_]/g, '_');
+  if (!newId || newId === oldId) return;
+  if (mapData[newId]) { showToast('이미 존재하는 ID입니다.', true); renderEditorDetail(); return; }
+  
+  mapData[newId] = { ...mapData[oldId], id: newId };
+  delete mapData[oldId];
+  
+  Object.values(mapData).forEach(r => {
+    if (r.connected && r.connected.includes(oldId)) {
+      r.connected = r.connected.map(id => id === oldId ? newId : id);
+    }
+  });
+  
+  selectedId = newId; markDirty(); renderAll(); showToast('✅ ID가 성공적으로 변경되었습니다.');
+}
+
+// [추가] 세력 동적 추가
+function addNewFaction() {
+  const name = prompt('새로운 세력 이름을 입력하세요:');
+  if(!name) return;
+  const color = prompt('세력의 색상 코드를 입력하세요 (예: #ff0000, gold):', '#ffffff');
+  const id = 'fac_' + Date.now().toString(36);
+  factionMeta[id] = { label: name, color: color };
+  markDirty(); renderEditorDetail(); renderMarkers();
+  showToast('✅ 새 세력이 추가되었습니다.');
+}
 
 function toggleConnection(tid,chk){
   if(!selectedId||!mapData[selectedId])return;
@@ -832,35 +729,24 @@ function addRegion(){
   const p=prompt('새 지역 ID (영문, 숫자, _):',nid);
   if(!p)return; nid=p.trim().replace(/[^a-zA-Z0-9_]/g,'_');
   if(mapData[nid]){alert('이미 존재하는 ID입니다.');return;}
-  mapData[nid]={id:nid,name:'새 지역',x:50,y:50,image:'',faction:'neutral',scenario:'',connected:[]};
+  mapData[nid]={id:nid,name:'새 지역',type:'',pvp:'',x:50,y:50,image:'',faction:'neutral',scenario:'',connected:[]};
   selectedId=nid; markDirty(); renderAll(); showToast('새 지역이 추가되었습니다');
 }
 
 function deleteRegion(){
   if(!selectedId||!mapData[selectedId])return;
-  const name=mapData[selectedId].name;
-  if(!confirm(`"${name}" 지역을 삭제하시겠습니까?`))return;
+  const name=mapData[selectedId].name; if(!confirm(`"${name}" 지역을 삭제하시겠습니까?`))return;
   Object.values(mapData).forEach(r=>{if(r.connected)r.connected=r.connected.filter(id=>id!==selectedId);});
-  delete mapData[selectedId]; selectedId=null; markDirty(); renderAll();
-  showToast(`"${name}" 삭제됨`);
+  delete mapData[selectedId]; selectedId=null; markDirty(); renderAll(); showToast(`"${name}" 삭제됨`);
 }
 
-function copyDataCode(){
-  const clean={};
-  Object.entries(mapData).forEach(([k,v])=>{clean[k]={id:v.id,name:v.name,x:Math.round(v.x*10)/10,y:Math.round(v.y*10)/10,image:v.image,faction:v.faction,scenario:v.scenario,connected:v.connected||[]};});
-  const code=JSON.stringify(clean,null,2);
-  navigator.clipboard.writeText(code).then(()=>showToast('✅ JSON 클립보드 복사 완료!')).catch(()=>{const t=document.createElement('textarea');t.value=code;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showToast('✅ JSON 클립보드 복사 완료!');});
-}
-
-// ── Drag & Drop ──
 function handleDragStart(e,id){if(mode!=='editor')return;dragTarget=id;dragStarted=false;dragStartX=e.clientX;dragStartY=e.clientY;document.getElementById('map-container').setPointerCapture(e.pointerId);}
 function handleDragMove(e){
   if(!dragTarget)return;
   if(!dragStarted&&Math.abs(e.clientX-dragStartX)+Math.abs(e.clientY-dragStartY)<5)return;
   dragStarted=true;
   const c=document.getElementById('map-container'),r=c.getBoundingClientRect();
-  const xP=Math.max(0,Math.min(100,(e.clientX-r.left-panX)/scale/mapImgW*100));
-  const yP=Math.max(0,Math.min(100,(e.clientY-r.top-panY)/scale/mapImgH*100));
+  const xP=Math.max(0,Math.min(100,(e.clientX-r.left-panX)/scale/mapImgW*100)), yP=Math.max(0,Math.min(100,(e.clientY-r.top-panY)/scale/mapImgH*100));
   mapData[dragTarget].x=xP; mapData[dragTarget].y=yP;
   const m=document.querySelector(`.map-marker[data-id="${dragTarget}"]`);
   if(m){m.style.left=(xP/100*mapImgW)+'px';m.style.top=(yP/100*mapImgH)+'px';m.classList.add('dragging');}
@@ -873,18 +759,13 @@ function handleDragEnd(e){
   if(was){markDirty();if(selectedId===id)renderDetail();renderMarkers();}else selectRegion(id);
 }
 
-// ── Mode ──
 function setMode(m){
   mode=m;
-  document.getElementById('btn-viewer').classList.toggle('active',m==='viewer');
-  document.getElementById('btn-editor').classList.toggle('active',m==='editor');
-  document.getElementById('edit-indicator').classList.toggle('visible',m==='editor');
-  document.getElementById('map-container').classList.toggle('edit-mode',m==='editor');
-  document.getElementById('panel-title').textContent=m==='viewer'?'Region Details':'Region Editor';
-  renderDetail();
+  document.getElementById('btn-viewer').classList.toggle('active',m==='viewer'); document.getElementById('btn-editor').classList.toggle('active',m==='editor');
+  document.getElementById('edit-indicator').classList.toggle('visible',m==='editor'); document.getElementById('map-container').classList.toggle('edit-mode',m==='editor');
+  document.getElementById('panel-title').textContent=m==='viewer'?'Region Details':'Region Editor'; renderDetail();
 }
 
-// ── Utils ──
 function updateStats(){
   const n=Object.keys(mapData).length,cs=new Set();
   Object.values(mapData).forEach(r=>(r.connected||[]).forEach(c=>cs.add([r.id,c].sort().join('|'))));
@@ -895,7 +776,6 @@ function showToast(msg,err){
   const t=document.getElementById('toast');t.textContent=msg;t.className=err?'error':'';
   clearTimeout(toastTimer);requestAnimationFrame(()=>{t.classList.add('show');toastTimer=setTimeout(()=>t.classList.remove('show'),3000);});
 }
-// Ctrl+S / Cmd+S
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();if(hasUnsavedChanges)saveToGithub();}});
 </script>
 </body>
