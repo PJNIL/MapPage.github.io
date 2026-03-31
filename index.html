@@ -1074,7 +1074,7 @@ async function runAiSummary() {
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1000,
+        max_tokens: 2000,
         system: `당신은 MMORPG 세계관 문서를 분석하는 전문가입니다.
 주어진 스토리 문서를 읽고 다음 JSON 형식으로만 응답하세요. JSON 외 어떤 텍스트도 포함하지 마세요.
 {
@@ -1102,7 +1102,12 @@ async function runAiSummary() {
     }
 
     const raw = data.content?.find(b => b.type === 'text')?.text || '';
-    const clean = raw.replace(/```json|```/g, '').trim();
+    let clean = raw.replace(/```json|```/g, '').trim();
+    // 잘린 JSON 복구 시도
+    if (!clean.endsWith('}')) {
+      const lastBrace = clean.lastIndexOf('}');
+      if (lastBrace > 0) clean = clean.substring(0, lastBrace + 1) + '}';
+    }
     const parsed = JSON.parse(clean);
 
     // Render result
