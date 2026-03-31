@@ -41,14 +41,12 @@
   .gtab-btn.active::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:20px; height:2px; background:var(--accent-blue); border-radius:2px; }
   .gtab-btn.dungeon-active { color:var(--accent-purple); background:var(--accent-purple-soft); }
   .gtab-btn.dungeon-active::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:20px; height:2px; background:var(--accent-purple); border-radius:2px; }
-  
   .gtab-btn.story-active { color:var(--accent-amber); background:var(--accent-amber-soft); }
   .gtab-btn.story-active::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:20px; height:2px; background:var(--accent-amber); border-radius:2px; }
-
   .gtab-spacer { flex:1; }
   .gtab-right { display:flex; align-items:center; gap:8px; }
 
-  /* Sync — global bar */
+  /* Sync */
   .sync-indicator { display:flex; align-items:center; gap:6px; padding:4px 12px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; background:var(--bg-tertiary); border:1px solid var(--border-dim); transition:all 0.25s; }
   .sync-indicator .sdot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
   .sync-indicator.connected { color:var(--accent-green); } .sync-indicator.connected .sdot { background:var(--accent-green); box-shadow:0 0 6px var(--accent-green); }
@@ -128,16 +126,206 @@
   .dungeon-empty { grid-column:1/-1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 0; color:var(--text-dim); text-align:center; gap:14px; }
   .dungeon-empty .icon { font-size:48px; opacity:0.2; }
 
-  /* Story View */
+  /* ─────────── STORY VIEW ─────────── */
   #story-view { width:100%; height:100%; display:none; flex-direction:column; background:var(--bg-secondary); }
   #story-view.visible { display:flex; }
-  .sv-header { padding:20px 28px 16px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border-dim); background:linear-gradient(180deg,rgba(251,191,36,0.04) 0%,transparent 100%); }
+
+  .sv-header {
+    padding: 20px 28px 16px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--border-dim);
+    background: linear-gradient(180deg, rgba(251,191,36,0.05) 0%, transparent 100%);
+  }
   .sv-header-left { display:flex; align-items:center; gap:14px; }
-  .sv-header-icon { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(248,113,113,0.15)); border:1px solid rgba(251,191,36,0.25); display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .sv-header-icon {
+    width:40px; height:40px; border-radius:10px;
+    background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(248,113,113,0.15));
+    border:1px solid rgba(251,191,36,0.3);
+    display:flex; align-items:center; justify-content:center; font-size:20px;
+  }
   .sv-header h2 { font-family:'Outfit',sans-serif; font-size:18px; font-weight:700; margin:0; }
   .sv-header p { font-size:11px; color:var(--text-dim); margin-top:2px; }
-  .sv-body { flex:1; width:100%; height:100%; overflow:hidden; }
-  .sv-body iframe { width:100%; height:100%; border:none; background:#fff; }
+  .sv-toolbar { display:flex; align-items:center; gap:8px; }
+  .sv-search-wrap {
+    display:flex; align-items:center; gap:8px;
+    background:var(--bg-tertiary); border:1px solid var(--border-dim);
+    border-radius:8px; padding:6px 12px; min-width:200px;
+    transition:border-color 0.2s;
+  }
+  .sv-search-wrap:focus-within { border-color:rgba(251,191,36,0.4); }
+  .sv-search-wrap input { flex:1; background:none; border:none; color:var(--text-primary); font-family:'Noto Sans KR',sans-serif; font-size:12px; outline:none; }
+  .sv-search-wrap input::placeholder { color:var(--text-dim); }
+
+  /* Story cards grid */
+  .sv-body {
+    flex:1; overflow-y:auto; padding:24px 28px;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+    gap:14px; align-content:start;
+  }
+  .sv-body::-webkit-scrollbar { width:5px; }
+  .sv-body::-webkit-scrollbar-thumb { background:var(--border-dim); border-radius:3px; }
+
+  .story-card {
+    background:var(--bg-card); border:1px solid var(--border-dim);
+    border-radius:var(--radius-lg); padding:0; cursor:pointer;
+    transition:all 0.22s; position:relative; overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .story-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--accent-amber), #f87171);
+    opacity:0; transition:opacity 0.2s;
+  }
+  .story-card:hover { border-color:rgba(251,191,36,0.35); background:var(--bg-elevated); transform:translateY(-2px); box-shadow:0 6px 30px rgba(0,0,0,0.4); }
+  .story-card:hover::before { opacity:1; }
+
+  .sc-top { padding:16px 18px 12px; flex:1; }
+  .sc-region-tag {
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700;
+    color:var(--accent-amber); background:rgba(251,191,36,0.08);
+    border:1px solid rgba(251,191,36,0.2); border-radius:10px;
+    padding:2px 8px; margin-bottom:10px; letter-spacing:0.5px; text-transform:uppercase;
+  }
+  .sc-name { font-family:'Outfit',sans-serif; font-size:15px; font-weight:700; color:var(--text-primary); margin-bottom:6px; line-height:1.3; }
+  .sc-desc { font-size:11px; color:var(--text-secondary); line-height:1.6; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .sc-footer {
+    padding:10px 18px; border-top:1px solid var(--border-dim);
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(0,0,0,0.15);
+  }
+  .sc-doc-id { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--text-dim); }
+  .sc-open-btn {
+    font-family:'Outfit',sans-serif; font-size:10px; font-weight:700;
+    color:var(--accent-amber); background:rgba(251,191,36,0.08);
+    border:1px solid rgba(251,191,36,0.25); border-radius:6px;
+    padding:4px 10px; cursor:pointer; transition:all 0.15s;
+    display:flex; align-items:center; gap:4px;
+  }
+  .sc-open-btn:hover { background:rgba(251,191,36,0.15); border-color:rgba(251,191,36,0.5); }
+
+  .sv-empty {
+    grid-column:1/-1; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:80px 0; color:var(--text-dim); text-align:center; gap:16px;
+  }
+  .sv-empty .icon { font-size:52px; opacity:0.15; }
+  .sv-empty h3 { font-family:'Outfit',sans-serif; font-size:16px; font-weight:600; color:var(--text-secondary); }
+  .sv-empty p { font-size:12px; max-width:300px; line-height:1.7; }
+
+  /* ─────────── STORY SLIDE PANEL ─────────── */
+  #story-panel-backdrop {
+    position:fixed; inset:0; top:46px;
+    background:rgba(0,0,0,0.5); backdrop-filter:blur(3px);
+    z-index:490; opacity:0; pointer-events:none;
+    transition:opacity 0.35s;
+  }
+  #story-panel-backdrop.open { opacity:1; pointer-events:auto; }
+
+  #story-slide-panel {
+    position:fixed; top:46px; left:0; bottom:0;
+    width:520px; max-width:88vw;
+    background:var(--bg-primary);
+    border-right:1px solid var(--border-active);
+    z-index:500;
+    display:flex; flex-direction:column;
+    transform:translateX(-100%);
+    transition:transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:6px 0 40px rgba(0,0,0,0.6);
+  }
+  #story-slide-panel.open { transform:translateX(0); }
+
+  .ssp-header {
+    padding:16px 20px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--border-dim);
+    background:linear-gradient(180deg, rgba(251,191,36,0.05) 0%, transparent 100%);
+  }
+  .ssp-header-left { display:flex; align-items:center; gap:12px; }
+  .ssp-icon {
+    width:36px; height:36px; border-radius:9px; flex-shrink:0;
+    background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(248,113,113,0.1));
+    border:1px solid rgba(251,191,36,0.25);
+    display:flex; align-items:center; justify-content:center; font-size:17px;
+  }
+  .ssp-title { font-family:'Outfit',sans-serif; font-size:15px; font-weight:700; color:var(--text-primary); line-height:1.2; }
+  .ssp-region { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent-amber); margin-top:2px; }
+  .ssp-actions { display:flex; align-items:center; gap:6px; }
+  .ssp-close-btn {
+    width:32px; height:32px; background:transparent; border:1px solid var(--border-dim);
+    border-radius:8px; color:var(--text-secondary); font-size:16px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:all 0.15s;
+  }
+  .ssp-close-btn:hover { background:var(--bg-hover); color:var(--text-primary); border-color:var(--border-active); }
+
+  .ssp-tabs {
+    display:flex; gap:2px; padding:10px 16px;
+    border-bottom:1px solid var(--border-dim); flex-shrink:0;
+    background:var(--bg-secondary);
+  }
+  .ssp-tab {
+    padding:5px 14px; border-radius:6px;
+    font-family:'Outfit',sans-serif; font-size:11px; font-weight:600;
+    border:none; cursor:pointer; background:transparent;
+    color:var(--text-dim); transition:all 0.15s;
+  }
+  .ssp-tab.active { background:var(--accent-amber-soft); color:var(--accent-amber); }
+  .ssp-tab:hover:not(.active) { color:var(--text-secondary); background:var(--bg-hover); }
+
+  .ssp-body { flex:1; overflow:hidden; position:relative; }
+  .ssp-body iframe { width:100%; height:100%; border:none; background:#fff; }
+  .ssp-loading {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:14px; color:var(--text-dim);
+  }
+  .ssp-loading-spinner {
+    width:32px; height:32px; border:2px solid var(--border-dim);
+    border-top-color:var(--accent-amber); border-radius:50%;
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .ssp-loading p { font-size:12px; font-family:'Outfit',sans-serif; }
+  .ssp-error {
+    position:absolute; inset:0;
+    display:none; flex-direction:column; align-items:center; justify-content:center;
+    gap:12px; color:var(--text-dim); text-align:center; padding:32px;
+  }
+  .ssp-error.visible { display:flex; }
+  .ssp-error .icon { font-size:40px; opacity:0.3; }
+  .ssp-error h4 { font-family:'Outfit',sans-serif; font-size:14px; color:var(--text-secondary); }
+  .ssp-error p { font-size:11px; line-height:1.7; max-width:320px; }
+  .ssp-error a { color:var(--accent-amber); }
+
+  /* ─────────── STORY MANAGER MODAL ─────────── */
+  #story-manager-modal .modal { width:620px; }
+  .sm-doc-list { display:flex; flex-direction:column; gap:8px; max-height:300px; overflow-y:auto; margin-bottom:14px; }
+  .sm-doc-list::-webkit-scrollbar { width:4px; } .sm-doc-list::-webkit-scrollbar-thumb { background:var(--border-dim); border-radius:2px; }
+  .sm-doc-item {
+    display:flex; align-items:center; gap:10px; padding:10px 14px;
+    background:var(--bg-tertiary); border:1px solid var(--border-dim);
+    border-radius:var(--radius-md); transition:border-color 0.15s;
+  }
+  .sm-doc-item:hover { border-color:var(--border-active); }
+  .sm-doc-item-info { flex:1; min-width:0; }
+  .sm-doc-name { font-family:'Outfit',sans-serif; font-size:13px; font-weight:600; color:var(--text-primary); }
+  .sm-doc-id { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-dim); margin-top:1px; }
+  .sm-doc-actions { display:flex; gap:4px; flex-shrink:0; }
+  .sm-add-form {
+    background:var(--bg-tertiary); border:1px solid var(--border-dim);
+    border-radius:var(--radius-md); padding:14px; margin-bottom:14px;
+  }
+  .sm-add-form-title { font-family:'Outfit',sans-serif; font-size:11px; font-weight:700; color:var(--accent-amber); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:12px; }
+  .sm-empty { text-align:center; padding:28px; color:var(--text-dim); font-size:12px; }
+  .sm-help {
+    padding:12px 14px; background:rgba(251,191,36,0.05); border:1px solid rgba(251,191,36,0.15);
+    border-radius:var(--radius-md); font-size:11px; color:var(--text-secondary); line-height:1.7;
+  }
+  .sm-help strong { color:var(--accent-amber); }
+  .sm-help code {
+    font-family:'JetBrains Mono',monospace; font-size:10px;
+    background:rgba(0,0,0,0.3); padding:1px 5px; border-radius:3px;
+  }
 
   /* Detail Panel */
   .panel-header { padding:16px 20px; border-bottom:1px solid var(--border-dim); display:flex; align-items:center; justify-content:space-between; flex-shrink:0; background:var(--bg-primary); }
@@ -168,6 +356,19 @@
   .data-table th { background:var(--bg-tertiary); color:var(--text-dim); font-weight:700; font-family:'Outfit',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:0.5px; }
   .data-table td { color:var(--text-secondary); }
 
+  /* Story button in detail panel */
+  .story-link-btn {
+    display:flex; align-items:center; gap:8px;
+    width:100%; padding:10px 14px; border-radius:var(--radius-md);
+    background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2);
+    color:var(--accent-amber); font-family:'Outfit',sans-serif; font-size:12px; font-weight:600;
+    cursor:pointer; transition:all 0.18s; margin-bottom:10px;
+  }
+  .story-link-btn:hover { background:rgba(251,191,36,0.12); border-color:rgba(251,191,36,0.4); }
+  .story-link-btn .slb-icon { font-size:16px; }
+  .story-link-btn .slb-text { flex:1; text-align:left; }
+  .story-link-btn .slb-arrow { opacity:0.5; font-size:11px; }
+
   /* Forms */
   .form-group { margin-bottom:14px; }
   .form-group label { display:block; font-family:'Outfit',sans-serif; font-size:10px; font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:5px; letter-spacing:0.5px; }
@@ -182,6 +383,8 @@
   .btn { padding:7px 16px; border-radius:var(--radius-sm); font-family:'Outfit',sans-serif; font-size:11px; font-weight:600; cursor:pointer; border:1px solid; transition:all 0.2s; display:inline-flex; align-items:center; justify-content:center; gap:5px; }
   .btn-primary { background:var(--accent-blue); border-color:var(--accent-blue); color:#fff; }
   .btn-primary:hover { background:#5aabff; }
+  .btn-amber { background:rgba(251,191,36,0.15); border-color:rgba(251,191,36,0.4); color:var(--accent-amber); }
+  .btn-amber:hover { background:rgba(251,191,36,0.25); border-color:var(--accent-amber); }
   .btn-success { background:var(--accent-green-dim); border-color:var(--accent-green); color:var(--accent-green); }
   .btn-success:hover { background:#1d8f62; }
   .btn-danger { background:rgba(127,29,29,0.3); border-color:rgba(248,113,113,0.4); color:var(--accent-red); }
@@ -258,8 +461,11 @@
       <button class="btn-icon" onclick="openSettings()">⚙</button>
     </div>
   </div>
+
   <div id="main-layout">
     <div id="left-panel">
+
+      <!-- MAP VIEW -->
       <div id="map-view">
         <div id="topbar">
           <div class="topbar-left"><div class="mode-toggle"><button id="btn-viewer" class="active" onclick="setMode('viewer')">VIEWER</button><button id="btn-editor" onclick="setMode('editor')">EDITOR</button></div></div>
@@ -271,7 +477,8 @@
         <div class="zoom-controls"><button onclick="zoomIn()">+</button><button onclick="zoomOut()">−</button><button onclick="zoomReset()">⌂</button></div>
         <div class="zoom-level" id="zoom-level">100%</div>
       </div>
-      
+
+      <!-- DUNGEON VIEW -->
       <div id="dungeon-view">
         <div class="dv-header">
           <div class="dv-header-left"><div class="dv-header-icon">⚔</div><div><h2>Dungeons & Contents</h2><div class="dv-count" id="dungeon-count">0 Dungeons</div></div></div>
@@ -280,21 +487,30 @@
         <div class="dv-body" id="dungeon-body"></div>
       </div>
 
+      <!-- STORY VIEW -->
       <div id="story-view">
         <div class="sv-header">
           <div class="sv-header-left">
             <div class="sv-header-icon">📖</div>
-            <div><h2>World Lore & Story</h2><p>세계관 설정 및 문서 (NotebookLM 소스)</p></div>
+            <div>
+              <h2>World Lore &amp; Story</h2>
+              <p id="sv-doc-count">문서 0개 등록됨</p>
+            </div>
           </div>
-          <button class="btn btn-ghost btn-sm" onclick="window.open('https://docs.google.com/document/d/1CwCxkSjqTdwneHIEWv9C6QgKrYklEvqC_R9G-RyXlko/edit?tab=t.0', '_blank')">✏️ 문서 수정하기</button>
+          <div class="sv-toolbar">
+            <div class="sv-search-wrap">
+              <span style="color:var(--text-dim);font-size:13px;">🔍</span>
+              <input type="text" id="sv-search" placeholder="스토리 검색..." oninput="filterStoryCards(this.value)">
+            </div>
+            <button class="btn btn-amber btn-sm" onclick="openStoryManager()">📁 문서 관리</button>
+          </div>
         </div>
-        <div class="sv-body">
-          <iframe src="https://docs.google.com/document/d/e/2PACX-1vSV1lKGVQ7PRiMA446Q3Gty0Hc065n3p_5i18AhGKtDR1hWwRLqo6cR6Uyxx6s1YXzZncf_DfsnxCwE/pub?embedded=true"></iframe>
-        </div>
+        <div class="sv-body" id="sv-body"></div>
       </div>
-      
+
     </div>
-    
+
+    <!-- RIGHT DETAIL PANEL -->
     <div id="detail-panel">
       <div class="panel-header"><h2 id="panel-title">Region Details</h2><div class="panel-actions" id="panel-actions"></div></div>
       <div class="panel-body" id="panel-body"><div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하세요</p></div></div>
@@ -303,6 +519,85 @@
   </div>
 </div>
 
+<!-- ── STORY SLIDE PANEL ── -->
+<div id="story-panel-backdrop" onclick="closeStoryPanel()"></div>
+<div id="story-slide-panel">
+  <div class="ssp-header">
+    <div class="ssp-header-left">
+      <div class="ssp-icon">📖</div>
+      <div>
+        <div class="ssp-title" id="ssp-title">스토리</div>
+        <div class="ssp-region" id="ssp-region-label"></div>
+      </div>
+    </div>
+    <div class="ssp-actions">
+      <a id="ssp-gdoc-link" href="#" target="_blank" class="btn btn-ghost btn-sm" style="text-decoration:none;">↗ 원본 문서</a>
+      <button class="ssp-close-btn" onclick="closeStoryPanel()">✕</button>
+    </div>
+  </div>
+  <div class="ssp-body" id="ssp-body">
+    <div class="ssp-loading" id="ssp-loading">
+      <div class="ssp-loading-spinner"></div>
+      <p>문서를 불러오는 중...</p>
+    </div>
+    <div class="ssp-error" id="ssp-error">
+      <div class="icon">⚠️</div>
+      <h4>문서를 불러올 수 없습니다</h4>
+      <p>구글 문서의 공유 설정이 <strong>"링크 있는 사용자 보기 가능"</strong>으로 설정되어 있는지 확인해주세요.<br><br>
+      또는 <a id="ssp-error-link" href="#" target="_blank">문서를 직접 열어보세요 ↗</a></p>
+    </div>
+    <iframe id="ssp-iframe" src="" title="Story Document"
+      style="display:none;width:100%;height:100%;border:none;background:#fff;"></iframe>
+  </div>
+</div>
+
+<!-- ── STORY MANAGER MODAL ── -->
+<div class="modal-overlay" id="story-manager-modal" onclick="if(event.target===this)closeStoryManager()">
+  <div class="modal" style="width:620px;max-width:94vw;">
+    <div class="modal-head">
+      <h3>📁 스토리 문서 관리</h3>
+      <button class="modal-close" onclick="closeStoryManager()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="sm-help" style="margin-bottom:16px;">
+        <strong>사용 방법:</strong> 구글 문서를 <strong>"링크 있는 사용자 보기 가능"</strong>으로 공유 설정 후,
+        문서 URL에서 ID를 복사해 등록하세요.<br>
+        URL 형식: <code>docs.google.com/document/d/<strong>[문서 ID]</strong>/edit</code>
+      </div>
+
+      <!-- Add Form -->
+      <div class="sm-add-form">
+        <div class="sm-add-form-title">➕ 새 문서 등록</div>
+        <div class="form-row" style="margin-bottom:10px;">
+          <div class="form-group">
+            <label>지역명 / 제목</label>
+            <input class="form-input" id="sm-new-name" placeholder="예: 엘프숲" autocomplete="off">
+          </div>
+          <div class="form-group" style="flex:2;">
+            <label>Google Docs 문서 ID</label>
+            <input class="form-input" id="sm-new-docid" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms" autocomplete="off">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label>설명 (선택)</label>
+          <input class="form-input" id="sm-new-desc" placeholder="이 지역 스토리에 대한 간단한 설명">
+        </div>
+        <div style="display:flex;justify-content:flex-end;">
+          <button class="btn btn-amber" onclick="addStoryDoc()">+ 등록</button>
+        </div>
+      </div>
+
+      <!-- Doc List -->
+      <div id="sm-doc-list" class="sm-doc-list"></div>
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
+        <button class="btn btn-ghost" onclick="closeStoryManager()">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── OTHER MODALS ── -->
 <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearchModal()">
   <div class="search-box">
     <div class="search-input-wrap"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="NPC 또는 몬스터 이름 / 인덱스 검색..." oninput="performSearch(this.value)" autocomplete="off"><kbd style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:4px;padding:2px 7px;">ESC</kbd></div>
@@ -327,6 +622,9 @@
 <div id="toast"></div>
 
 <script>
+// ─────────────────────────────────────────────
+//  CONSTANTS & STATE
+// ─────────────────────────────────────────────
 const DUNGEON_TYPE_KEY='t_dungeon';
 const DEFAULT_MAP_DATA={"1001":{id:"1001",name:"하남성",type:"t_field",pvp:"안전 지역",x:45,y:45,image:"",factions:["f_neutral"],scenario:"안전 지역 / 주요 필드",connected:["1002","1003","1004"],monsters:[],npcs:[]},"1002":{id:"1002",name:"소림사",type:"t_field",pvp:"안전 지역",x:35,y:35,image:"",factions:["f_neutral"],scenario:"안전 지역",connected:["1001"],monsters:[],npcs:[]},"1003":{id:"1003",name:"섬서성",type:"t_field",pvp:"안전 지역",x:25,y:50,image:"",factions:["f_neutral"],scenario:"안전 지역",connected:["1001"],monsters:[],npcs:[]},"1004":{id:"1004",name:"호북성",type:"t_field",pvp:"안전 지역",x:55,y:60,image:"",factions:["f_neutral"],scenario:"일반 필드",connected:["1001"],monsters:[],npcs:[]}};
 let mapData={};
@@ -340,27 +638,275 @@ let dragTarget=null,dragStarted=false,dragStartX,dragStartY;
 let ghConfig={token:'',owner:'',repo:'',path:'data/mapData.json',branch:'main',gsApiKey:'',gsSheetId:'',fontSize:13};
 let activeTypeFilters=new Set(),currentSearchTab='all';
 
-function switchGlobalTab(tab){
-  currentGlobalTab=tab;
-  document.getElementById('gtab-map').className='gtab-btn'+(tab==='map'?' active':'');
-  document.getElementById('gtab-dungeon').className='gtab-btn'+(tab==='dungeon'?' dungeon-active':'');
-  document.getElementById('gtab-story').className='gtab-btn'+(tab==='story'?' story-active':'');
-  
-  const mv=document.getElementById('map-view'), dv=document.getElementById('dungeon-view'), sv=document.getElementById('story-view'), dp=document.getElementById('detail-panel');
-  
-  mv.classList.add('hidden'); dv.classList.remove('visible'); sv.classList.remove('visible');
-  dp.style.display = 'flex';
-  
-  if(tab==='map'){
-    mv.classList.remove('hidden'); document.getElementById('panel-title').textContent=mode==='viewer'?'Region Details':'Region Editor'; selectedId=null; renderDetail();
-  } else if(tab==='dungeon'){
-    dv.classList.add('visible'); document.getElementById('panel-title').textContent='Dungeon Details'; selectedId=null; renderDungeonBrowser(); renderDetail();
-  } else if(tab==='story'){
-    sv.classList.add('visible'); 
-    dp.style.display = 'none';
+// ── Story Docs State ──
+let storyDocs = []; // [{ id, name, docId, desc }]
+
+// ─────────────────────────────────────────────
+//  STORY DOCS — PERSISTENCE
+// ─────────────────────────────────────────────
+function loadStoryDocs() {
+  try {
+    const s = localStorage.getItem('wm_story_docs');
+    if (s) storyDocs = JSON.parse(s);
+  } catch(e) { storyDocs = []; }
+}
+function saveStoryDocs() {
+  try { localStorage.setItem('wm_story_docs', JSON.stringify(storyDocs)); } catch(e) {}
+}
+
+// ─────────────────────────────────────────────
+//  STORY VIEW — RENDER
+// ─────────────────────────────────────────────
+function renderStoryView() {
+  const body = document.getElementById('sv-body');
+  const count = document.getElementById('sv-doc-count');
+  count.textContent = `문서 ${storyDocs.length}개 등록됨`;
+
+  if (storyDocs.length === 0) {
+    body.innerHTML = `
+      <div class="sv-empty">
+        <div class="icon">📚</div>
+        <h3>등록된 스토리 문서가 없습니다</h3>
+        <p>"문서 관리" 버튼을 눌러 구글 드라이브 문서를 등록하세요.<br>
+        문서는 구글 문서 공유 설정에서<br>"링크 있는 사용자 보기 가능"으로 설정해야 합니다.</p>
+        <button class="btn btn-amber" onclick="openStoryManager()">📁 문서 관리 열기</button>
+      </div>`;
+    return;
+  }
+
+  body.innerHTML = storyDocs.map(doc => `
+    <div class="story-card" data-docid="${doc.id}" data-name="${(doc.name||'').toLowerCase()}" onclick="openStoryPanel('${doc.id}')">
+      <div class="sc-top">
+        <div class="sc-region-tag">📍 ${doc.name || '지역 미지정'}</div>
+        <div class="sc-name">${doc.name || '제목 없음'} 스토리</div>
+        <div class="sc-desc">${doc.desc || '설명이 없습니다. 문서 관리에서 설명을 추가하세요.'}</div>
+      </div>
+      <div class="sc-footer">
+        <div class="sc-doc-id">${doc.docId ? doc.docId.substring(0,24)+'…' : 'ID 없음'}</div>
+        <button class="sc-open-btn" onclick="event.stopPropagation();openStoryPanel('${doc.id}')">
+          <span>읽기</span> <span>→</span>
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterStoryCards(q) {
+  q = q.trim().toLowerCase();
+  document.querySelectorAll('.story-card').forEach(c => {
+    const name = c.dataset.name || '';
+    c.style.display = (!q || name.includes(q)) ? '' : 'none';
+  });
+}
+
+// ─────────────────────────────────────────────
+//  STORY SLIDE PANEL
+// ─────────────────────────────────────────────
+let storyPanelOpen = false;
+
+function openStoryPanel(storyDocId) {
+  const doc = storyDocs.find(d => d.id === storyDocId);
+  if (!doc) return;
+
+  // Set header info
+  document.getElementById('ssp-title').textContent = (doc.name || '스토리') + ' 스토리';
+  document.getElementById('ssp-region-label').textContent = '📍 ' + (doc.name || '지역 미지정');
+
+  const gdocUrl = doc.docId
+    ? `https://docs.google.com/document/d/${doc.docId}/preview`
+    : null;
+  const gdocEditUrl = doc.docId
+    ? `https://docs.google.com/document/d/${doc.docId}/edit`
+    : '#';
+
+  document.getElementById('ssp-gdoc-link').href = gdocEditUrl;
+  document.getElementById('ssp-error-link').href = gdocEditUrl;
+
+  // Reset state
+  const iframe = document.getElementById('ssp-iframe');
+  const loading = document.getElementById('ssp-loading');
+  const error = document.getElementById('ssp-error');
+  iframe.style.display = 'none';
+  loading.style.display = 'flex';
+  error.classList.remove('visible');
+
+  if (!doc.docId) {
+    loading.style.display = 'none';
+    error.classList.add('visible');
+  } else {
+    iframe.src = gdocUrl;
+  }
+
+  // Open panel
+  document.getElementById('story-slide-panel').classList.add('open');
+  document.getElementById('story-panel-backdrop').classList.add('open');
+  storyPanelOpen = true;
+}
+
+function closeStoryPanel() {
+  document.getElementById('story-slide-panel').classList.remove('open');
+  document.getElementById('story-panel-backdrop').classList.remove('open');
+  storyPanelOpen = false;
+  // Delay src clear to avoid flash
+  setTimeout(() => {
+    const iframe = document.getElementById('ssp-iframe');
+    iframe.src = '';
+    iframe.style.display = 'none';
+  }, 400);
+}
+
+function onIframeLoad() {
+  const iframe = document.getElementById('ssp-iframe');
+  const loading = document.getElementById('ssp-loading');
+  const error = document.getElementById('ssp-error');
+  // If src is empty (cleanup), ignore
+  if (!iframe.src || iframe.src === window.location.href) return;
+  loading.style.display = 'none';
+  error.classList.remove('visible');
+  iframe.style.display = 'block';
+}
+
+function onIframeError() {
+  document.getElementById('ssp-loading').style.display = 'none';
+  document.getElementById('ssp-iframe').style.display = 'none';
+  document.getElementById('ssp-error').classList.add('visible');
+}
+
+// Open story panel for a map region (from detail panel)
+function openStoryForRegion(regionName) {
+  // Find story doc matching region name
+  const doc = storyDocs.find(d =>
+    d.name && regionName &&
+    (d.name.toLowerCase() === regionName.toLowerCase() ||
+     regionName.toLowerCase().includes(d.name.toLowerCase()) ||
+     d.name.toLowerCase().includes(regionName.toLowerCase()))
+  );
+  if (doc) {
+    openStoryPanel(doc.id);
+  } else {
+    showToast(`"${regionName}"에 연결된 스토리 문서가 없습니다.`, true);
   }
 }
 
+// ─────────────────────────────────────────────
+//  STORY MANAGER MODAL
+// ─────────────────────────────────────────────
+function openStoryManager() {
+  renderStoryManagerList();
+  document.getElementById('story-manager-modal').classList.add('open');
+  document.getElementById('sm-new-name').value = '';
+  document.getElementById('sm-new-docid').value = '';
+  document.getElementById('sm-new-desc').value = '';
+}
+
+function closeStoryManager() {
+  document.getElementById('story-manager-modal').classList.remove('open');
+}
+
+function renderStoryManagerList() {
+  const list = document.getElementById('sm-doc-list');
+  if (storyDocs.length === 0) {
+    list.innerHTML = '<div class="sm-empty">등록된 문서가 없습니다. 위에서 새 문서를 추가해주세요.</div>';
+    return;
+  }
+  list.innerHTML = storyDocs.map((doc, idx) => `
+    <div class="sm-doc-item">
+      <div class="sm-doc-item-info">
+        <div class="sm-doc-name">${doc.name || '이름 없음'} ${doc.desc ? '— ' + doc.desc.substring(0,30) + (doc.desc.length>30?'…':'') : ''}</div>
+        <div class="sm-doc-id">${doc.docId || 'Doc ID 없음'}</div>
+      </div>
+      <div class="sm-doc-actions">
+        <button class="btn btn-ghost btn-sm" onclick="previewStoryFromManager('${doc.id}')">👁 미리보기</button>
+        <button class="btn-icon-sm" title="삭제" onclick="deleteStoryDoc('${doc.id}')">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addStoryDoc() {
+  const name = document.getElementById('sm-new-name').value.trim();
+  const docId = document.getElementById('sm-new-docid').value.trim();
+  const desc = document.getElementById('sm-new-desc').value.trim();
+
+  if (!name) { showToast('지역명을 입력해주세요.', true); return; }
+  if (!docId) { showToast('Google Docs 문서 ID를 입력해주세요.', true); return; }
+
+  // Extract doc ID from full URL if pasted
+  const urlMatch = docId.match(/\/document\/d\/([a-zA-Z0-9_-]+)/);
+  const cleanDocId = urlMatch ? urlMatch[1] : docId;
+
+  storyDocs.push({
+    id: 'sd_' + Date.now().toString(36),
+    name, docId: cleanDocId, desc
+  });
+  saveStoryDocs();
+  renderStoryManagerList();
+  renderStoryView();
+  document.getElementById('sm-new-name').value = '';
+  document.getElementById('sm-new-docid').value = '';
+  document.getElementById('sm-new-desc').value = '';
+  showToast(`✅ "${name}" 스토리 문서 등록됨`);
+  updateSvDocCount();
+}
+
+function deleteStoryDoc(id) {
+  const doc = storyDocs.find(d => d.id === id);
+  if (!doc || !confirm(`"${doc.name}" 스토리 문서를 삭제하시겠습니까?`)) return;
+  storyDocs = storyDocs.filter(d => d.id !== id);
+  saveStoryDocs();
+  renderStoryManagerList();
+  renderStoryView();
+  updateSvDocCount();
+  showToast(`"${doc.name}" 삭제됨`);
+}
+
+function previewStoryFromManager(id) {
+  closeStoryManager();
+  openStoryPanel(id);
+}
+
+function updateSvDocCount() {
+  const el = document.getElementById('sv-doc-count');
+  if (el) el.textContent = `문서 ${storyDocs.length}개 등록됨`;
+}
+
+// ─────────────────────────────────────────────
+//  GLOBAL TAB SWITCH
+// ─────────────────────────────────────────────
+function switchGlobalTab(tab) {
+  currentGlobalTab = tab;
+  document.getElementById('gtab-map').className = 'gtab-btn' + (tab === 'map' ? ' active' : '');
+  document.getElementById('gtab-dungeon').className = 'gtab-btn' + (tab === 'dungeon' ? ' dungeon-active' : '');
+  document.getElementById('gtab-story').className = 'gtab-btn' + (tab === 'story' ? ' story-active' : '');
+
+  const mv = document.getElementById('map-view'),
+        dv = document.getElementById('dungeon-view'),
+        sv = document.getElementById('story-view'),
+        dp = document.getElementById('detail-panel');
+
+  mv.classList.add('hidden');
+  dv.classList.remove('visible');
+  sv.classList.remove('visible');
+  dp.style.display = 'flex';
+
+  if (tab === 'map') {
+    mv.classList.remove('hidden');
+    document.getElementById('panel-title').textContent = mode === 'viewer' ? 'Region Details' : 'Region Editor';
+    selectedId = null; renderDetail();
+  } else if (tab === 'dungeon') {
+    dv.classList.add('visible');
+    document.getElementById('panel-title').textContent = 'Dungeon Details';
+    selectedId = null; renderDungeonBrowser(); renderDetail();
+  } else if (tab === 'story') {
+    sv.classList.add('visible');
+    dp.style.display = 'none';
+    renderStoryView();
+  }
+}
+
+// ─────────────────────────────────────────────
+//  DUNGEON VIEW
+// ─────────────────────────────────────────────
 function renderDungeonBrowser(){
   const body=document.getElementById('dungeon-body');
   const dungeons=Object.values(mapData).filter(r=>r.type===DUNGEON_TYPE_KEY);
@@ -374,6 +920,9 @@ function renderDungeonBrowser(){
 function selectDungeon(id){selectedId=id;document.querySelectorAll('.dungeon-card').forEach(c=>c.classList.toggle('selected',c.dataset.id===id));renderDetail();}
 function filterDungeonCards(q){q=q.trim().toLowerCase();document.querySelectorAll('.dungeon-card').forEach(c=>{const n=c.dataset.name||'',i=(c.dataset.id||'').toLowerCase();c.style.display=(!q||n.includes(q)||i.includes(q))?'':'none';});}
 
+// ─────────────────────────────────────────────
+//  SEARCH MODAL
+// ─────────────────────────────────────────────
 function openSearchModal(){document.getElementById('search-overlay').classList.add('open');const inp=document.getElementById('search-input');inp.value='';inp.focus();document.getElementById('search-results').innerHTML='<div class="search-empty">검색어를 입력하세요</div>';}
 function closeSearchModal(){document.getElementById('search-overlay').classList.remove('open');}
 function setSearchTab(type,btn){currentSearchTab=type;document.querySelectorAll('.search-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');performSearch(document.getElementById('search-input').value);}
@@ -391,6 +940,9 @@ function performSearch(query){
 function highlightMatch(t,q){if(!q)return t;const i=t.toLowerCase().indexOf(q);if(i<0)return t;return t.substring(0,i)+'<mark>'+t.substring(i,i+q.length)+'</mark>'+t.substring(i+q.length);}
 function navigateFromSearch(rId,rType){closeSearchModal();if(rType===DUNGEON_TYPE_KEY){switchGlobalTab('dungeon');setTimeout(()=>selectDungeon(rId),50);}else{switchGlobalTab('map');selectRegion(rId);}}
 
+// ─────────────────────────────────────────────
+//  GITHUB SYNC
+// ─────────────────────────────────────────────
 function isGhOk(){return ghConfig.token&&ghConfig.owner&&ghConfig.repo&&ghConfig.path;}
 function ghUrl(){return`https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/${ghConfig.path}`;}
 function ghHdr(){return{Authorization:`Bearer ${ghConfig.token}`,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};}
@@ -414,9 +966,41 @@ function openSettings(){document.getElementById('cfg-token').value=ghConfig.toke
 function closeSettings(){document.getElementById('settings-modal').classList.remove('open');}
 function saveSettings(){ghConfig.token=document.getElementById('cfg-token').value.trim();ghConfig.owner=document.getElementById('cfg-owner').value.trim();ghConfig.repo=document.getElementById('cfg-repo').value.trim();ghConfig.path=document.getElementById('cfg-path').value.trim()||'data/mapData.json';ghConfig.branch=document.getElementById('cfg-branch').value.trim()||'main';ghConfig.gsApiKey=document.getElementById('cfg-gs-key').value.trim();ghConfig.gsSheetId=document.getElementById('cfg-gs-id').value.trim();ghConfig.fontSize=parseInt(document.getElementById('cfg-font').value)||13;localStorage.setItem('wm_gh_cfg',JSON.stringify(ghConfig));closeSettings();if(isGhOk()){loadFromGithub().then(loaded=>{if(loaded)renderAll();});}}
 
-window.addEventListener('DOMContentLoaded',async()=>{loadGhCfg();Object.assign(mapData,JSON.parse(JSON.stringify(DEFAULT_MAP_DATA)));activeTypeFilters=new Set(Object.keys(typeMeta));activeTypeFilters.delete(DUNGEON_TYPE_KEY);renderFilterBar();if(isGhOk())await loadFromGithub();const img=document.getElementById('world-image');img.onload=()=>{mapImgW=img.naturalWidth||1920;mapImgH=img.naturalHeight||1080;initViewport();renderAll();};if(img.complete&&img.naturalWidth>0){mapImgW=img.naturalWidth;mapImgH=img.naturalHeight;initViewport();renderAll();}setupPanZoom();});
-document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearchModal();}if(e.key==='Escape'){closeSearchModal();closeLightbox();closeSettings();}if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();if(hasUnsavedChanges)saveToGithub();}});
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
+  loadGhCfg();
+  loadStoryDocs();
 
+  // iframe 이벤트 — 인라인 속성 대신 JS에서 등록
+  const iframe = document.getElementById('ssp-iframe');
+  iframe.addEventListener('load', onIframeLoad);
+  iframe.addEventListener('error', onIframeError);
+  Object.assign(mapData, JSON.parse(JSON.stringify(DEFAULT_MAP_DATA)));
+  activeTypeFilters = new Set(Object.keys(typeMeta));
+  activeTypeFilters.delete(DUNGEON_TYPE_KEY);
+  renderFilterBar();
+  if (isGhOk()) await loadFromGithub();
+  const img = document.getElementById('world-image');
+  img.onload = () => { mapImgW=img.naturalWidth||1920; mapImgH=img.naturalHeight||1080; initViewport(); renderAll(); };
+  if (img.complete && img.naturalWidth > 0) { mapImgW=img.naturalWidth; mapImgH=img.naturalHeight; initViewport(); renderAll(); }
+  setupPanZoom();
+});
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey||e.metaKey) && e.key==='k') { e.preventDefault(); openSearchModal(); }
+  if (e.key === 'Escape') {
+    if (storyPanelOpen) { closeStoryPanel(); return; }
+    closeSearchModal(); closeLightbox(); closeSettings();
+    document.getElementById('story-manager-modal').classList.remove('open');
+  }
+  if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); if(hasUnsavedChanges) saveToGithub(); }
+});
+
+// ─────────────────────────────────────────────
+//  MAP / VIEWPORT
+// ─────────────────────────────────────────────
 function initViewport(){const vp=document.getElementById('map-viewport'),img=document.getElementById('world-image'),c=document.getElementById('map-container');img.style.width=mapImgW+'px';img.style.height=mapImgH+'px';vp.style.width=mapImgW+'px';vp.style.height=mapImgH+'px';scale=Math.min(c.clientWidth/mapImgW,c.clientHeight/mapImgH)*0.9;panX=(c.clientWidth-mapImgW*scale)/2;panY=(c.clientHeight-mapImgH*scale)/2;applyTransform();}
 function applyTransform(){document.getElementById('map-viewport').style.transform=`translate(${panX}px,${panY}px) scale(${scale})`;document.getElementById('zoom-level').textContent=Math.round(scale*100)+'%';}
 function setupPanZoom(){const c=document.getElementById('map-container');c.addEventListener('pointerdown',e=>{if(e.button===1||(e.button===0&&!isMarkerEl(e.target))){if(mode==='editor'&&isMarkerEl(e.target))return;isPanning=true;panStartX=e.clientX;panStartY=e.clientY;panStartPanX=panX;panStartPanY=panY;c.classList.add('panning');c.setPointerCapture(e.pointerId);}});c.addEventListener('pointermove',e=>{if(isPanning){panX=panStartPanX+(e.clientX-panStartX);panY=panStartPanY+(e.clientY-panStartY);applyTransform();return;}if(dragTarget)handleDragMove(e);});c.addEventListener('pointerup',e=>{if(isPanning){isPanning=false;c.classList.remove('panning');}if(dragTarget)handleDragEnd(e);});c.addEventListener('wheel',e=>{e.preventDefault();const r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,old=scale;scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*(e.deltaY>0?0.9:1.1)));panX=mx-(mx-panX)*(scale/old);panY=my-(my-panY)*(scale/old);applyTransform();},{passive:false});}
@@ -425,20 +1009,28 @@ function zoomIn(){const c=document.getElementById('map-container'),cx=c.clientWi
 function zoomOut(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.max(MIN_SCALE,scale/1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
 function zoomReset(){initViewport();}
 
+// ─────────────────────────────────────────────
+//  FILTER / MARKERS / CONNECTIONS
+// ─────────────────────────────────────────────
 function renderFilterBar(){const bar=document.getElementById('filter-bar');bar.innerHTML='';Object.entries(typeMeta).forEach(([k,v])=>{if(k===DUNGEON_TYPE_KEY)return;const btn=document.createElement('button');btn.className=`filter-btn ${activeTypeFilters.has(k)?'active':''}`;btn.style.setProperty('--c',v.color);btn.textContent=v.label;btn.onclick=()=>{if(activeTypeFilters.has(k))activeTypeFilters.delete(k);else activeTypeFilters.add(k);btn.classList.toggle('active',activeTypeFilters.has(k));renderMarkers();renderConnections();};bar.appendChild(btn);});}
 function renderAll(){renderFilterBar();renderMarkers();renderConnections();updateStats();if(selectedId&&!mapData[selectedId])selectedId=null;renderDetail();}
 function renderMarkers(){const layer=document.getElementById('markers-layer');layer.innerHTML='';Object.values(mapData).forEach(region=>{if(region.type===DUNGEON_TYPE_KEY)return;if(!activeTypeFilters.has(region.type))return;const el=document.createElement('div');el.className='map-marker'+(region.id===selectedId?' selected':'');el.dataset.id=region.id;el.style.left=(region.x/100*mapImgW)+'px';el.style.top=(region.y/100*mapImgH)+'px';const col=typeMeta[region.type]?.color||'#555d74';el.innerHTML=`<div class="marker-pin"><svg viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.268 21.732 0 14 0z" fill="${col}"/><circle cx="14" cy="13" r="6" fill="rgba(0,0,0,0.3)"/><circle cx="14" cy="13" r="4" fill="#fff" opacity="0.9"/></svg></div><div class="marker-label">${region.name}</div>`;el.addEventListener('pointerdown',e=>{if(mode==='editor'){e.stopPropagation();handleDragStart(e,region.id);}});el.addEventListener('click',()=>{if(!dragTarget){if(selectedId===region.id){selectedId=null;renderAll();}else{selectRegion(region.id);}}});layer.appendChild(el);});}
 function renderConnections(){const svg=document.getElementById('connections-svg');svg.setAttribute('width',mapImgW);svg.setAttribute('height',mapImgH);svg.style.width=mapImgW+'px';svg.style.height=mapImgH+'px';svg.innerHTML='';const drawn=new Set();Object.values(mapData).forEach(r=>{if(r.type===DUNGEON_TYPE_KEY)return;if(!activeTypeFilters.has(r.type))return;(r.connected||[]).forEach(tid=>{const t=mapData[tid];if(!t||t.type===DUNGEON_TYPE_KEY||!activeTypeFilters.has(t.type))return;const k=[r.id,tid].sort().join('|');if(drawn.has(k))return;drawn.add(k);const line=document.createElementNS('http://www.w3.org/2000/svg','line');line.setAttribute('x1',r.x/100*mapImgW);line.setAttribute('y1',r.y/100*mapImgH);line.setAttribute('x2',t.x/100*mapImgW);line.setAttribute('y2',t.y/100*mapImgH);if(selectedId&&(r.id===selectedId||tid===selectedId))line.classList.add('highlight');svg.appendChild(line);});});}
 function selectRegion(id){selectedId=id;renderMarkers();renderConnections();renderDetail();}
 
+// ─────────────────────────────────────────────
+//  DETAIL PANEL
+// ─────────────────────────────────────────────
 function renderDetail(){
   const body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
   if(!selectedId||!mapData[selectedId]){
     if(currentGlobalTab==='dungeon'){actions.innerHTML=mode==='editor'?`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 전체 저장</button>`:'';body.innerHTML=`<div class="empty-state"><div class="icon">🏰</div><p>던전 카드를 클릭하여<br>상세 정보를 확인하세요</p></div>`;}
     else if(mode==='editor'){actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 전체 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button>`;body.innerHTML=`<div class="empty-state"><div class="icon">✏️</div><p>마커를 클릭하여 편집하거나<br>새 지역을 추가하세요</p><button class="btn btn-success" onclick="addRegion()" style="margin-top:8px;">+ 신규 지역 추가</button></div>`;}
-    else{actions.innerHTML='';body.innerHTML=`<div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>`;}return;
+    else{actions.innerHTML='';body.innerHTML=`<div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>`;}
+    return;
   }
-  if(mode==='editor'&&currentGlobalTab==='map')renderEditorDetail();else renderViewerDetail();
+  if(mode==='editor'&&currentGlobalTab==='map') renderEditorDetail();
+  else renderViewerDetail();
 }
 
 function generateTable(arr){if(!arr||arr.length===0)return'<div class="detail-value" style="color:var(--text-dim)">데이터 없음</div>';return`<table class="data-table" style="table-layout:fixed;width:100%;"><thead><tr><th style="width:15%;text-align:center;">인덱스</th><th style="width:35%;">이름</th><th style="width:20%;">타입</th><th style="width:30%;">파일명</th></tr></thead><tbody>${arr.map(i=>`<tr><td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);text-align:center;">${i.idx||'-'}</td><td style="font-weight:600;">${i.name||'-'}</td><td>${i.type||'-'}</td><td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:10px;word-break:break-all;">${i.file||'-'}</td></tr>`).join('')}</tbody></table>`;}
@@ -448,8 +1040,25 @@ function renderViewerDetail(){
   const tMeta=typeMeta[r.type]||{label:'알 수 없음',color:'#555d74'};
   const fBadges=(r.factions||[]).map(fId=>{const fm=factionMeta[fId];return fm?`<div class="info-badge" style="border-color:var(--border-dim);color:var(--text-secondary)">🛡 ${fm.label}</div>`:'';}).join('');
   const conn=(r.connected||[]).map(cid=>{const cr=mapData[cid];if(!cr)return'';if(cr.type===DUNGEON_TYPE_KEY)return`<button class="connected-btn" onclick="switchGlobalTab('dungeon');setTimeout(()=>selectDungeon('${cid}'),50);">${cr.name} 🏰</button>`;return`<button class="connected-btn" onclick="switchGlobalTab('map');selectRegion('${cid}')">${cr.name}</button>`;}).join('');
+
+  // Check if this region has a story doc
+  const hasStory = storyDocs.some(d =>
+    d.name && r.name && (
+      d.name.toLowerCase() === r.name.toLowerCase() ||
+      r.name.toLowerCase().includes(d.name.toLowerCase()) ||
+      d.name.toLowerCase().includes(r.name.toLowerCase())
+    )
+  );
+  const storyBtn = hasStory
+    ? `<button class="story-link-btn" onclick="openStoryForRegion('${r.name}')">
+        <span class="slb-icon">📖</span>
+        <span class="slb-text">${r.name} 스토리 보기</span>
+        <span class="slb-arrow">→</span>
+       </button>`
+    : '';
+
   const editBtn=(currentGlobalTab==='dungeon')?`<div class="separator"></div><button class="btn btn-ghost btn-block" onclick="switchGlobalTab('map');setMode('editor');selectRegion('${r.id}');">✏️ 에디터에서 열기</button>`:'';
-  body.innerHTML=`${r.image?`<div class="detail-image-wrap" onclick="openLightbox('${r.image}')"><img src="${r.image}" alt="${r.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=no-image>No Image</div>'"></div>`:''}<div class="detail-name">${r.name}</div><div class="detail-id">ID: ${r.id}</div><div class="badge-row"><div class="info-badge" style="border-color:${tMeta.color};color:${tMeta.color}"><div class="faction-dot" style="background:${tMeta.color}"></div>${tMeta.label}</div>${r.pvp?`<div class="info-badge" style="border-color:var(--accent-red-dim);color:var(--accent-red)">⚔ ${r.pvp}</div>`:''}${fBadges}</div><div class="detail-section"><div class="detail-label">시나리오 / 특징</div><div class="detail-value">${r.scenario||'—'}</div></div><div class="detail-section"><div class="detail-label">등장 몬스터</div>${generateTable(r.monsters)}</div><div class="detail-section"><div class="detail-label">등장 NPC</div>${generateTable(r.npcs)}</div><div class="detail-section"><div class="detail-label">연결된 지역</div><div class="connected-list">${conn||'<span class="detail-value">없음</span>'}</div></div>${editBtn}`;
+  body.innerHTML=`${r.image?`<div class="detail-image-wrap" onclick="openLightbox('${r.image}')"><img src="${r.image}" alt="${r.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=no-image>No Image</div>'"></div>`:''}<div class="detail-name">${r.name}</div><div class="detail-id">ID: ${r.id}</div><div class="badge-row"><div class="info-badge" style="border-color:${tMeta.color};color:${tMeta.color}"><div class="faction-dot" style="background:${tMeta.color}"></div>${tMeta.label}</div>${r.pvp?`<div class="info-badge" style="border-color:var(--accent-red-dim);color:var(--accent-red)">⚔ ${r.pvp}</div>`:''}${fBadges}</div>${storyBtn}<div class="detail-section"><div class="detail-label">시나리오 / 특징</div><div class="detail-value">${r.scenario||'—'}</div></div><div class="detail-section"><div class="detail-label">등장 몬스터</div>${generateTable(r.monsters)}</div><div class="detail-section"><div class="detail-label">등장 NPC</div>${generateTable(r.npcs)}</div><div class="detail-section"><div class="detail-label">연결된 지역</div><div class="connected-list">${conn||'<span class="detail-value">없음</span>'}</div></div>${editBtn}`;
   actions.innerHTML=currentGlobalTab==='dungeon'?`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 전체 저장</button>`:'';
 }
 
@@ -465,6 +1074,9 @@ function renderEditorDetail(){
   actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 전체 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button>`;
 }
 
+// ─────────────────────────────────────────────
+//  EDIT OPERATIONS
+// ─────────────────────────────────────────────
 function updateField(f,v){if(!selectedId||!mapData[selectedId])return;mapData[selectedId][f]=v;markDirty();if(f==='name'||f==='type'){renderMarkers();if(currentGlobalTab==='dungeon')renderDungeonBrowser();}}
 function updateTypeColor(tId,hex){if(typeMeta[tId]){typeMeta[tId].color=hex;markDirty();renderFilterBar();renderMarkers();}}
 function manageType(tId){const meta=typeMeta[tId];const act=prompt(`분류 관리 [${meta.label}]\n1: 이름 변경\n2: 새 분류 추가\n3: 이 분류 삭제`);if(act==='1'){const n=prompt('새 이름:',meta.label);if(n){meta.label=n.trim();markDirty();renderAll();}}else if(act==='2'){const n=prompt('새 분류 이름:');if(n){const nid='t_'+Date.now();typeMeta[nid]={label:n.trim(),color:'#8a92a8'};activeTypeFilters.add(nid);markDirty();renderAll();}}else if(act==='3'){if(tId===DUNGEON_TYPE_KEY)return alert('"던전 및 콘텐츠"는 삭제할 수 없습니다.');if(Object.keys(typeMeta).length<=1)return alert('최소 1개의 분류 필요.');if(confirm(`"${meta.label}" 삭제?`)){delete typeMeta[tId];activeTypeFilters.delete(tId);const fb=Object.keys(typeMeta)[0];Object.values(mapData).forEach(r=>{if(r.type===tId)r.type=fb;});markDirty();renderAll();}}}
