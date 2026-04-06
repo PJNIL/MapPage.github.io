@@ -1,71 +1,5 @@
 {
   "regions": {
-    "1": {
-      "id": "1",
-      "name": "청해성",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 46.7,
-      "y": 40.7,
-      "image": "",
-      "factions": [],
-      "scenario": "",
-      "connected": [],
-      "monsters": [],
-      "npcs": []
-    },
-    "2": {
-      "id": "2",
-      "name": "사천성",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 58.8,
-      "y": 62.5,
-      "image": "",
-      "factions": [
-        "f_1774855745685",
-        "f_1774855753031"
-      ],
-      "scenario": "",
-      "connected": [],
-      "monsters": [],
-      "npcs": []
-    },
-    "3": {
-      "id": "3",
-      "name": "호북성",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 78.1,
-      "y": 59.7,
-      "image": "",
-      "factions": [
-        "f_1774844912801",
-        "f_1774855708813"
-      ],
-      "scenario": "",
-      "connected": [
-        "Hanam1001"
-      ],
-      "monsters": [],
-      "npcs": []
-    },
-    "4": {
-      "id": "4",
-      "name": "산동성",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 88.5,
-      "y": 38.4,
-      "image": "",
-      "factions": [
-        "f_1774844914725"
-      ],
-      "scenario": "",
-      "connected": [],
-      "monsters": [],
-      "npcs": []
-    },
     "Hanam1001": {
       "id": "Hanam1001",
       "name": "하남성",
@@ -83,7 +17,7 @@
         "Sorimsa1002",
         "Shaanxi1003",
         "Jangunmyo",
-        "3"
+        "Hubei1004"
       ],
       "monsters": [
         {
@@ -561,7 +495,7 @@
       "scenario": "",
       "connected": [
         "Hanam1001",
-        "Gansu"
+        "Gansu1008"
       ],
       "monsters": [
         {
@@ -747,24 +681,6 @@
       "monsters": [],
       "npcs": []
     },
-    "Gansu": {
-      "id": "Gansu",
-      "name": "감숙성",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 62.2,
-      "y": 42.2,
-      "image": "",
-      "factions": [
-        "f_1774855757739"
-      ],
-      "scenario": "",
-      "connected": [
-        "Shaanxi1003"
-      ],
-      "monsters": [],
-      "npcs": []
-    },
     "region_mncp3218": {
       "id": "region_mncp3218",
       "name": "산서성",
@@ -774,40 +690,6 @@
       "y": 32.8,
       "image": "",
       "factions": [],
-      "scenario": "",
-      "connected": [],
-      "monsters": [],
-      "npcs": []
-    },
-    "region_mncp3dsa": {
-      "id": "region_mncp3dsa",
-      "name": "하북성",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 84.7,
-      "y": 25.7,
-      "image": "",
-      "factions": [
-        "f_1774855732913",
-        "fac_mncl3m2l"
-      ],
-      "scenario": "",
-      "connected": [],
-      "monsters": [],
-      "npcs": []
-    },
-    "region_mncp3lkw": {
-      "id": "region_mncp3lkw",
-      "name": "신강",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 27.1,
-      "y": 21.8,
-      "image": "",
-      "factions": [
-        "f_1774855772256",
-        "f_1774855768133"
-      ],
       "scenario": "",
       "connected": [],
       "monsters": [],
@@ -836,22 +718,6 @@
       "y": 74.6,
       "image": "",
       "factions": [],
-      "scenario": "",
-      "connected": [],
-      "monsters": [],
-      "npcs": []
-    },
-    "region_mncp4iq6": {
-      "id": "region_mncp4iq6",
-      "name": "호남성",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 76.2,
-      "y": 73.5,
-      "image": "",
-      "factions": [
-        "f_1774844917045"
-      ],
       "scenario": "",
       "connected": [],
       "monsters": [],
@@ -926,22 +792,6 @@
       "y": 15.7,
       "image": "",
       "factions": [],
-      "scenario": "",
-      "connected": [],
-      "monsters": [],
-      "npcs": []
-    },
-    "region_mncp5y12": {
-      "id": "region_mncp5y12",
-      "name": "운남성",
-      "type": "t_1774845560682",
-      "pvp": "",
-      "x": 57,
-      "y": 85.7,
-      "image": "",
-      "factions": [
-        "f_1774855755619"
-      ],
       "scenario": "",
       "connected": [],
       "monsters": [],
@@ -1326,6 +1176,156 @@
           "img": ""
         }
       ],
+      "npcs": []
+    },
+    "Hubei1004": {
+      "id": "Hubei1004",
+      "name": "호북성",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 78.1,
+      "y": 59.7,
+      "image": "",
+      "factions": [
+        "f_1774844912801",
+        "f_1774855708813"
+      ],
+      "scenario": "",
+      "connected": [
+        "Hanam1001"
+      ],
+      "monsters": [],
+      "npcs": []
+    },
+    "Sichuan1005": {
+      "id": "Sichuan1005",
+      "name": "사천성",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 58.8,
+      "y": 62.5,
+      "image": "",
+      "factions": [
+        "f_1774855745685",
+        "f_1774855753031"
+      ],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "Yunnan1006": {
+      "id": "Yunnan1006",
+      "name": "운남성",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 57,
+      "y": 85.7,
+      "image": "",
+      "factions": [
+        "f_1774855755619"
+      ],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "Qinghai1007": {
+      "id": "Qinghai1007",
+      "name": "청해성",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 46.7,
+      "y": 40.7,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "Gansu1008": {
+      "id": "Gansu1008",
+      "name": "감숙성",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 62.2,
+      "y": 42.2,
+      "image": "",
+      "factions": [
+        "f_1774855757739"
+      ],
+      "scenario": "",
+      "connected": [
+        "Shaanxi1003"
+      ],
+      "monsters": [],
+      "npcs": []
+    },
+    "Xinjiang1009": {
+      "id": "Xinjiang1009",
+      "name": "신강",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 27.1,
+      "y": 21.8,
+      "image": "",
+      "factions": [
+        "f_1774855772256",
+        "f_1774855768133"
+      ],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "Shandong1010": {
+      "id": "Shandong1010",
+      "name": "산동성",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 88.5,
+      "y": 38.4,
+      "image": "",
+      "factions": [
+        "f_1774844914725"
+      ],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "Hunan1011": {
+      "id": "Hunan1011",
+      "name": "호남성",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 76.2,
+      "y": 73.5,
+      "image": "",
+      "factions": [
+        "f_1774844917045"
+      ],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
+      "npcs": []
+    },
+    "Hebei1012": {
+      "id": "Hebei1012",
+      "name": "하북성",
+      "type": "t_1774845560682",
+      "pvp": "",
+      "x": 84.7,
+      "y": 25.7,
+      "image": "",
+      "factions": [
+        "f_1774855732913",
+        "fac_mncl3m2l"
+      ],
+      "scenario": "",
+      "connected": [],
+      "monsters": [],
       "npcs": []
     }
   },
