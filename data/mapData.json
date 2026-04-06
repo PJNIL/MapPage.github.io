@@ -1207,6 +1207,105 @@
           "img": ""
         }
       ]
+    },
+    "UndergroundTrainingHall0102": {
+      "id": "UndergroundTrainingHall0102",
+      "name": "지하연무장",
+      "type": "t_dungeon",
+      "pvp": "",
+      "x": 50,
+      "y": 50,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [
+        {
+          "idx": "11051",
+          "name": "백봉",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11052",
+          "name": "불가살이",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11053",
+          "name": "이무기",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11054",
+          "name": "도올",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11055",
+          "name": "궁기 ",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11056",
+          "name": "해태",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11057",
+          "name": "도철",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11058",
+          "name": "요호",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11059",
+          "name": "구미호",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11060",
+          "name": "도철",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11061",
+          "name": "기린",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11062",
+          "name": "혼돈",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        }
+      ],
+      "npcs": []
     }
   },
   "types": {
