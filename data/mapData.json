@@ -1270,6 +1270,63 @@
         }
       ],
       "npcs": []
+    },
+    "SecretGarden0103": {
+      "id": "SecretGarden0103",
+      "name": "비밀의 정원",
+      "type": "t_dungeon",
+      "pvp": "",
+      "x": 50,
+      "y": 50,
+      "image": "",
+      "factions": [],
+      "scenario": "",
+      "connected": [],
+      "monsters": [
+        {
+          "idx": "11031",
+          "name": "음양사",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11032",
+          "name": "검은 음양사",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11033",
+          "name": "무녀",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11034",
+          "name": "검은 무녀",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11035",
+          "name": "무사",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        },
+        {
+          "idx": "11036",
+          "name": "검은 무사",
+          "type": "일반 몬스터",
+          "file": "",
+          "img": ""
+        }
+      ],
+      "npcs": []
     }
   },
   "types": {
