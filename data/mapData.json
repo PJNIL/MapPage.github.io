@@ -16,7 +16,6 @@
       "connected": [
         "Sorimsa1002",
         "Shaanxi1003",
-        "Jangunmyo",
         "Hubei1004"
       ],
       "monsters": [
@@ -268,8 +267,7 @@
       ],
       "scenario": "",
       "connected": [
-        "Hanam1001",
-        "MaboolBongInji"
+        "Hanam1001"
       ],
       "monsters": [
         {
@@ -648,38 +646,6 @@
           "img": ""
         }
       ]
-    },
-    "Jangunmyo": {
-      "id": "Jangunmyo",
-      "name": "장군묘",
-      "type": "t_1774845049845",
-      "pvp": "",
-      "x": 76.1,
-      "y": 45.9,
-      "image": "",
-      "factions": [],
-      "scenario": "",
-      "connected": [
-        "Hanam1001"
-      ],
-      "monsters": [],
-      "npcs": []
-    },
-    "MaboolBongInji": {
-      "id": "MaboolBongInji",
-      "name": "마불봉인지",
-      "type": "t_1774845049845",
-      "pvp": "",
-      "x": 80.8,
-      "y": 39,
-      "image": "",
-      "factions": [],
-      "scenario": "",
-      "connected": [
-        "Sorimsa1002"
-      ],
-      "monsters": [],
-      "npcs": []
     },
     "region_mncp3218": {
       "id": "region_mncp3218",
