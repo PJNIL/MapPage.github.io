@@ -620,20 +620,20 @@
   .qpop { position:fixed; z-index:30000; max-width:420px; background:#101827; border:1px solid #d9a441; border-radius:14px; padding:14px; box-shadow:0 18px 55px rgba(0,0,0,.55); color:#eef3ff; }
   .qpop h4 { margin:0 0 8px; font-size:15px; } .qpop p{margin:4px 0;color:#bfd0ef;font-size:12px;line-height:1.55}.qpop .close{float:right;background:transparent;border:0;color:#f6d78b;cursor:pointer;font-weight:900}
 
-  /* ─────────── QUEST BUILDER / INSERT EXPORT ─────────── */
-  .qbuilder-shell { display:grid; gap:16px; max-width:1680px; margin:0 auto; }
-  .qbuilder-smart { background:linear-gradient(135deg,rgba(96,165,250,.09),rgba(217,164,65,.07)); border:1px solid #334056; border-radius:20px; padding:18px; }
+  /* ─────────── QUEST BUILDER / STRICT INSERT EXPORT V3 ─────────── */
+  .qbuilder-shell { display:grid; gap:16px; max-width:1720px; margin:0 auto; }
+  .qbuilder-smart { background:linear-gradient(135deg,rgba(96,165,250,.10),rgba(217,164,65,.065)); border:1px solid #334056; border-radius:20px; padding:18px; }
   .qbuilder-smart-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:12px; }
   .qbuilder-smart-title { color:#fff; font-size:17px; font-weight:900; margin:0 0 4px; }
-  .qbuilder-smart-desc { color:#9fb0ce; font-size:12px; line-height:1.65; margin:0; }
-  .qbuilder-prompt { width:100%; min-height:108px; resize:vertical; background:#0b1220; border:1px solid #2f3c54; border-radius:14px; color:#eef3ff; padding:13px 14px; outline:none; font-family:inherit; font-size:13px; line-height:1.65; }
+  .qbuilder-smart-desc { color:#9fb0ce; font-size:12px; line-height:1.65; margin:0; max-width:980px; }
+  .qbuilder-prompt { width:100%; min-height:118px; resize:vertical; background:#0b1220; border:1px solid #2f3c54; border-radius:14px; color:#eef3ff; padding:13px 14px; outline:none; font-family:inherit; font-size:13px; line-height:1.65; }
   .qbuilder-prompt:focus { border-color:#60a5fa; box-shadow:0 0 0 3px rgba(96,165,250,.12); }
   .qbuilder-prompt-example { color:#7888a8; font-size:11px; line-height:1.6; margin-top:8px; }
   .qbuilder-assist-result { display:none; margin-top:10px; border:1px solid #2a354a; background:rgba(15,22,36,.72); border-radius:14px; padding:10px 12px; }
   .qbuilder-assist-result.visible { display:block; }
   .qbuilder-assist-result b { color:#f6d78b; }
   .qbuilder-assist-result ul { margin:6px 0 0; padding-left:18px; color:#bfd0ef; font-size:12px; line-height:1.55; }
-  .qbuilder-layout { display:grid; grid-template-columns:minmax(0,0.82fr) minmax(560px,1.18fr); gap:16px; align-items:start; }
+  .qbuilder-layout { display:grid; grid-template-columns:minmax(520px,.92fr) minmax(620px,1.08fr); gap:16px; align-items:start; }
   .qbuilder-card { background:linear-gradient(180deg,#121a2a,#0f1624); border:1px solid #2a354a; border-radius:18px; padding:18px; min-width:0; overflow:hidden; }
   .qbuilder-card.sticky { position:sticky; top:16px; }
   .qbuilder-card h3 { margin:0 0 10px; color:#fff; font-size:16px; }
@@ -648,13 +648,20 @@
   .qfield.full { grid-column:1/-1; }
   .qfield label { display:block; margin:0 0 5px; color:#f6d78b; font-size:10px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
   .qfield small { display:block; color:#7888a8; font-size:10px; margin-top:4px; line-height:1.4; }
-  .qtextarea { min-height:66px; resize:vertical; line-height:1.55; }
+  .qtextarea { min-height:70px; resize:vertical; line-height:1.55; }
   .qbuilder-section { border-top:1px solid #243149; padding-top:14px; margin-top:14px; }
   .qslot-list { display:grid; gap:8px; margin-top:8px; }
   .qslot { border:1px solid #263247; background:#0f1624; border-radius:14px; padding:10px; }
   .qslot-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; color:#f6d78b; font-size:11px; font-weight:900; }
   .qinline-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:12px; }
-  .qbuilder-mini-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .qbuilder-mini-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:flex-end; }
+  .qcheckline { display:flex; align-items:center; gap:8px; margin-top:8px; color:#bfd0ef; font-size:12px; line-height:1.5; }
+  .qstrict-banner { display:flex; gap:10px; align-items:flex-start; border:1px solid rgba(248,113,113,.34); background:rgba(248,113,113,.075); color:#fecaca; border-radius:14px; padding:11px 12px; margin-bottom:12px; font-size:12px; line-height:1.55; }
+  .qstrict-banner b { color:#fff; }
+  .qsummary-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:8px; margin:10px 0 12px; }
+  .qsummary-item { border:1px solid #2a354a; background:#101827; border-radius:12px; padding:10px; min-width:0; }
+  .qsummary-item b { display:block; color:#f6d78b; font-size:10px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px; }
+  .qsummary-item span { color:#e6eefc; font-size:12px; word-break:break-all; }
   .qverify-box { border:1px solid #2a354a; background:#0d1422; border-radius:14px; padding:12px; margin-bottom:12px; }
   .qverify-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
   .qverify-title { color:#fff; font-weight:900; font-size:13px; }
@@ -668,16 +675,17 @@
   .qverify-list li.ok::before { color:#34d399; }
   .qverify-list li.warn::before { color:#fbbf24; }
   .qverify-list li.bad::before { color:#f87171; }
-  .qexport-wrap { overflow:auto; border:1px solid #2a354a; border-radius:16px; background:#0f1624; max-height:520px; }
-  .qexport-table { width:100%; border-collapse:collapse; min-width:1100px; }
+  .qexport-wrap { overflow:auto; border:1px solid #2a354a; border-radius:16px; background:#0f1624; max-height:560px; }
+  .qexport-table { width:100%; border-collapse:collapse; min-width:1200px; }
   .qexport-table th { position:sticky; top:0; z-index:2; background:#172036; color:#f6d78b; padding:8px 9px; font-size:11px; text-align:left; border-bottom:1px solid #2a354a; white-space:nowrap; }
-  .qexport-table td { padding:8px 9px; color:#dce7fb; font-size:12px; border-bottom:1px solid #202b3f; border-right:1px solid rgba(42,53,74,.55); white-space:pre-wrap; min-width:72px; outline:none; }
+  .qexport-table td { padding:8px 9px; color:#dce7fb; font-size:12px; border-bottom:1px solid #202b3f; border-right:1px solid rgba(42,53,74,.55); white-space:pre-wrap; min-width:74px; outline:none; }
   .qexport-table td[contenteditable="true"] { cursor:text; }
   .qexport-table td[contenteditable="true"]:focus { box-shadow:inset 0 0 0 2px #60a5fa; background:rgba(96,165,250,.12); }
-  .qexport-table td.need { background:rgba(248,113,113,.18); color:#fecaca; box-shadow:inset 0 0 0 1px rgba(248,113,113,.42); font-weight:900; }
-  .qexport-table td.manual { background:rgba(96,165,250,.12); color:#dbeafe; box-shadow:inset 0 0 0 1px rgba(96,165,250,.35); }
-  .qexport-table td.auto { background:rgba(52,211,153,.06); }
-  .qexport-table td.defaulted { background:rgba(251,191,36,.045); color:#dbeafe; }
+  .qexport-table td.need { background:rgba(248,113,113,.20); color:#fecaca; box-shadow:inset 0 0 0 1px rgba(248,113,113,.50); font-weight:900; }
+  .qexport-table td.manual { background:rgba(96,165,250,.13); color:#dbeafe; box-shadow:inset 0 0 0 1px rgba(96,165,250,.40); }
+  .qexport-table td.auto { background:rgba(52,211,153,.065); }
+  .qexport-table td.template { background:rgba(167,139,250,.075); color:#ddd6fe; }
+  .qexport-table td.blank { color:#6f7d98; }
   .qexport-meta { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 12px; }
   .qexport-meta .qpill { font-size:11px; }
   .qbuilder-empty { border:1px dashed #334056; border-radius:16px; padding:30px; text-align:center; color:#9fb0ce; background:#0f1624; }
@@ -686,8 +694,9 @@
   .qattention-card { border:1px solid #2a354a; background:#101827; border-radius:12px; padding:10px; }
   .qattention-card b { color:#fff; font-size:13px; }
   .qattention-card p { color:#9fb0ce; font-size:11px; line-height:1.5; margin:4px 0 0; }
-  @media (max-width:1400px){.qbuilder-layout{grid-template-columns:1fr}.qbuilder-card.sticky{position:static}.qform-grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media (max-width:900px){.qform-grid.three,.qform-grid.four,.qform-grid{grid-template-columns:1fr}.qbuilder-smart-head{flex-direction:column}.qbuilder-mini-actions{width:100%}}
+  .qbtn.blocked, .qbtn:disabled { opacity:.45; cursor:not-allowed; border-color:#334056; color:#7b879d; background:#111827; }
+  @media (max-width:1500px){.qbuilder-layout{grid-template-columns:1fr}.qbuilder-card.sticky{position:static}.qform-grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:900px){.qform-grid.three,.qform-grid.four,.qform-grid{grid-template-columns:1fr}.qbuilder-smart-head{flex-direction:column}.qbuilder-mini-actions{width:100%;justify-content:flex-start}}
 
   @media (max-width:1100px){.qapp{grid-template-columns:230px minmax(0,1fr)}.qstats{grid-template-columns:repeat(2,minmax(0,1fr))}.qcriteria{grid-template-columns:1fr}.qtwocol{grid-template-columns:1fr}.qhero h2{font-size:28px}}
   @media (max-width:760px){.qapp{grid-template-columns:1fr}.qside{height:auto}.qmain{padding:16px}.qhero{padding:20px}.qstats{grid-template-columns:1fr}}
@@ -1769,41 +1778,64 @@ function qRenderVerify(m){return `<section class="qsection"><h2>검증</h2><div 
 function qRenderRaw(m){const lines=m.payload.data?.scenario?.lines||[];return `<section class="qsection"><h2>원문 전체</h2><div class="qstorybox qraw">${qesc(lines.map((l,i)=>String(i+1).padStart(4,'0')+'  '+l).join('\n'))}</div></section>`;}
 
 // ─────────────────────────────────────────────
-//  QUEST BUILDER — SMART DRAFT → EDITABLE REAL INSERT ROW
+//  QUEST BUILDER V3 — STRICT DRAFT → VERIFIED INSERT ROW
 // ─────────────────────────────────────────────
 const QUEST_NEED_VALUE = '기입 필요';
-const QUEST_BUILDER_STORAGE_KEY = 'questBuilderDraftV2';
+const QUEST_BUILDER_STORAGE_KEY = 'questBuilderDraftV3';
+const QUEST_REQUIRED_SHEET_NAME = '퀘스트 데이터';
 
-function qFindQuestInsertSheet(payload){
-  return qfindSheet(payload,'퀘스트 데이터') || qfindSheet(payload,'QuestInfo') || qfindSheet(payload,'퀘스트 리스트');
-}
-function qQuestInsertTable(m){
-  const sheet=qFindQuestInsertSheet(m?.payload||{});
-  const table=qparseTable(sheet);
-  const keys=qHeaderUniqueKeys(table.headers||[]);
-  return {sheet, headers:table.headers||[], keys, rows:table.rows||[]};
-}
-function qHeaderUniqueKeys(headers){
-  const seen={};
-  return (headers||[]).map((h,i)=>{
-    const base=qcleanHeader(h)||('__blank_'+(i+1));
-    const n=seen[base]||0; seen[base]=n+1;
-    return n?base+'.'+n:base;
-  });
-}
+function qHasValue(v){ return v !== undefined && v !== null && String(v).trim() !== ''; }
+function qBuilderVal(id){return (document.getElementById(id)?.value||'').trim();}
+function qBuilderMaybeNum(id){const v=qBuilderVal(id); return v===''?'':qnum(v);}
+function qBuilderChecked(id){return !!document.getElementById(id)?.checked;}
+function qBuilderAttr(v){return qesc(v??'');}
+function qBuilderSelected(a,b){return String(a??'')===String(b??'')?' selected':'';}
+function qBuilderCheckedAttr(v){return v?' checked':'';}
+function qHeaderNorm(v){return String(v||'').trim().replace(/^;/,'').replace(/[\s_\-\.\/]/g,'').toLowerCase();}
 function qStripOcc(k){return String(k||'').replace(/\.\d+$/,'');}
 function qOcc(k){const m=String(k||'').match(/\.(\d+)$/); return m?parseInt(m[1],10):0;}
-function qBuilderVal(id){return (document.getElementById(id)?.value||'').trim();}
-function qBuilderNum(id){return qnum(qBuilderVal(id));}
-function qBuilderChecked(id){return !!document.getElementById(id)?.checked;}
-function qSuggestNextQuestIndex(m){
-  const max=Math.max(0,...(m?.quests||[]).map(q=>q.index||0));
-  return max+1;
+function qHeaderUniqueKeys(headers){
+  const seen={};
+  return (headers||[]).map((h,i)=>{const base=qcleanHeader(h)||('__blank_'+(i+1)); const n=seen[base]||0; seen[base]=n+1; return n?base+'.'+n:base;});
 }
+function qQuestBuilderRowObj(keys,row){const o={}; keys.forEach((k,i)=>{o[k]=row[i]??'';}); return o;}
+
+function qFindQuestInsertSheetInfo(payload){
+  const sheets=payload?.data?.spreadsheet?.sheets||[];
+  const exact=sheets.find(s=>String(s.name||'').trim()===QUEST_REQUIRED_SHEET_NAME);
+  if(exact) return {sheet:exact, exact:true, message:`${QUEST_REQUIRED_SHEET_NAME} 정확히 일치`};
+  const partial=sheets.find(s=>String(s.name||'').includes(QUEST_REQUIRED_SHEET_NAME));
+  if(partial) return {sheet:partial, exact:false, message:`${QUEST_REQUIRED_SHEET_NAME} 포함 시트만 발견: ${partial.name}`};
+  return {sheet:null, exact:false, message:`${QUEST_REQUIRED_SHEET_NAME} 시트를 찾지 못함`};
+}
+function qQuestHeaderScore(row){
+  const set=new Set((row||[]).map(qHeaderNorm));
+  const must=['index','nextquest','type','tab','offernpc','rewardnpc','object1','rewardexp','rewardmoney','blankfield'];
+  return must.reduce((n,k)=>n+(set.has(k)?1:0),0);
+}
+function qQuestInsertTable(m){
+  const info=qFindQuestInsertSheetInfo(m?.payload||{}), values=info.sheet?.values||[];
+  let headerIndex=-1, best=-1;
+  for(let i=0;i<values.length;i++){
+    const score=qQuestHeaderScore(values[i]);
+    if(score>best){best=score; headerIndex=i;}
+    if(score>=3 && values[i].some(c=>qHeaderNorm(c)==='index')) break;
+  }
+  if(headerIndex<0 || best<=0) return {sheet:info.sheet, sheetExact:info.exact, sheetMessage:info.message, headerIndex:-1, headers:[], keys:[], rows:[]};
+  const headers=values[headerIndex].map(qcleanHeader), keys=qHeaderUniqueKeys(headers), rows=[];
+  for(let i=headerIndex+1;i<values.length;i++){
+    const row=values[i]||[];
+    if(row.every(c=>!String(c||'').trim())) continue;
+    const obj=qQuestBuilderRowObj(keys,row); obj.__row=i+1; rows.push(obj);
+  }
+  return {sheet:info.sheet, sheetExact:info.exact, sheetMessage:info.message, headerIndex, headers, keys, rows};
+}
+function qSuggestNextQuestIndex(m){const max=Math.max(0,...(m?.quests||[]).map(q=>q.index||0)); return max+1;}
+
 function qQuestBuilderDefaultDraft(m){
-  const base={quickText:'',index:qSuggestNextQuestIndex(m),type:0,tab:0,next:0,title:'',desc:'',detail:'',offerNpc:0,rewardNpc:0,sameRewardNpc:true,offerTalk:0,rewardTalk:0,condType1:0,condValue1:0,condType2:0,condValue2:0,rewardExp:0,rewardMoney:0,questDropItem:0,dropPercent:'',objects:[],rewards:[]};
-  for(let i=1;i<=5;i++)base.objects.push({type:0,target:0,location:0,value:0});
-  for(let i=1;i<=4;i++)base.rewards.push({item:0,value:0});
+  const base={quickText:'',index:qSuggestNextQuestIndex(m),templateIndex:'',type:'',tab:'',next:0,title:'',desc:'',detail:'',offerNpc:'',rewardNpc:'',sameRewardNpc:true,offerTalk:'',rewardTalk:'',condType1:0,condValue1:'',condType2:0,condValue2:'',warpIndex:'',warpLocation:'',noObject:false,noReward:false,rewardExp:'',rewardMoney:'',questDropItem:'',dropPercent:'',objects:[],rewards:[]};
+  for(let i=1;i<=5;i++)base.objects.push({type:0,target:'',location:'',value:''});
+  for(let i=1;i<=4;i++)base.rewards.push({item:'',value:''});
   return base;
 }
 function qQuestBuilderSaved(m){
@@ -1812,460 +1844,404 @@ function qQuestBuilderSaved(m){
     const saved=JSON.parse(localStorage.getItem(QUEST_BUILDER_STORAGE_KEY)||'null');
     if(saved&&typeof saved==='object'){
       const merged={...base,...saved};
-      merged.objects=Array.from({length:5},(_,i)=>({type:0,target:0,location:0,value:0,...(saved.objects?.[i]||{})}));
-      merged.rewards=Array.from({length:4},(_,i)=>({item:0,value:0,...(saved.rewards?.[i]||{})}));
+      merged.objects=Array.from({length:5},(_,i)=>({type:0,target:'',location:'',value:'',...(saved.objects?.[i]||{})}));
+      merged.rewards=Array.from({length:4},(_,i)=>({item:'',value:'',...(saved.rewards?.[i]||{})}));
       if(!qnum(merged.index)) merged.index=qSuggestNextQuestIndex(m);
       return merged;
     }
   }catch(e){}
   return base;
 }
-function qBuilderAttr(v){return qesc(v??'');}
-function qBuilderSelected(a,b){return String(a)===String(b)?' selected':'';}
-function qBuilderCheckedAttr(v){return v?' checked':'';}
-function qTypeOptions(selected){return [0,1,8,9].map(v=>`<option value="${v}"${qBuilderSelected(selected,v)}>${v} · ${QUEST_TYPE_LABEL[v]||v}</option>`).join('');}
-function qTabOptions(selected){return Object.entries(QUEST_TAB_LABEL).map(([v,l])=>`<option value="${v}"${qBuilderSelected(selected,v)}>${v} · ${qesc(l)}</option>`).join('');}
-function qConditionOptions(selected){
-  const opts=[[0,'없음'],[1,'퀘스트 완료'],[2,'레벨'],[3,'아이템'],[10,'명성']];
-  return opts.map(([v,l])=>`<option value="${v}"${qBuilderSelected(selected,v)}>${v} · ${qesc(l)}</option>`).join('');
-}
-function qObjectTypeOptions(selected){
-  const preferred=[0,1,2,102,103,104,105,152,405,452,453,454,503];
-  const seen=new Set(preferred);
-  const rest=Object.keys(QUEST_OBJECT_LABEL).map(Number).filter(v=>!seen.has(v)).sort((a,b)=>a-b);
-  return preferred.concat(rest).map(v=>`<option value="${v}"${qBuilderSelected(selected,v)}>${v} · ${qesc(QUEST_OBJECT_LABEL[v]||v)}</option>`).join('');
-}
-function qInput(id,label,value,type='text',extra=''){
-  return `<div class="qfield"><label for="${id}">${label}</label><input class="qinput" id="${id}" type="${type}" value="${qBuilderAttr(value)}" oninput="qQuestBuilderPreview(false)" ${extra}></div>`;
-}
-function qTextarea(id,label,value,extra=''){
-  return `<div class="qfield full"><label for="${id}">${label}</label><textarea class="qinput qtextarea" id="${id}" oninput="qQuestBuilderPreview(false)" ${extra}>${qBuilderAttr(value)}</textarea></div>`;
+function qTypeOptions(selected){return `<option value=""${qBuilderSelected(selected,'')}>선택 필요</option>`+[0,1,8,9].map(v=>`<option value="${v}"${qBuilderSelected(selected,v)}>${v} · ${QUEST_TYPE_LABEL[v]||v}</option>`).join('');}
+function qTabOptions(selected){return `<option value=""${qBuilderSelected(selected,'')}>선택 필요</option>`+Object.entries(QUEST_TAB_LABEL).map(([v,l])=>`<option value="${v}"${qBuilderSelected(selected,v)}>${v} · ${qesc(l)}</option>`).join('');}
+function qConditionOptions(selected){const opts=[[0,'없음'],[1,'퀘스트 완료'],[2,'레벨'],[3,'아이템'],[10,'명성']]; return opts.map(([v,l])=>`<option value="${v}"${qBuilderSelected(selected,v)}>${v} · ${qesc(l)}</option>`).join('');}
+function qObjectTypeOptions(selected){const preferred=[0,1,2,102,103,104,105,152,405,452,453,454,503]; const seen=new Set(preferred); const rest=Object.keys(QUEST_OBJECT_LABEL).map(Number).filter(v=>!seen.has(v)).sort((a,b)=>a-b); return preferred.concat(rest).map(v=>`<option value="${v}"${qBuilderSelected(selected,v)}>${v} · ${qesc(QUEST_OBJECT_LABEL[v]||v)}</option>`).join('');}
+function qInput(id,label,value,type='text',extra=''){return `<div class="qfield"><label for="${id}">${label}</label><input class="qinput" id="${id}" type="${type}" value="${qBuilderAttr(value)}" oninput="qQuestBuilderPreview(false)" ${extra}></div>`;}
+function qTextarea(id,label,value,extra=''){return `<div class="qfield full"><label for="${id}">${label}</label><textarea class="qinput qtextarea" id="${id}" oninput="qQuestBuilderPreview(false)" ${extra}>${qBuilderAttr(value)}</textarea></div>`;}
+
+function qQuestBuilderTemplateOptions(m,d,table){
+  const rows=(table.rows||[]).filter(r=>qnum(qRowBaseVal(table,r,'Index')));
+  const opts=['<option value="">자동 선택</option>'];
+  rows.slice(0,700).forEach(r=>{
+    const idx=qnum(qRowBaseVal(table,r,'Index'));
+    const title=qRowBaseVal(table,r,'BlankField')||qRowBaseVal(table,r,'Title')||qRowBaseVal(table,r,'QuestName')||'';
+    const type=qRowBaseVal(table,r,'Type'), tab=qRowBaseVal(table,r,'Tab'), obj=qRowBaseVal(table,r,'Object1')||qRowBaseVal(table,r,'Object');
+    opts.push(`<option value="${idx}"${qBuilderSelected(d.templateIndex,idx)}>${idx} · T${qesc(type)} / Tab${qesc(tab)} / Obj${qesc(obj||0)} · ${qesc(String(title).slice(0,28))}</option>`);
+  });
+  return opts.join('');
 }
 function qRenderBuilder(m){
-  const d=qQuestBuilderSaved(m), table=qQuestInsertTable(m);
-  const sheetName=table.sheet?.name||'시트 미확인';
-  return `<section class="qsection"><h2>퀘스트 생성</h2><p class="qdesc">문장으로 초안을 만들고, 자동 매핑된 실 삽입 데이터 1행을 셀 단위로 직접 수정한 뒤 복사할 수 있습니다. 빨간 셀만 수동 확인이 필요한 값입니다.</p>
+  const d=qQuestBuilderSaved(m), table=qQuestInsertTable(m), sheetName=table.sheet?.name||'시트 미확인';
+  return `<section class="qsection"><h2>퀘스트 생성</h2><p class="qdesc">이 버전은 추론값을 실데이터에 바로 확정하지 않습니다. 자연어는 구조화 초안으로만 변환하고, ID/타입/보상/워프/조건은 검증을 통과한 값만 실 삽입 데이터로 내보냅니다.</p>
     <div class="qbuilder-shell">
       <div class="qbuilder-smart">
         <div class="qbuilder-smart-head">
-          <div><div class="qbuilder-smart-title">간단 문장으로 초안 생성</div><p class="qbuilder-smart-desc">퀘스트 타입, 지역, NPC, 목표, 보상을 한 문장으로 적으면 아래 편집 필드와 실 삽입 데이터에 자동 반영합니다. 이름은 동기화된 사용 데이터에서 ID를 찾고, 애매한 값은 자동 확정하지 않습니다.</p></div>
-          <div class="qbuilder-mini-actions"><button class="qbtn" onclick="qQuestBuilderApplyPrompt();return false;">문장으로 초안 생성</button><button class="qbtn" onclick="qQuestBuilderExample();return false;">예시 넣기</button><button class="qbtn" onclick="qQuestBuilderAutoIndex();return false;">Index 자동</button></div>
+          <div><div class="qbuilder-smart-title">간단 문장 → 구조화 초안</div><p class="qbuilder-smart-desc">예: <b>서브 / 하남성 / 제목: 사라진 약초꾼 / 설명: 약초꾼을 찾아달라는 의뢰 / 목표: 늑대 10마리 처치 후 보고 / 시작NPC 11001 / 완료NPC 11001 / 몬스터 23004 10마리 처치 / 선행 10016 / 워프 50012 / 보상 경험치 1200 돈 300</b></p></div>
+          <div class="qbuilder-mini-actions"><button class="qbtn" onclick="qQuestBuilderApplyPrompt();return false;">문장 분석</button><button class="qbtn" onclick="qQuestBuilderExample();return false;">예시 넣기</button><button class="qbtn" onclick="qQuestBuilderAutoIndex();return false;">Index 자동</button></div>
         </div>
-        <textarea class="qbuilder-prompt" id="qbf-prompt" placeholder="예: 서브 / 하남성 / 제목: 사라진 약초꾼 / 시작NPC 11001 완료NPC 11001 / 늑대 10마리 처치 / 보상 경험치 1200 돈 300 / 다음 10018" oninput="qQuestBuilderSaveQuickTextOnly()">${qBuilderAttr(d.quickText)}</textarea>
-        <div class="qbuilder-prompt-example">추천 형식: <b>타입 / 지역 / 제목 / 목표 / 시작NPC / 완료NPC / 다음 / 보상</b>. ID를 알고 있으면 숫자로 쓰는 것이 가장 정확합니다.</div>
+        <textarea class="qbuilder-prompt" id="qbf-prompt" placeholder="메인/서브, 지역, 제목, 설명, 목표, NPC ID, 조건, 워프, 보상을 가능한 한 명시하세요. 이름 입력도 가능하지만 ID가 가장 안전합니다." oninput="qQuestBuilderSaveQuickTextOnly()">${qBuilderAttr(d.quickText)}</textarea>
+        <div class="qbuilder-prompt-example">원칙: 제목만 있으면 설명/목표를 자동으로 채우지 않습니다. 이름이 ID로 유일하게 해석되지 않으면 실데이터에는 <b>${QUEST_NEED_VALUE}</b>로 남깁니다.</div>
         <div class="qbuilder-assist-result" id="qbuilder-assist-result"></div>
       </div>
       <div class="qbuilder-layout">
         <div class="qbuilder-card">
-          <h3>편집 가능한 퀘스트 초안</h3>
-          <p class="qbuilder-note">기준 시트: <b>${qesc(sheetName)}</b> · 컬럼 ${table.headers.length}개. 아래 값은 언제든 수정 가능하며, 수정 즉시 미리보기에 반영됩니다.</p>
-          <h4>기본 정보</h4>
+          <h3>검증 가능한 퀘스트 초안</h3>
+          <p class="qbuilder-note">기준 시트: <b>${qesc(sheetName)}</b> · 컬럼 ${table.headers.length}개. 이 기능은 <b>${QUEST_REQUIRED_SHEET_NAME}</b> 시트가 없으면 내보내기를 차단합니다.</p>
+          <div class="qstrict-banner"><span>⚠</span><div><b>정확성 우선 모드</b><br>알 수 없는 키 컬럼은 0으로 추정하지 않습니다. 기존 실데이터의 유사 템플릿 행을 복사한 뒤, 명확히 입력된 값만 덮어씁니다.</div></div>
+          <h4>기본 정보 / 템플릿</h4>
           <div class="qform-grid four">
             ${qInput('qbf-index','Index',d.index,'number','min="1"')}
             <div class="qfield"><label for="qbf-type">Type</label><select class="qselect" id="qbf-type" onchange="qQuestBuilderPreview(false)">${qTypeOptions(d.type)}</select></div>
             <div class="qfield"><label for="qbf-tab">Tab / 지역</label><select class="qselect" id="qbf-tab" onchange="qQuestBuilderPreview(false)">${qTabOptions(d.tab)}</select></div>
             ${qInput('qbf-next','NextQuest',d.next,'number','min="0"')}
+            <div class="qfield full"><label for="qbf-template-index">템플릿 행</label><select class="qselect" id="qbf-template-index" onchange="qQuestBuilderPreview(false)">${qQuestBuilderTemplateOptions(m,d,table)}</select><small>자동 선택은 Type/Tab/Object가 가장 비슷한 기존 ${QUEST_REQUIRED_SHEET_NAME} 행을 복사합니다.</small></div>
           </div>
           <div class="qbuilder-section">
             <h4>제목 / 설명 / 목표 문구</h4>
             ${qTextarea('qbf-title','퀘스트 제목 / BlankField',d.title,'placeholder="예: 사라진 약초꾼"')}
-            ${qTextarea('qbf-desc','간단 설명 / BlankField.1',d.desc,'placeholder="비워두면 목표 문구 또는 제목으로 안전 보정"')}
-            ${qTextarea('qbf-detail','목표 문구 / BlankField.2',d.detail,'placeholder="예: 늑대 10마리 처치 후 약초꾼에게 돌아가기"')}
+            ${qTextarea('qbf-desc','간단 설명 / BlankField.1',d.desc,'placeholder="실제로 퀘스트 설명에 들어갈 문장. 비우면 기입 필요."')}
+            ${qTextarea('qbf-detail','목표 문구 / BlankField.2',d.detail,'placeholder="예: 늑대 10마리 처치 후 약초꾼에게 돌아가기. 비우면 기입 필요."')}
           </div>
           <div class="qbuilder-section">
             <h4>NPC / 대사 / 조건</h4>
             <div class="qform-grid four">
-              ${qInput('qbf-offer-npc','OfferNPC',d.offerNpc,'number','min="0"')}
-              ${qInput('qbf-reward-npc','RewardNPC',d.rewardNpc,'number','min="0"')}
+              ${qInput('qbf-offer-npc','OfferNPC ID 또는 이름',d.offerNpc,'text','placeholder="11001 또는 NPC명"')}
+              ${qInput('qbf-reward-npc','RewardNPC ID 또는 이름',d.rewardNpc,'text','placeholder="비우면 동일 처리 가능"')}
               ${qInput('qbf-offer-talk','OfferTalk',d.offerTalk,'number','min="0"')}
               ${qInput('qbf-reward-talk','RewardTalk',d.rewardTalk,'number','min="0"')}
             </div>
-            <label style="display:flex;align-items:center;gap:8px;margin:8px 0 0;color:#bfd0ef;font-size:12px;"><input type="checkbox" id="qbf-same-reward-npc" ${qBuilderCheckedAttr(d.sameRewardNpc)} onchange="qQuestBuilderPreview(false)"> RewardNPC 미입력 시 OfferNPC와 동일 처리</label>
+            <label class="qcheckline"><input type="checkbox" id="qbf-same-reward-npc" ${qBuilderCheckedAttr(d.sameRewardNpc)} onchange="qQuestBuilderPreview(false)"> RewardNPC 미입력 시 OfferNPC와 동일 처리</label>
             <div class="qform-grid four" style="margin-top:10px;">
               <div class="qfield"><label for="qbf-cond-type-1">OfferConditionType1</label><select class="qselect" id="qbf-cond-type-1" onchange="qQuestBuilderPreview(false)">${qConditionOptions(d.condType1)}</select></div>
-              ${qInput('qbf-cond-value-1','OfferValue1',d.condValue1,'number','min="0"')}
+              ${qInput('qbf-cond-value-1','OfferValue1',d.condValue1,'text','placeholder="선행 퀘스트/레벨/아이템 ID"')}
               <div class="qfield"><label for="qbf-cond-type-2">OfferConditionType2</label><select class="qselect" id="qbf-cond-type-2" onchange="qQuestBuilderPreview(false)">${qConditionOptions(d.condType2)}</select></div>
-              ${qInput('qbf-cond-value-2','OfferValue2',d.condValue2,'number','min="0"')}
+              ${qInput('qbf-cond-value-2','OfferValue2',d.condValue2,'text','placeholder="필요 시 입력"')}
             </div>
           </div>
           <div class="qbuilder-section">
-            <h4>Object 목표</h4>
-            <p class="qbuilder-note">처치/보스는 Target=몬스터 ID, Value=수량. 전리품은 Location=몬스터 ID, Value=수량을 우선 사용합니다.</p>
+            <h4>목표 Object</h4>
+            <p class="qbuilder-note">ID 칸에는 숫자 ID를 권장합니다. 이름을 넣은 경우 동기화 데이터에서 유일하게 찾을 때만 ID로 변환합니다.</p>
+            <label class="qcheckline"><input type="checkbox" id="qbf-no-object" ${qBuilderCheckedAttr(d.noObject)} onchange="qQuestBuilderPreview(false)"> 목표 Object 없음 확정</label>
             <div class="qslot-list">${d.objects.map((o,i)=>qRenderBuilderObjectSlot(i+1,o)).join('')}</div>
           </div>
           <div class="qbuilder-section">
-            <h4>보상 / 드롭</h4>
-            <div class="qform-grid four">
+            <h4>워프 / 이동</h4>
+            <div class="qform-grid two">
+              ${qInput('qbf-warp-index','WarpIndex / Warp ID',d.warpIndex,'text','placeholder="워프 인덱스"')}
+              ${qInput('qbf-warp-location','WarpLocation / Location',d.warpLocation,'text','placeholder="필요 시 위치 인덱스"')}
+            </div>
+          </div>
+          <div class="qbuilder-section">
+            <h4>보상 / 드랍</h4>
+            <label class="qcheckline"><input type="checkbox" id="qbf-no-reward" ${qBuilderCheckedAttr(d.noReward)} onchange="qQuestBuilderPreview(false)"> 보상 없음 확정</label>
+            <div class="qform-grid four" style="margin-top:10px;">
               ${qInput('qbf-reward-exp','RewardExp',d.rewardExp,'number','min="0"')}
               ${qInput('qbf-reward-money','RewardMoney',d.rewardMoney,'number','min="0"')}
-              ${qInput('qbf-quest-drop-item','QuestDropItem',d.questDropItem,'number','min="0"')}
-              ${qInput('qbf-drop-percent','DropPercent',d.dropPercent,'text','placeholder="예: 30 또는 30%"')}
+              ${qInput('qbf-quest-drop-item','QuestDropItem',d.questDropItem,'text','placeholder="아이템 ID"')}
+              ${qInput('qbf-drop-percent','DropPercent',d.dropPercent,'text','placeholder="예: 30%"')}
             </div>
             <div class="qslot-list">${d.rewards.map((r,i)=>qRenderBuilderRewardSlot(i+1,r)).join('')}</div>
           </div>
           <div class="qinline-actions"><button class="qbtn" onclick="qQuestBuilderPreview(true);return false;">실 삽입 데이터 생성 / 검증</button><button class="qbtn" onclick="qQuestBuilderReset();return false;">초기화</button></div>
         </div>
         <div class="qbuilder-card sticky">
-          <h3>실 삽입 데이터 미리보기 · 셀 직접 수정 가능</h3>
-          <div id="qbuilder-result"><div class="qbuilder-empty">문장으로 초안을 만들거나 필드를 입력하면 <b>검증 결과와 실 삽입용 1행 데이터</b>가 여기에 표시됩니다.<br>표 안의 셀은 직접 클릭해서 수정할 수 있습니다.</div></div>
+          <h3>실 삽입 데이터 미리보기</h3>
+          <div id="qbuilder-result"><div class="qbuilder-empty">문장 분석 또는 필드 입력 후 <b>실 삽입 데이터 생성 / 검증</b>을 누르세요.<br>빨간 셀은 실제 복사 전 반드시 수정해야 합니다.</div></div>
         </div>
       </div>
-    </div>
-  </section>`;
+    </div></section>`;
 }
-function qRenderBuilderObjectSlot(n,o){
-  return `<div class="qslot"><div class="qslot-head"><span>Object ${n}</span><span class="qmuted">Type / Target / Location / Value</span></div><div class="qform-grid four"><div class="qfield"><label for="qbf-obj-type-${n}">Object${n}</label><select class="qselect" id="qbf-obj-type-${n}" onchange="qQuestBuilderPreview(false)">${qObjectTypeOptions(o.type)}</select></div>${qInput(`qbf-obj-target-${n}`,`ObjectTarget${n}`,o.target,'number','min="0"')}${qInput(`qbf-obj-location-${n}`,`ObjectLocation${n}`,o.location,'number','min="0"')}${qInput(`qbf-obj-value-${n}`,`ObjectValue${n}`,o.value,'number','min="0"')}</div></div>`;
-}
-function qRenderBuilderRewardSlot(n,r){
-  return `<div class="qslot"><div class="qslot-head"><span>Reward Item ${n}</span><span class="qmuted">아이템 ID / 수량</span></div><div class="qform-grid">${qInput(`qbf-reward-item-${n}`,`RewardItem${n}`,r.item,'number','min="0"')}${qInput(`qbf-item-value-${n}`,`ItemValue${n}`,r.value,'number','min="0"')}</div></div>`;
-}
-function qQuestBuilderSaveQuickTextOnly(){
-  try{const d=qQuestBuilderCollect(false); d.quickText=qBuilderVal('qbf-prompt'); localStorage.setItem(QUEST_BUILDER_STORAGE_KEY,JSON.stringify(d));}catch(e){}
-}
+function qRenderBuilderObjectSlot(n,o){return `<div class="qslot"><div class="qslot-head"><span>Object ${n}</span><span class="qmuted">Type / Target / Location / Value</span></div><div class="qform-grid four"><div class="qfield"><label for="qbf-obj-type-${n}">Object${n}</label><select class="qselect" id="qbf-obj-type-${n}" onchange="qQuestBuilderPreview(false)">${qObjectTypeOptions(o.type)}</select></div>${qInput(`qbf-obj-target-${n}`,`ObjectTarget${n}`,o.target,'text','placeholder="ID 또는 이름"')}${qInput(`qbf-obj-location-${n}`,`ObjectLocation${n}`,o.location,'text','placeholder="ID 또는 위치"')}${qInput(`qbf-obj-value-${n}`,`ObjectValue${n}`,o.value,'number','min="0"')}</div></div>`;}
+function qRenderBuilderRewardSlot(n,r){return `<div class="qslot"><div class="qslot-head"><span>Reward ${n}</span><span class="qmuted">Item / Value</span></div><div class="qform-grid two">${qInput(`qbf-reward-item-${n}`,`RewardItem${n}`,r.item,'text','placeholder="아이템 ID 또는 이름"')}${qInput(`qbf-item-value-${n}`,`ItemValue${n}`,r.value,'number','min="0"')}</div></div>`;}
+
+function qQuestBuilderSaveQuickTextOnly(){try{const d=qQuestBuilderCollect(false); d.quickText=qBuilderVal('qbf-prompt'); localStorage.setItem(QUEST_BUILDER_STORAGE_KEY,JSON.stringify(d));}catch(e){}}
 function qQuestBuilderCollect(save=true){
-  const same=qBuilderChecked('qbf-same-reward-npc');
-  const offerNpc=qBuilderNum('qbf-offer-npc');
-  const rewardRaw=qBuilderNum('qbf-reward-npc');
-  const title=qBuilderVal('qbf-title');
-  let desc=qBuilderVal('qbf-desc');
-  let detail=qBuilderVal('qbf-detail');
-  if(!detail && desc) detail=desc;
-  if(!desc && detail) desc=detail;
-  if(!desc && title) desc=title;
-  if(!detail && title) detail=title;
-  const d={
-    quickText:qBuilderVal('qbf-prompt'), index:qBuilderNum('qbf-index'), type:qBuilderNum('qbf-type'), tab:qBuilderNum('qbf-tab'), next:qBuilderNum('qbf-next'),
-    title, desc, detail,
-    offerNpc, rewardNpc:(same&&!rewardRaw?offerNpc:rewardRaw), sameRewardNpc:same,
-    offerTalk:qBuilderNum('qbf-offer-talk'), rewardTalk:qBuilderNum('qbf-reward-talk'),
-    condType1:qBuilderNum('qbf-cond-type-1'), condValue1:qBuilderNum('qbf-cond-value-1'), condType2:qBuilderNum('qbf-cond-type-2'), condValue2:qBuilderNum('qbf-cond-value-2'),
-    rewardExp:qBuilderNum('qbf-reward-exp'), rewardMoney:qBuilderNum('qbf-reward-money'), questDropItem:qBuilderNum('qbf-quest-drop-item'), dropPercent:qBuilderVal('qbf-drop-percent'),
-    objects:[], rewards:[]
-  };
-  for(let i=1;i<=5;i++)d.objects.push({type:qBuilderNum(`qbf-obj-type-${i}`),target:qBuilderNum(`qbf-obj-target-${i}`),location:qBuilderNum(`qbf-obj-location-${i}`),value:qBuilderNum(`qbf-obj-value-${i}`)});
-  for(let i=1;i<=4;i++)d.rewards.push({item:qBuilderNum(`qbf-reward-item-${i}`),value:qBuilderNum(`qbf-item-value-${i}`)});
-  if(save){try{localStorage.setItem(QUEST_BUILDER_STORAGE_KEY,JSON.stringify(d));}catch(e){}}
+  const offerNpc=qBuilderVal('qbf-offer-npc'), rewardRaw=qBuilderVal('qbf-reward-npc'), same=qBuilderChecked('qbf-same-reward-npc');
+  const d={quickText:qBuilderVal('qbf-prompt'), index:qBuilderMaybeNum('qbf-index'), templateIndex:qBuilderVal('qbf-template-index'), type:qBuilderVal('qbf-type'), tab:qBuilderVal('qbf-tab'), next:qBuilderMaybeNum('qbf-next'), title:qBuilderVal('qbf-title'), desc:qBuilderVal('qbf-desc'), detail:qBuilderVal('qbf-detail'), offerNpc, rewardNpc:(same&&!rewardRaw?offerNpc:rewardRaw), sameRewardNpc:same, offerTalk:qBuilderVal('qbf-offer-talk'), rewardTalk:qBuilderVal('qbf-reward-talk'), condType1:qBuilderMaybeNum('qbf-cond-type-1'), condValue1:qBuilderVal('qbf-cond-value-1'), condType2:qBuilderMaybeNum('qbf-cond-type-2'), condValue2:qBuilderVal('qbf-cond-value-2'), warpIndex:qBuilderVal('qbf-warp-index'), warpLocation:qBuilderVal('qbf-warp-location'), noObject:qBuilderChecked('qbf-no-object'), noReward:qBuilderChecked('qbf-no-reward'), rewardExp:qBuilderVal('qbf-reward-exp'), rewardMoney:qBuilderVal('qbf-reward-money'), questDropItem:qBuilderVal('qbf-quest-drop-item'), dropPercent:qBuilderVal('qbf-drop-percent'), objects:[], rewards:[]};
+  for(let i=1;i<=5;i++)d.objects.push({type:qBuilderMaybeNum(`qbf-obj-type-${i}`)||0,target:qBuilderVal(`qbf-obj-target-${i}`),location:qBuilderVal(`qbf-obj-location-${i}`),value:qBuilderVal(`qbf-obj-value-${i}`)});
+  for(let i=1;i<=4;i++)d.rewards.push({item:qBuilderVal(`qbf-reward-item-${i}`),value:qBuilderVal(`qbf-item-value-${i}`)});
+  if(save)try{localStorage.setItem(QUEST_BUILDER_STORAGE_KEY,JSON.stringify(d));}catch(e){}
   return d;
 }
 function qQuestBuilderSetValue(id,value){const el=document.getElementById(id); if(el!=null)el.value=value??'';}
 function qQuestBuilderSetChecked(id,value){const el=document.getElementById(id); if(el)el.checked=!!value;}
 function qQuestBuilderApplyData(d){
-  qQuestBuilderSetValue('qbf-index',d.index); qQuestBuilderSetValue('qbf-type',d.type); qQuestBuilderSetValue('qbf-tab',d.tab); qQuestBuilderSetValue('qbf-next',d.next);
+  qQuestBuilderSetValue('qbf-index',d.index); qQuestBuilderSetValue('qbf-template-index',d.templateIndex||''); qQuestBuilderSetValue('qbf-type',d.type); qQuestBuilderSetValue('qbf-tab',d.tab); qQuestBuilderSetValue('qbf-next',d.next);
   qQuestBuilderSetValue('qbf-title',d.title); qQuestBuilderSetValue('qbf-desc',d.desc); qQuestBuilderSetValue('qbf-detail',d.detail);
   qQuestBuilderSetValue('qbf-offer-npc',d.offerNpc); qQuestBuilderSetValue('qbf-reward-npc',d.rewardNpc); qQuestBuilderSetChecked('qbf-same-reward-npc',d.sameRewardNpc);
   qQuestBuilderSetValue('qbf-offer-talk',d.offerTalk); qQuestBuilderSetValue('qbf-reward-talk',d.rewardTalk);
   qQuestBuilderSetValue('qbf-cond-type-1',d.condType1); qQuestBuilderSetValue('qbf-cond-value-1',d.condValue1); qQuestBuilderSetValue('qbf-cond-type-2',d.condType2); qQuestBuilderSetValue('qbf-cond-value-2',d.condValue2);
+  qQuestBuilderSetValue('qbf-warp-index',d.warpIndex); qQuestBuilderSetValue('qbf-warp-location',d.warpLocation); qQuestBuilderSetChecked('qbf-no-object',d.noObject); qQuestBuilderSetChecked('qbf-no-reward',d.noReward);
   qQuestBuilderSetValue('qbf-reward-exp',d.rewardExp); qQuestBuilderSetValue('qbf-reward-money',d.rewardMoney); qQuestBuilderSetValue('qbf-quest-drop-item',d.questDropItem); qQuestBuilderSetValue('qbf-drop-percent',d.dropPercent);
-  for(let i=1;i<=5;i++){const o=d.objects[i-1]||{}; qQuestBuilderSetValue(`qbf-obj-type-${i}`,o.type||0); qQuestBuilderSetValue(`qbf-obj-target-${i}`,o.target||0); qQuestBuilderSetValue(`qbf-obj-location-${i}`,o.location||0); qQuestBuilderSetValue(`qbf-obj-value-${i}`,o.value||0);}
-  for(let i=1;i<=4;i++){const r=d.rewards[i-1]||{}; qQuestBuilderSetValue(`qbf-reward-item-${i}`,r.item||0); qQuestBuilderSetValue(`qbf-item-value-${i}`,r.value||0);}
+  for(let i=1;i<=5;i++){const o=d.objects[i-1]||{}; qQuestBuilderSetValue(`qbf-obj-type-${i}`,o.type||0); qQuestBuilderSetValue(`qbf-obj-target-${i}`,o.target||''); qQuestBuilderSetValue(`qbf-obj-location-${i}`,o.location||''); qQuestBuilderSetValue(`qbf-obj-value-${i}`,o.value||'');}
+  for(let i=1;i<=4;i++){const r=d.rewards[i-1]||{}; qQuestBuilderSetValue(`qbf-reward-item-${i}`,r.item||''); qQuestBuilderSetValue(`qbf-item-value-${i}`,r.value||'');}
 }
-function qQuestBuilderAutoIndex(){
-  const el=document.getElementById('qbf-index'); if(el){el.value=qSuggestNextQuestIndex(questState.model); qQuestBuilderPreview(false);}
-}
-function qQuestBuilderReset(){
-  try{localStorage.removeItem(QUEST_BUILDER_STORAGE_KEY);}catch(e){}
-  questRender();
-}
+function qQuestBuilderAutoIndex(){qQuestBuilderSetValue('qbf-index',qSuggestNextQuestIndex(questState.model)); qQuestBuilderPreview(false);}
+function qQuestBuilderReset(){localStorage.removeItem(QUEST_BUILDER_STORAGE_KEY); questRender(); if(typeof showToast==='function')showToast('퀘스트 생성 초안을 초기화했습니다.');}
 function qQuestBuilderExample(){
-  const txt='서브 / 하남성 / 제목: 사라진 약초꾼 / 설명: 약초꾼을 위협하는 늑대를 처치한다 / 목표: 늑대 10마리 처치 후 약초꾼에게 돌아가기 / 시작NPC 11001 완료NPC 11001 / 늑대 10마리 처치 / 보상 경험치 1200 돈 300 / 다음 10018';
-  qQuestBuilderSetValue('qbf-prompt',txt);
-  qQuestBuilderApplyPrompt();
+  const t='서브 / 하남성 / 제목: 사라진 약초꾼 / 설명: 하남성 외곽에서 사라진 약초꾼의 흔적을 조사한다. / 목표: 늑대 10마리 처치 후 약초꾼에게 보고 / 시작NPC 11001 / 완료NPC 11001 / 선행 10016 / 워프 50012 / 몬스터 23004 10마리 처치 / 보상 경험치 1200 돈 300';
+  qQuestBuilderSetValue('qbf-prompt',t); qQuestBuilderApplyPrompt();
 }
-function qQuestBuilderApplyPrompt(){
-  const m=questState.model; if(!m)return;
-  const text=qBuilderVal('qbf-prompt');
-  if(!text){if(typeof showToast==='function')showToast('문장 입력 후 초안을 생성하세요.',true);return;}
-  const current=qQuestBuilderCollect(false);
-  const parsed=qQuestBuilderParsePrompt(m,text,current);
-  parsed.data.quickText=text;
-  qQuestBuilderApplyData(parsed.data);
-  try{localStorage.setItem(QUEST_BUILDER_STORAGE_KEY,JSON.stringify(parsed.data));}catch(e){}
-  qQuestBuilderShowAssist(parsed);
-  qQuestBuilderPreview(true);
+
+function qQuestBuilderCatalog(m){
+  const map=[];
+  const add=(id,name,kind,source)=>{id=qnum(id); name=String(name||'').trim(); if(!id||!name||name==='Name'||/^\d+$/.test(name))return; map.push({id,name,kind:kind||'unknown',source:source||''});};
+  Object.entries(m?.names||{}).forEach(([id,name])=>add(id,name,'name','nameMap'));
+  (m?.usage||[]).forEach(u=>add(u.id,u.name,u.kind||'usage','usage'));
+  const sheets=m?.payload?.data?.spreadsheet?.sheets||[];
+  sheets.forEach(s=>{
+    const sn=String(s.name||''); let kind='unknown';
+    if(/npc|엔피씨/i.test(sn))kind='npc'; else if(/monster|몬스터|mob|몹/i.test(sn))kind='monster'; else if(/item|아이템/i.test(sn))kind='item'; else if(/warp|워프|teleport|텔레포트/i.test(sn))kind='warp';
+    if(kind==='unknown')return;
+    (s.values||[]).slice(0,2000).forEach(row=>{
+      for(let i=0;i<Math.min(row.length,8);i++){
+        const id=qnum(row[i]); if(!id)continue;
+        for(let j=0;j<Math.min(row.length,8);j++){
+          if(i===j)continue; const name=String(row[j]||'').trim();
+          if(name && !/^\d+$/.test(name) && name.length<=40){add(id,name,kind,sn); break;}
+        }
+      }
+    });
+  });
+  const uniq=new Map();
+  map.forEach(e=>{const k=e.kind+'|'+e.id+'|'+e.name; if(!uniq.has(k))uniq.set(k,e);});
+  return [...uniq.values()];
 }
-function qQuestBuilderShowAssist(parsed){
-  const el=document.getElementById('qbuilder-assist-result'); if(!el)return;
-  const notes=(parsed.notes||[]).map(n=>`<li>${qesc(n)}</li>`).join('');
-  el.classList.add('visible');
-  el.innerHTML=`<b>초안 생성 결과</b><ul>${notes||'<li>입력 문장에서 확정 가능한 값을 반영했습니다.</li>'}</ul>`;
-}
-function qQuestBuilderKnownEntities(m){
-  const map=new Map();
-  Object.entries(m?.names||{}).forEach(([id,name])=>{id=qnum(id); name=String(name||'').trim(); if(id&&name)map.set(id,{id,name,kind:'name'});});
-  (m?.usage||[]).forEach(u=>{if(u.id&&u.name)map.set(u.id,{id:u.id,name:u.name,kind:u.kind||'usage'});});
-  return [...map.values()].filter(e=>e.name && e.name!=='ID '+e.id).sort((a,b)=>b.name.length-a.name.length||a.id-b.id);
-}
-function qQuestBuilderResolveEntity(m,raw,kind){
-  raw=String(raw||'').trim();
-  const num=raw.match(/\b\d{2,}\b/); if(num)return {id:qnum(num[0]), note:`ID ${num[0]} 직접 입력`};
-  const clean=raw.replace(/["'“”‘’]/g,'').replace(/(NPC|엔피씨|몬스터|마리|개|처치|대화|완료|시작|에게|을|를|와|과)/g,' ').trim();
-  const ents=qQuestBuilderKnownEntities(m).filter(e=>!kind || e.kind===kind || e.kind==='name');
-  const hits=ents.filter(e=>clean.includes(e.name) || raw.includes(e.name));
-  if(hits.length===1)return {id:hits[0].id,note:`${hits[0].name} → ${hits[0].id}`};
-  if(hits.length>1)return {id:0, ambiguous:hits.slice(0,5).map(e=>`${e.name}(${e.id})`).join(', ')};
-  const token=clean.split(/[\s,/]+/).filter(x=>x.length>=2).sort((a,b)=>b.length-a.length)[0];
-  if(token){
-    const fuzzy=ents.filter(e=>e.name.includes(token) || token.includes(e.name)).slice(0,5);
-    if(fuzzy.length===1)return {id:fuzzy[0].id,note:`${token} ≈ ${fuzzy[0].name}(${fuzzy[0].id})`};
-    if(fuzzy.length>1)return {id:0, ambiguous:fuzzy.map(e=>`${e.name}(${e.id})`).join(', ')};
-  }
-  return {id:0};
+function qNormalizeName(v){return String(v||'').replace(/[\s"'“”‘’\[\]\(\)<>]/g,'').toLowerCase();}
+function qResolveIdStrict(m,raw,kind,label,required){
+  raw=String(raw??'').trim();
+  if(!raw){return required?{ok:false,value:QUEST_NEED_VALUE,status:'need',msg:`${label} 필요`}:{ok:true,value:0,status:'auto',msg:`${label} 미사용`};}
+  if(/^\d+$/.test(raw)){return {ok:true,value:qnum(raw),status:'auto',msg:`${label} ID ${raw}`};}
+  const catalog=qQuestBuilderCatalog(m), norm=qNormalizeName(raw);
+  const allowed=catalog.filter(e=>!kind || e.kind===kind || e.kind==='name' || e.kind==='usage');
+  let hits=allowed.filter(e=>qNormalizeName(e.name)===norm);
+  if(!hits.length)hits=allowed.filter(e=>qNormalizeName(e.name).includes(norm) || norm.includes(qNormalizeName(e.name)));
+  const ids=[...new Map(hits.map(e=>[e.id,e])).values()];
+  if(ids.length===1)return {ok:true,value:ids[0].id,status:'auto',msg:`${label} ${raw} → ${ids[0].id}`};
+  if(ids.length>1)return {ok:false,value:QUEST_NEED_VALUE,status:'need',msg:`${label} '${raw}' 후보 다수: ${ids.slice(0,5).map(e=>`${e.name}(${e.id})`).join(', ')}`};
+  return {ok:false,value:QUEST_NEED_VALUE,status:'need',msg:`${label} '${raw}' ID 변환 실패`};
 }
 function qQuestBuilderLineValue(text,labels){
   const parts=String(text||'').split(/\s*\/\s*|\n+/);
   for(const label of labels){
-    const re=new RegExp('(?:^|\\b)'+label+'\\s*[:：=]\\s*([^/\\n]+)','i');
+    const re=new RegExp('(?:^|[\\s/])'+label+'\\s*[:：=]?\\s*([^/\\n]+)','i');
     const m=text.match(re); if(m)return m[1].trim();
     const part=parts.find(p=>new RegExp('^\\s*'+label+'\\b','i').test(p));
     if(part)return part.replace(new RegExp('^\\s*'+label+'\\s*[:：=]?\\s*','i'),'').trim();
   }
   return '';
 }
+function qQuestBuilderApplyPrompt(){
+  const m=questState.model, current=qQuestBuilderCollect(false), parsed=qQuestBuilderParsePrompt(m,qBuilderVal('qbf-prompt'),current);
+  qQuestBuilderApplyData(parsed.data);
+  localStorage.setItem(QUEST_BUILDER_STORAGE_KEY,JSON.stringify(parsed.data));
+  const box=document.getElementById('qbuilder-assist-result');
+  if(box){box.classList.add('visible'); box.innerHTML=`<b>문장 분석 결과</b><ul>${parsed.notes.map(n=>`<li>${qesc(n)}</li>`).join('')||'<li>명확하게 추출된 값이 없습니다. 제목/설명/목표/타입/지역을 명시하세요.</li>'}</ul>`;}
+  qQuestBuilderPreview(false);
+}
 function qQuestBuilderParsePrompt(m,text,current){
-  const d=JSON.parse(JSON.stringify(current||qQuestBuilderDefaultDraft(m)));
-  const notes=[]; const src=String(text||'').replace(/\r/g,'');
+  const d=JSON.parse(JSON.stringify(current||qQuestBuilderDefaultDraft(m))), notes=[], src=String(text||'').replace(/\r/g,'');
   d.quickText=src;
   const idx=src.match(/(?:Index|인덱스|퀘스트\s*번호)\s*[:：=]?\s*(\d+)/i); if(idx){d.index=qnum(idx[1]); notes.push(`Index ${d.index} 반영`);} else if(!d.index){d.index=qSuggestNextQuestIndex(m); notes.push(`Index 자동 제안 ${d.index}`);}
   const next=src.match(/(?:NextQuest|Next|다음\s*퀘스트|다음)\s*[:：=]?\s*(\d+)/i); if(next){d.next=qnum(next[1]); notes.push(`NextQuest ${d.next} 반영`);}
-  if(/메인/.test(src)){d.type=0; notes.push('Type 메인 반영');}
-  else if(/서브/.test(src)){d.type=1; notes.push('Type 서브 반영');}
-  else if(/인스턴스/.test(src)){d.type=9; notes.push('Type 인스턴스 반영');}
-  else if(/던전/.test(src)){d.type=8; notes.push('Type 던전 반영');}
-  Object.entries(QUEST_TAB_LABEL).forEach(([v,name])=>{ if(src.includes(name) || src.includes(name.replace(/성$/,''))){d.tab=qnum(v); notes.push(`지역 ${name} 반영`);} });
-  const title=qQuestBuilderLineValue(src,['제목','퀘스트명','이름','Title']);
-  if(title){d.title=title; notes.push('제목 반영');}
-  else if(!d.title){const first=src.split(/\n|\//).map(s=>s.trim()).find(s=>s && !/(메인|서브|하남|소림|섬서|호북|사천|NPC|보상|목표|설명)/.test(s)); if(first&&first.length<=40){d.title=first; notes.push('첫 문장을 제목 후보로 반영');}}
+  if(/메인/.test(src)){d.type='0'; notes.push('Type 0 메인 반영');} else if(/서브/.test(src)){d.type='1'; notes.push('Type 1 서브 반영');} else if(/인스턴스/.test(src)){d.type='9'; notes.push('Type 9 인스턴스 반영');} else if(/던전/.test(src)){d.type='8'; notes.push('Type 8 던전 반영');}
+  Object.entries(QUEST_TAB_LABEL).forEach(([v,name])=>{ if(src.includes(name) || src.includes(name.replace(/성$/,''))){d.tab=String(v); notes.push(`Tab ${v} ${name} 반영`);} });
+  const title=qQuestBuilderLineValue(src,['제목','퀘스트명','이름','Title']); if(title){d.title=title; notes.push('제목 반영');}
   const desc=qQuestBuilderLineValue(src,['설명','요약','내용','Desc']); if(desc){d.desc=desc; notes.push('설명 반영');}
-  const detail=qQuestBuilderLineValue(src,['목표','완료조건','클리어조건','Objective']); if(detail){d.detail=detail; notes.push('목표 문구 반영');}
-  const offerRaw=qQuestBuilderLineValue(src,['시작NPC','수락NPC','제공NPC','OfferNPC','시작']);
-  if(offerRaw){const r=qQuestBuilderResolveEntity(m,offerRaw,'npc'); if(r.id){d.offerNpc=r.id; notes.push(`OfferNPC ${r.note}`);} else if(r.ambiguous)notes.push(`OfferNPC 후보가 여러 개입니다: ${r.ambiguous}`);}
-  const rewardRaw=qQuestBuilderLineValue(src,['완료NPC','보상NPC','RewardNPC','완료']);
-  if(rewardRaw){const r=qQuestBuilderResolveEntity(m,rewardRaw,'npc'); if(r.id){d.rewardNpc=r.id; d.sameRewardNpc=false; notes.push(`RewardNPC ${r.note}`);} else if(r.ambiguous)notes.push(`RewardNPC 후보가 여러 개입니다: ${r.ambiguous}`);}
-  if(!d.rewardNpc && d.offerNpc){d.rewardNpc=d.offerNpc; d.sameRewardNpc=true;}
-  const ot=src.match(/(?:OfferTalk|수락대사|시작대사)\s*[:：=]?\s*(\d+)/i); if(ot){d.offerTalk=qnum(ot[1]); notes.push(`OfferTalk ${d.offerTalk} 반영`);}
-  const rt=src.match(/(?:RewardTalk|완료대사|보상대사)\s*[:：=]?\s*(\d+)/i); if(rt){d.rewardTalk=qnum(rt[1]); notes.push(`RewardTalk ${d.rewardTalk} 반영`);}
-  const cond=src.match(/(?:선행|조건|이후|완료\s*후)\s*(?:퀘스트)?\s*[:：=]?\s*(\d+)/i); if(cond){d.condType1=1; d.condValue1=qnum(cond[1]); notes.push(`선행 퀘스트 조건 ${d.condValue1} 반영`);}
-  const exp=src.match(/(?:경험치|EXP|Exp)\s*[:：=]?\s*(\d+)/i); if(exp){d.rewardExp=qnum(exp[1]); notes.push(`RewardExp ${d.rewardExp} 반영`);}
-  const money=src.match(/(?:돈|은화|골드|Gold|Money)\s*[:：=]?\s*(\d+)/i); if(money){d.rewardMoney=qnum(money[1]); notes.push(`RewardMoney ${d.rewardMoney} 반영`);}
-  const rewardItem=src.match(/(?:보상\s*아이템|RewardItem)\s*[:：=]?\s*(\d+)(?:\D{0,8}(\d+)\s*(?:개|개수|수량))?/i); if(rewardItem){d.rewards[0]={item:qnum(rewardItem[1]),value:qnum(rewardItem[2]||1)}; notes.push(`RewardItem1 ${d.rewards[0].item} x${d.rewards[0].value} 반영`);}
-  const dropItem=src.match(/(?:드랍아이템|전리품아이템|QuestDropItem)\s*[:：=]?\s*(\d+)/i); if(dropItem){d.questDropItem=qnum(dropItem[1]); notes.push(`QuestDropItem ${d.questDropItem} 반영`);}
+  const detail=qQuestBuilderLineValue(src,['목표','목표문구','완료조건','클리어조건','Objective']); if(detail){d.detail=detail; notes.push('목표 문구 반영');}
+  const offerRaw=qQuestBuilderLineValue(src,['시작NPC','수락NPC','제공NPC','OfferNPC','시작']); if(offerRaw){d.offerNpc=offerRaw; notes.push(`OfferNPC 입력값 반영: ${offerRaw}`);}
+  const rewardRaw=qQuestBuilderLineValue(src,['완료NPC','보상NPC','RewardNPC','완료']); if(rewardRaw){d.rewardNpc=rewardRaw; d.sameRewardNpc=false; notes.push(`RewardNPC 입력값 반영: ${rewardRaw}`);}
+  const ot=src.match(/(?:OfferTalk|수락대사|시작대사)\s*[:：=]?\s*(\d+)/i); if(ot){d.offerTalk=ot[1]; notes.push(`OfferTalk ${ot[1]} 반영`);}
+  const rt=src.match(/(?:RewardTalk|완료대사|보상대사)\s*[:：=]?\s*(\d+)/i); if(rt){d.rewardTalk=rt[1]; notes.push(`RewardTalk ${rt[1]} 반영`);}
+  const cond=src.match(/(?:선행|조건|이후|완료\s*후)\s*(?:퀘스트)?\s*[:：=]?\s*(\d+)/i); if(cond){d.condType1=1; d.condValue1=cond[1]; notes.push(`선행 퀘스트 조건 ${cond[1]} 반영`);}
+  const warp=src.match(/(?:워프|WarpIndex|Warp|텔레포트)\s*[:：=]?\s*(\d+)/i); if(warp){d.warpIndex=warp[1]; notes.push(`WarpIndex ${warp[1]} 반영`);}
+  const wloc=src.match(/(?:WarpLocation|워프위치|이동위치|Location)\s*[:：=]?\s*(\d+)/i); if(wloc){d.warpLocation=wloc[1]; notes.push(`WarpLocation ${wloc[1]} 반영`);}
+  if(/보상\s*없음|무보상/.test(src)){d.noReward=true; notes.push('보상 없음 확정 반영');}
+  const exp=src.match(/(?:경험치|EXP|Exp)\s*[:：=]?\s*(\d+)/i); if(exp){d.rewardExp=exp[1]; d.noReward=false; notes.push(`RewardExp ${exp[1]} 반영`);}
+  const money=src.match(/(?:돈|은화|골드|Gold|Money)\s*[:：=]?\s*(\d+)/i); if(money){d.rewardMoney=money[1]; d.noReward=false; notes.push(`RewardMoney ${money[1]} 반영`);}
+  const rewardItem=src.match(/(?:보상\s*아이템|RewardItem)\s*[:：=]?\s*([^/\n]+?)(?:\s+(\d+)\s*(?:개|개수|수량))?(?=\s*\/|$)/i); if(rewardItem){d.rewards[0]={item:rewardItem[1].trim(),value:rewardItem[2]||1}; d.noReward=false; notes.push(`RewardItem1 ${d.rewards[0].item} x${d.rewards[0].value} 반영`);}
+  const dropItem=src.match(/(?:드랍아이템|전리품아이템|QuestDropItem)\s*[:：=]?\s*(\d+)/i); if(dropItem){d.questDropItem=dropItem[1]; notes.push(`QuestDropItem ${dropItem[1]} 반영`);}
   const pct=src.match(/(?:확률|DropPercent)\s*[:：=]?\s*(\d+\s*%?)/i); if(pct){d.dropPercent=pct[1].replace(/\s+/g,''); notes.push(`DropPercent ${d.dropPercent} 반영`);}
-  const obj=qQuestBuilderParseObject(m,src,notes);
-  if(obj){d.objects[0]=obj; if(!d.detail)d.detail=qQuestBuilderObjectDetail(obj,m); if(!d.desc)d.desc=d.detail||d.title;}
-  if(!d.desc && d.detail)d.desc=d.detail;
-  if(!d.detail && d.desc)d.detail=d.desc;
+  const obj=qQuestBuilderParseObject(src,notes); if(obj){d.objects[0]=obj; d.noObject=false;}
   return {data:d,notes};
 }
-function qQuestBuilderObjectClause(src,regex){
-  const parts=String(src||'').split(/\s*\/\s*|\n+/).map(s=>s.trim()).filter(Boolean);
-  return parts.find(p=>regex.test(p)) || String(src||'');
-}
-function qQuestBuilderObjectCount(clause){
-  const m=String(clause||'').match(/(\d+)\s*(?:마리|개|회|번)/);
-  if(m)return qnum(m[1]);
-  const nums=[...String(clause||'').matchAll(/\b(\d+)\b/g)].map(x=>qnum(x[1])).filter(n=>n>0&&n<10000);
-  return nums.length?nums[nums.length-1]:1;
-}
-function qQuestBuilderParseObject(m,src,notes){
-  if(/전리품|드랍/.test(src)){
-    const clause=qQuestBuilderObjectClause(src,/전리품|드랍/);
-    const count=qQuestBuilderObjectCount(clause);
-    const r=qQuestBuilderResolveEntity(m,clause,'monster');
-    if(r.id){notes.push(`전리품 대상 ${r.note}, 수량 ${count} 반영`);return {type:454,target:0,location:r.id,value:count};}
-    if(r.ambiguous)notes.push(`전리품 대상 후보가 여러 개입니다: ${r.ambiguous}`);
-    return {type:454,target:0,location:0,value:count};
-  }
-  if(/처치|사냥|잡아|잡기|섬멸|토벌/.test(src)){
-    const clause=qQuestBuilderObjectClause(src,/처치|사냥|잡아|잡기|섬멸|토벌/);
-    const count=qQuestBuilderObjectCount(clause);
-    const r=qQuestBuilderResolveEntity(m,clause,'monster');
-    const type=/보스|우두머리/.test(clause)?453:452;
-    if(r.id){notes.push(`${QUEST_OBJECT_LABEL[type]} 대상 ${r.note}, 수량 ${count} 반영`);return {type,target:r.id,location:0,value:count};}
-    if(r.ambiguous)notes.push(`처치 대상 후보가 여러 개입니다: ${r.ambiguous}`);
-    return {type,target:0,location:0,value:count};
-  }
-  if(/대화|말\s*걸|만나|보고/.test(src)){
-    const clause=qQuestBuilderObjectClause(src,/대화|말\s*걸|만나|보고/);
-    const r=qQuestBuilderResolveEntity(m,clause,'npc');
-    if(r.id){notes.push(`대화 대상 ${r.note} 반영`);return {type:2,target:r.id,location:0,value:0};}
-    if(r.ambiguous)notes.push(`대화 대상 후보가 여러 개입니다: ${r.ambiguous}`);
-    return {type:2,target:0,location:0,value:0};
-  }
-  if(/이동|도착|방문/.test(src)){
-    const clause=qQuestBuilderObjectClause(src,/이동|도착|방문/);
-    const loc=clause.match(/(?:위치|Location|좌표|지역ID)\s*[:：=]?\s*(\d+)/i);
-    if(loc){notes.push(`이동 Location ${loc[1]} 반영`);return {type:1,target:0,location:qnum(loc[1]),value:0};}
-    return {type:1,target:0,location:0,value:0};
-  }
+function qQuestBuilderObjectClause(src,regex){const parts=String(src||'').split(/\s*\/\s*|\n+/).map(s=>s.trim()).filter(Boolean); return parts.find(p=>regex.test(p)) || String(src||'');}
+function qQuestBuilderObjectCount(clause){const m=String(clause||'').match(/(\d+)\s*(?:마리|개|회|번)/); if(m)return m[1]; return '';}
+function qQuestBuilderObjectTargetText(clause){return String(clause||'').replace(/\d+\s*(마리|개|회|번)/g,'').replace(/(몬스터|NPC|처치|사냥|잡아|잡기|섬멸|토벌|대화|말\s*걸|만나|보고|전리품|드랍|획득|이동|도착|방문|보스|우두머리)/g,' ').trim();}
+function qQuestBuilderParseObject(src,notes){
+  if(/전리품|드랍/.test(src)){const clause=qQuestBuilderObjectClause(src,/전리품|드랍/); const count=qQuestBuilderObjectCount(clause)||1; const target=qQuestBuilderObjectTargetText(clause); notes.push(`전리품 Object 후보 반영: 대상 ${target||'미확정'}, 수량 ${count}`); return {type:454,target:'',location:target,value:count};}
+  if(/처치|사냥|잡아|잡기|섬멸|토벌/.test(src)){const clause=qQuestBuilderObjectClause(src,/처치|사냥|잡아|잡기|섬멸|토벌/); const count=qQuestBuilderObjectCount(clause)||1; const target=qQuestBuilderObjectTargetText(clause); const type=/보스|우두머리/.test(clause)?453:452; notes.push(`${QUEST_OBJECT_LABEL[type]} Object 후보 반영: 대상 ${target||'미확정'}, 수량 ${count}`); return {type,target,location:'',value:count};}
+  if(/대화|말\s*걸|만나|보고/.test(src)){const clause=qQuestBuilderObjectClause(src,/대화|말\s*걸|만나|보고/); const target=qQuestBuilderObjectTargetText(clause); notes.push(`대화 Object 후보 반영: 대상 ${target||'미확정'}`); return {type:2,target,location:'',value:''};}
+  if(/이동|도착|방문/.test(src)){const clause=qQuestBuilderObjectClause(src,/이동|도착|방문/); const loc=(clause.match(/(?:위치|Location|좌표|지역ID)\s*[:：=]?\s*(\d+)/i)||[])[1]||''; notes.push(`이동 Object 후보 반영: Location ${loc||'미확정'}`); return {type:1,target:'',location:loc,value:''};}
   return null;
 }
-function qQuestBuilderObjectDetail(o,m){
-  const name=(m?.names||{})[o.target] || (m?.names||{})[o.location] || '';
-  if(o.type===452||o.type===453)return `${name||('ID '+o.target)} ${o.value||1}마리 처치`;
-  if(o.type===454)return `${name||('ID '+o.location)}에게서 전리품 ${o.value||1}개 획득`;
-  if(o.type===2)return `${name||('ID '+o.target)}와 대화`;
-  if(o.type===1)return `목표 위치로 이동`;
+
+function qRowBaseVal(table,row,base,occ=0){
+  const keys=(table.keys||[]).filter(k=>qStripOcc(k)===base);
+  const key=keys[occ]||keys[0]; return key?String(row?.[key]??'').trim():'';
+}
+function qRowBaseValNorm(table,row,norms,occ=0){
+  for(const k of table.keys||[]){const base=qStripOcc(k); if(norms.includes(qHeaderNorm(base))){ if(occ===qOcc(k))return String(row?.[k]??'').trim(); }}
   return '';
 }
-function qQuestBuilderPreview(showToastFlag){
-  if(questState.active!=='builder')return;
-  const m=questState.model;
-  const target=document.getElementById('qbuilder-result');
-  if(!m||!target)return;
-  const d=qQuestBuilderCollect();
-  const built=qQuestBuilderBuildRow(m,d);
-  questState.builder=built;
-  target.innerHTML=qQuestBuilderPreviewHTML(built);
-  if(showToastFlag && typeof showToast==='function') showToast(built.needCount?`⚠ 검증 완료: 기입 필요 ${built.needCount}칸`:'✅ 검증 완료: 기입 필요 없음');
-}
-function qNeedCell(reason){return {value:QUEST_NEED_VALUE,status:'need',reason:reason||'수동 기입 필요'};}
-function qAutoCell(value,reason){return {value:value??'',status:'auto',reason:reason||'자동 매핑'};}
-function qDefaultCell(value,reason){return {value:value??'',status:'defaulted',reason:reason||'안전 기본값'};}
-function qBlankCell(reason){return {value:'',status:'blank',reason:reason||'빈 값 유지'};}
-function qQuestBuilderFieldCell(key,raw,d,table){
-  const base=qStripOcc(key), occ=qOcc(key);
-  if(base.startsWith('__blank_')) return qBlankCell('빈 헤더 컬럼');
-  const objMatch=base.match(/^Object(Target|Location|Value)?([1-5])$/);
-  if(objMatch){
-    const part=objMatch[1]||'Type', idx=parseInt(objMatch[2],10)-1, o=d.objects[idx]||{type:0,target:0,location:0,value:0};
-    if(part==='Type') return qDefaultCell(o.type||0,'Object 타입');
-    if(part==='Target'){
-      if(qObjectNeedsTarget(o.type)&&!o.target) return qNeedCell(`Object${idx+1} ${QUEST_OBJECT_LABEL[o.type]||o.type} Target 필요`);
-      return qDefaultCell(o.target||0,'Object Target');
-    }
-    if(part==='Location'){
-      if(qObjectNeedsLocation(o.type)&&!o.location) return qNeedCell(`Object${idx+1} ${QUEST_OBJECT_LABEL[o.type]||o.type} Location 필요`);
-      return qDefaultCell(o.location||0,'Object Location');
-    }
-    if(part==='Value'){
-      if(qObjectNeedsValue(o.type)&&!o.value) return qNeedCell(`Object${idx+1} ${QUEST_OBJECT_LABEL[o.type]||o.type} Value 필요`);
-      return qDefaultCell(o.value||0,'Object Value');
-    }
-  }
-  const rewardItem=base.match(/^RewardItem([1-4])$/);
-  if(rewardItem){const r=d.rewards[parseInt(rewardItem[1],10)-1]||{}; return qDefaultCell(r.item||0,'보상 아이템');}
-  const itemValue=base.match(/^ItemValue([1-4])$/);
-  if(itemValue){const r=d.rewards[parseInt(itemValue[1],10)-1]||{}; if(r.item&&!r.value)return qNeedCell(`RewardItem${itemValue[1]} 수량 필요`); return qDefaultCell(r.value||0,'보상 수량');}
-  const direct={
-    Index: d.index || QUEST_NEED_VALUE,
-    NextQuest: d.next || 0,
-    OfferNPC: d.offerNpc || 0,
-    RewardNPC: d.rewardNpc || 0,
-    OfferTalk: d.offerTalk || 0,
-    RewardTalk: d.rewardTalk || 0,
-    OfferConditionType1: d.condType1 || 0,
-    OfferValue1: d.condValue1 || 0,
-    OfferConditionType2: d.condType2 || 0,
-    OfferValue2: d.condValue2 || 0,
-    Type: Number.isFinite(d.type)?d.type:QUEST_NEED_VALUE,
-    Tab: Number.isFinite(d.tab)?d.tab:QUEST_NEED_VALUE,
-    RewardExp: d.rewardExp || 0,
-    RewardMoney: d.rewardMoney || 0,
-    QuestDropItem: d.questDropItem || 0,
-    DropPercent: d.dropPercent || ''
-  };
-  if(base in direct){
-    const v=direct[base];
-    if(v===QUEST_NEED_VALUE) return qNeedCell(base+' 필요');
-    return qAutoCell(v,base+' 매핑');
-  }
-  if(base==='BlankField'){
-    if(occ===0) return d.title?qAutoCell(d.title,'제목 매핑'):qNeedCell('퀘스트 제목 필요');
-    if(occ===1) return (d.desc||d.detail||d.title)?qAutoCell(d.desc||d.detail||d.title,'설명 매핑/보정'):qNeedCell('퀘스트 설명 필요');
-    if(occ===2) return (d.detail||d.desc||d.title)?qAutoCell(d.detail||d.desc||d.title,'목표 문구 매핑/보정'):qNeedCell('목표 문구 필요');
-    return qQuestBuilderInferUnknownCell(key,raw,table);
-  }
-  if(['Title','Name','QuestName'].includes(base)) return d.title?qAutoCell(d.title,'제목 매핑'):qNeedCell('퀘스트 제목 필요');
-  if(['Desc','Description','Summary'].includes(base)) return (d.desc||d.detail||d.title)?qAutoCell(d.desc||d.detail||d.title,'설명 매핑/보정'):qNeedCell('퀘스트 설명 필요');
-  if(['Detail','Goal','Objective','ObjectText'].includes(base)) return (d.detail||d.desc||d.title)?qAutoCell(d.detail||d.desc||d.title,'목표 문구 매핑/보정'):qNeedCell('목표 문구 필요');
-  return qQuestBuilderInferUnknownCell(key,raw,table);
-}
-function qQuestBuilderInferUnknownCell(key,raw,table){
-  const base=qStripOcc(key), label=String(raw||base||'').trim();
-  const lower=label.toLowerCase();
-  if(!label)return qBlankCell('빈 헤더');
-  if(/memo|comment|note|remark|비고|메모|주석/.test(lower)) return qBlankCell('메모성 컬럼');
-  const rows=(table.rows||[]).slice(0,220);
-  const all=rows.map(r=>String(r[key]??'').trim());
-  const vals=all.filter(Boolean);
-  const nonEmptyRatio=rows.length?vals.length/rows.length:0;
-  if(/percent|rate|ratio|count|value|type|flag|level|grade|id|idx|npc|item|exp|money|gold|point|condition|quest|target|location|object|talk/.test(lower)) return qDefaultCell(0,'헤더명 기준 숫자형 안전 기본값');
-  if(!vals.length || nonEmptyRatio<0.12) return qBlankCell('기존 데이터 대부분 공란인 선택 컬럼');
-  const numeric=vals.filter(v=>/^-?\d+(\.\d+)?%?$/.test(v.replace(/,/g,''))).length;
-  if(numeric/vals.length>=0.7) return qDefaultCell(0,'기존 데이터 기준 숫자형 컬럼');
-  const freq={}; vals.forEach(v=>{freq[v]=(freq[v]||0)+1;});
-  const common=Object.entries(freq).sort((a,b)=>b[1]-a[1])[0];
-  if(common && common[1]/vals.length>=0.7) return qDefaultCell(common[0],`기존 데이터 최빈값 ${common[0]} 사용`);
-  if(nonEmptyRatio<0.55) return qBlankCell('선택 텍스트 컬럼으로 판단하여 공란 유지');
-  return qNeedCell(`헤더 ${label} 자동 판단 불가`);
+function qQuestTemplateObjectType(table,row){return qnum(qRowBaseVal(table,row,'Object1')||qRowBaseVal(table,row,'Object'));}
+function qQuestBuilderChooseTemplate(table,d){
+  const rows=(table.rows||[]).filter(r=>qnum(qRowBaseVal(table,r,'Index')));
+  if(!rows.length)return null;
+  if(qnum(d.templateIndex)){const fixed=rows.find(r=>qnum(qRowBaseVal(table,r,'Index'))===qnum(d.templateIndex)); if(fixed)return {row:fixed,reason:`사용자 지정 템플릿 ${d.templateIndex}`};}
+  const dt=qHasValue(d.type)?qnum(d.type):null, db=qHasValue(d.tab)?qnum(d.tab):null, obj=(d.objects||[]).find(o=>qnum(o.type))||{};
+  const scored=rows.map(r=>{let score=0; const rt=qnum(qRowBaseVal(table,r,'Type')), rb=qnum(qRowBaseVal(table,r,'Tab')), ro=qQuestTemplateObjectType(table,r), idx=qnum(qRowBaseVal(table,r,'Index'));
+    if(dt!==null && rt===dt)score+=8; if(db!==null && rb===db)score+=3; if(qnum(obj.type)&&ro===qnum(obj.type))score+=10; if(qRowBaseVal(table,r,'RewardExp')||qRowBaseVal(table,r,'RewardMoney'))score+=1; return {row:r,score,idx};
+  }).sort((a,b)=>b.score-a.score || b.idx-a.idx);
+  return scored[0]?.score>0?{row:scored[0].row,reason:`자동 템플릿 ${qnum(qRowBaseVal(table,scored[0].row,'Index'))} · score ${scored[0].score}`}:{row:rows[rows.length-1],reason:`유사도 부족, 최신 행 ${qnum(qRowBaseVal(table,rows[rows.length-1],'Index'))} 사용`};
 }
 function qObjectNeedsTarget(t){return [2,102,103,104,105,106,107,108,109,110,152,165,405,452,453,503].includes(Number(t));}
 function qObjectNeedsLocation(t){return [1,454].includes(Number(t));}
 function qObjectNeedsValue(t){return [102,103,104,105,152,452,453,454,503].includes(Number(t));}
-function qQuestBuilderValidateInput(m,d){
-  const items=[];
-  const add=(level,msg)=>items.push({level,msg});
-  if(!d.index)add('bad','Index가 비어 있습니다.');
-  else if((m.quests||[]).some(q=>q.index===d.index))add('bad',`Index ${d.index}는 이미 사용 중입니다.`);
-  else add('ok',`Index ${d.index}는 현재 동기화 데이터와 중복되지 않습니다.`);
-  if(!d.title)add('bad','퀘스트 제목이 비어 있습니다.'); else add('ok','퀘스트 제목 입력 확인.');
-  if(!d.desc)add('warn','설명이 비어 있습니다. 실데이터에서는 제목 또는 목표 문구로 보정됩니다.'); else add('ok','설명 입력/보정 확인.');
-  if(!d.detail)add('warn','목표 문구가 비어 있습니다. 실데이터에서는 설명 또는 제목으로 보정됩니다.'); else add('ok','목표 문구 입력/보정 확인.');
-  if(!d.offerNpc)add('ok','OfferNPC 미사용: 0으로 출력합니다. NPC 수락 퀘스트라면 직접 입력하세요.'); else add('ok','OfferNPC 입력 확인.');
-  if(!d.rewardNpc)add('ok','RewardNPC 미사용: 0으로 출력합니다. 완료 NPC가 있다면 직접 입력하세요.'); else add('ok','RewardNPC 입력 확인.');
-  d.objects.forEach((o,i)=>{
-    if(!o.type)return;
-    const label=`Object${i+1} ${QUEST_OBJECT_LABEL[o.type]||o.type}`;
-    if(qObjectNeedsTarget(o.type)&&!o.target)add('bad',`${label}: ObjectTarget${i+1} 필요.`);
-    if(qObjectNeedsLocation(o.type)&&!o.location)add('bad',`${label}: ObjectLocation${i+1} 필요.`);
-    if(qObjectNeedsValue(o.type)&&!o.value)add('bad',`${label}: ObjectValue${i+1} 필요.`);
-  });
-  if(!d.objects.some(o=>o.type))add('warn','Object 목표가 없습니다. 순수 대화/안내 퀘스트가 아니라면 최소 1개 목표를 입력하세요.');
-  d.rewards.forEach((r,i)=>{if(r.item&&!r.value)add('bad',`RewardItem${i+1} 수량 ItemValue${i+1} 필요.`);});
+function qObjectTargetKind(t){t=Number(t); if(t===2)return 'npc'; if(t===452||t===453)return 'monster'; if(t===454)return 'monster'; return '';}
+function qQuestBuilderResolveAll(m,d){
+  const notes=[];
+  const res={notes, offerNpc:qResolveIdStrict(m,d.offerNpc,'npc','OfferNPC',false), rewardNpc:null, offerTalk:qResolveIdStrict(m,d.offerTalk,'','OfferTalk',false), rewardTalk:qResolveIdStrict(m,d.rewardTalk,'','RewardTalk',false), condValue1:{ok:true,value:d.condValue1||0,status:'auto',msg:'OfferValue1'}, condValue2:{ok:true,value:d.condValue2||0,status:'auto',msg:'OfferValue2'}, warpIndex:qResolveIdStrict(m,d.warpIndex,'warp','WarpIndex',false), warpLocation:qResolveIdStrict(m,d.warpLocation,'','WarpLocation',false), questDropItem:qResolveIdStrict(m,d.questDropItem,'item','QuestDropItem',false), objects:[], rewards:[]};
+  res.rewardNpc=qResolveIdStrict(m,d.rewardNpc,'npc','RewardNPC',false);
+  if(d.sameRewardNpc && !qHasValue(d.rewardNpc) && qHasValue(d.offerNpc))res.rewardNpc=res.offerNpc;
+  d.objects.forEach((o,i)=>{const type=qnum(o.type), kind=qObjectTargetKind(type); const targetReq=qObjectNeedsTarget(type), locReq=qObjectNeedsLocation(type); const target=qResolveIdStrict(m,o.target,kind,`ObjectTarget${i+1}`,targetReq); const loc=qResolveIdStrict(m,o.location,(type===454?'monster':''),`ObjectLocation${i+1}`,locReq); res.objects.push({type,target,location:loc,value:qHasValue(o.value)?qnum(o.value):0});});
+  d.rewards.forEach((r,i)=>{const item=qResolveIdStrict(m,r.item,'item',`RewardItem${i+1}`,false); res.rewards.push({item,value:qHasValue(r.value)?qnum(r.value):0});});
+  [res.offerNpc,res.rewardNpc,res.offerTalk,res.rewardTalk,res.warpIndex,res.warpLocation,res.questDropItem,...res.objects.flatMap(o=>[o.target,o.location]),...res.rewards.map(r=>r.item)].forEach(x=>{if(x?.msg)notes.push(x.msg);});
+  return res;
+}
+function qCell(value,status,reason){return {value:value??'',status:status||'auto',reason:reason||''};}
+function qNeedCell(reason){return qCell(QUEST_NEED_VALUE,'need',reason||'수동 기입 필요');}
+function qAutoCell(value,reason){return qCell(value,'auto',reason||'명확한 입력값');}
+function qTemplateCell(value,reason){return qCell(value,'template',reason||'실데이터 템플릿 복사');}
+function qBlankCell(reason){return qCell('','blank',reason||'공란 유지');}
+function qKnownHeader(base){return qHeaderNorm(base);}
+function qCriticalUnknownHeader(label){const l=qHeaderNorm(label); return /index|idx|type|tab|npc|monster|mob|item|reward|condition|quest|target|location|object|talk|warp|teleport|drop|exp|money|gold|value|count|rate|percent|flag|level|id/.test(l);}
+function qTemplateFallbackCell(key,raw,table,template){
+  const tv=template?.row?.[key];
+  if(qHasValue(tv))return qTemplateCell(tv,`${template.reason}: ${raw||key}`);
+  if(qCriticalUnknownHeader(raw||key))return qNeedCell(`헤더 '${raw||key}' 자동 매핑 불가. 템플릿 값도 비어 있음.`);
+  return qBlankCell('선택/설명성 미매핑 컬럼 공란 유지');
+}
+function qQuestBuilderFieldCell(key,raw,d,table,resolved,template){
+  const base=qStripOcc(key), occ=qOcc(key), norm=qKnownHeader(base);
+  if(base.startsWith('__blank_')) return qBlankCell('빈 헤더 컬럼');
+  const objMatch=norm.match(/^object(target|location|value)?([1-5])$/);
+  if(objMatch){
+    const part=objMatch[1]||'type', idx=parseInt(objMatch[2],10)-1, o=d.objects[idx]||{type:0}, r=resolved.objects[idx]||{};
+    if(part==='type')return qAutoCell(qnum(o.type)||0,`Object${idx+1} Type`);
+    if(part==='target'){ if(r.target?.status==='need')return qNeedCell(r.target.msg); return qAutoCell(r.target?.value||0,`ObjectTarget${idx+1}`); }
+    if(part==='location'){ if(r.location?.status==='need')return qNeedCell(r.location.msg); return qAutoCell(r.location?.value||0,`ObjectLocation${idx+1}`); }
+    if(part==='value'){ if(qObjectNeedsValue(o.type)&&!qnum(o.value))return qNeedCell(`ObjectValue${idx+1} 필요`); return qAutoCell(qnum(o.value)||0,`ObjectValue${idx+1}`); }
+  }
+  const rewardItem=norm.match(/^rewarditem([1-4])$/);
+  if(rewardItem){const r=resolved.rewards[parseInt(rewardItem[1],10)-1]; if(r?.item?.status==='need')return qNeedCell(r.item.msg); return qAutoCell(r?.item?.value||0,`RewardItem${rewardItem[1]}`);}
+  const itemValue=norm.match(/^itemvalue([1-4])$/);
+  if(itemValue){const i=parseInt(itemValue[1],10)-1, rr=d.rewards[i]||{}; if(qHasValue(rr.item)&&!qnum(rr.value))return qNeedCell(`ItemValue${itemValue[1]} 필요`); return qAutoCell(qnum(rr.value)||0,`ItemValue${itemValue[1]}`);}
+  if(norm==='index'||norm==='questindex') return qnum(d.index)?qAutoCell(qnum(d.index),'Index'):qNeedCell('Index 필요');
+  if(norm==='nextquest') return qAutoCell(qnum(d.next)||0,'NextQuest');
+  if(norm==='type'||norm==='questtype') return qHasValue(d.type)?qAutoCell(qnum(d.type),'Type'):qNeedCell('Type 선택 필요');
+  if(norm==='tab'||norm==='region'||norm==='regiontab') return qHasValue(d.tab)?qAutoCell(qnum(d.tab),'Tab'):qNeedCell('Tab/지역 선택 필요');
+  if(norm==='offernpc'){ if(resolved.offerNpc.status==='need')return qNeedCell(resolved.offerNpc.msg); return qAutoCell(resolved.offerNpc.value||0,'OfferNPC'); }
+  if(norm==='rewardnpc'){ if(resolved.rewardNpc.status==='need')return qNeedCell(resolved.rewardNpc.msg); return qAutoCell(resolved.rewardNpc.value||0,'RewardNPC'); }
+  if(norm==='offertalk'){ if(resolved.offerTalk.status==='need')return qNeedCell(resolved.offerTalk.msg); return qAutoCell(resolved.offerTalk.value||0,'OfferTalk'); }
+  if(norm==='rewardtalk'){ if(resolved.rewardTalk.status==='need')return qNeedCell(resolved.rewardTalk.msg); return qAutoCell(resolved.rewardTalk.value||0,'RewardTalk'); }
+  if(norm==='offerconditiontype1')return qAutoCell(qnum(d.condType1)||0,'OfferConditionType1');
+  if(norm==='offervalue1'||norm==='offerconditionvalue1')return qAutoCell(d.condValue1||0,'OfferValue1');
+  if(norm==='offerconditiontype2')return qAutoCell(qnum(d.condType2)||0,'OfferConditionType2');
+  if(norm==='offervalue2'||norm==='offerconditionvalue2')return qAutoCell(d.condValue2||0,'OfferValue2');
+  if(norm==='rewardexp'||norm==='exp')return qAutoCell(qnum(d.rewardExp)||0,'RewardExp');
+  if(norm==='rewardmoney'||norm==='money'||norm==='gold')return qAutoCell(qnum(d.rewardMoney)||0,'RewardMoney');
+  if(norm==='questdropitem'){ if(resolved.questDropItem.status==='need')return qNeedCell(resolved.questDropItem.msg); return qAutoCell(resolved.questDropItem.value||0,'QuestDropItem'); }
+  if(norm==='droppercent'||norm==='droprate')return qAutoCell(d.dropPercent||'','DropPercent');
+  if(/^(warpindex|warpid|warp|teleportindex|teleportid)$/.test(norm)){ if(resolved.warpIndex.status==='need')return qNeedCell(resolved.warpIndex.msg); return qAutoCell(resolved.warpIndex.value||0,'WarpIndex'); }
+  if(/^(warplocation|warplocationid|teleportlocation|movelocation)$/.test(norm)){ if(resolved.warpLocation.status==='need')return qNeedCell(resolved.warpLocation.msg); return qAutoCell(resolved.warpLocation.value||0,'WarpLocation'); }
+  if(norm==='blankfield'){
+    if(occ===0)return d.title?qAutoCell(d.title,'제목'):qNeedCell('퀘스트 제목 필요');
+    if(occ===1)return d.desc?qAutoCell(d.desc,'설명'):qNeedCell('퀘스트 설명 필요');
+    if(occ===2)return d.detail?qAutoCell(d.detail,'목표 문구'):qNeedCell('목표 문구 필요');
+    return qTemplateFallbackCell(key,raw,table,template);
+  }
+  if(['title','name','questname'].includes(norm))return d.title?qAutoCell(d.title,'제목'):qNeedCell('퀘스트 제목 필요');
+  if(['desc','description','summary'].includes(norm))return d.desc?qAutoCell(d.desc,'설명'):qNeedCell('퀘스트 설명 필요');
+  if(['detail','goal','objective','objecttext'].includes(norm))return d.detail?qAutoCell(d.detail,'목표 문구'):qNeedCell('목표 문구 필요');
+  return qTemplateFallbackCell(key,raw,table,template);
+}
+function qQuestBuilderHasReward(d){return qnum(d.rewardExp)||qnum(d.rewardMoney)||qHasValue(d.questDropItem)||qHasValue(d.dropPercent)||d.rewards.some(r=>qHasValue(r.item)||qnum(r.value));}
+function qQuestBuilderHasObject(d){return d.objects.some(o=>qnum(o.type)||qHasValue(o.target)||qHasValue(o.location)||qnum(o.value));}
+function qQuestBuilderValidateInput(m,d,resolved){
+  const items=[], add=(level,msg)=>items.push({level,msg});
+  if(!qnum(d.index))add('bad','Index가 비어 있습니다.'); else if((m.quests||[]).some(q=>q.index===qnum(d.index)))add('bad',`Index ${d.index}는 이미 사용 중입니다.`); else add('ok',`Index ${d.index} 중복 없음.`);
+  if(!qHasValue(d.type))add('bad','Type을 선택해야 합니다. 메인/서브/던전/인스턴스 중 하나를 확정하세요.'); else add('ok',`Type ${d.type} 확인.`);
+  if(!qHasValue(d.tab))add('bad','Tab/지역을 선택해야 합니다.'); else add('ok',`Tab ${d.tab} 확인.`);
+  if(!d.title)add('bad','퀘스트 제목이 비어 있습니다.'); else add('ok','제목 입력 확인.');
+  if(!d.desc)add('bad','설명이 비어 있습니다. 제목으로 자동 대체하지 않습니다.'); else add('ok','설명 입력 확인.');
+  if(!d.detail)add('bad','목표 문구가 비어 있습니다. 제목/설명으로 자동 대체하지 않습니다.'); else add('ok','목표 문구 입력 확인.');
+  if(!d.noObject && !qQuestBuilderHasObject(d))add('bad','Object 목표가 없습니다. 목표 없음 퀘스트라면 체크박스로 명시하세요.'); else add('ok',d.noObject?'Object 없음 확정.':'Object 목표 입력 확인.');
+  if(!d.noReward && !qQuestBuilderHasReward(d))add('bad','보상이 없습니다. 보상 없음 퀘스트라면 체크박스로 명시하세요.'); else add('ok',d.noReward?'보상 없음 확정.':'보상 입력 확인.');
+  if(qnum(d.condType1)&&!qHasValue(d.condValue1))add('bad','OfferConditionType1이 있는데 OfferValue1이 비어 있습니다.');
+  if(qnum(d.condType2)&&!qHasValue(d.condValue2))add('bad','OfferConditionType2가 있는데 OfferValue2가 비어 있습니다.');
+  const checkRes=(r)=>{ if(r?.status==='need')add('bad',r.msg); };
+  [resolved.offerNpc,resolved.rewardNpc,resolved.offerTalk,resolved.rewardTalk,resolved.warpIndex,resolved.warpLocation,resolved.questDropItem].forEach(checkRes);
+  resolved.objects.forEach(o=>{checkRes(o.target); checkRes(o.location);});
+  resolved.rewards.forEach(r=>checkRes(r.item));
+  d.objects.forEach((o,i)=>{if(!qnum(o.type))return; if(qObjectNeedsValue(o.type)&&!qnum(o.value))add('bad',`ObjectValue${i+1} 필요.`);});
+  d.rewards.forEach((r,i)=>{if(qHasValue(r.item)&&!qnum(r.value))add('bad',`RewardItem${i+1} 수량 ItemValue${i+1} 필요.`);});
   return items;
 }
-function qQuestBuilderValidateSchema(table,rowCells){
-  const items=[];
-  const headers=table.headers.map(qcleanHeader);
-  const has=(name)=>headers.includes(name);
-  const hasAny=(arr)=>arr.some(has);
-  if(!table.sheet)items.push({level:'bad',msg:'퀘스트 데이터/QuestInfo/퀘스트 리스트 시트를 찾지 못했습니다.'});
-  else items.push({level:'ok',msg:`시트 "${table.sheet.name}" 헤더 ${table.headers.length}개를 기준으로 출력합니다.`});
-  ['Index','NextQuest','Type','Tab'].forEach(h=>items.push({level:has(h)?'ok':'bad',msg:has(h)?`필수 헤더 ${h} 확인.`:`필수 헤더 ${h} 없음.`}));
-  items.push({level:hasAny(['BlankField','Title','Name','QuestName'])?'ok':'bad',msg:hasAny(['BlankField','Title','Name','QuestName'])?'제목 매핑 헤더 확인.':'제목을 넣을 헤더가 없습니다.'});
-  const need=rowCells.filter(c=>c.status==='need').length;
-  const defaulted=rowCells.filter(c=>c.status==='defaulted').length;
-  items.push({level:need?'warn':'ok',msg:need?`${need}개 셀은 자동 판단 불가 또는 필수 입력 누락으로 '${QUEST_NEED_VALUE}' 처리됩니다.`:'빨간 수동 기입 셀이 없습니다.'});
-  if(defaulted)items.push({level:'warn',msg:`${defaulted}개 셀은 기존 데이터/헤더명 기준의 안전 기본값입니다. 필요하면 미리보기 표에서 직접 수정하세요.`});
+function qHasMappedHeader(table,role){
+  const norms=(table.keys||[]).map(k=>qHeaderNorm(qStripOcc(k)));
+  const aliases={Index:['index','questindex'],Type:['type','questtype'],Tab:['tab','region','regiontab'],Title:['blankfield','title','name','questname'],Object:['object1','object'],Reward:['rewardexp','rewardmoney','rewarditem1']};
+  return (aliases[role]||[qHeaderNorm(role)]).some(a=>norms.includes(a));
+}
+function qQuestBuilderValidateSchema(table,cells,template){
+  const items=[], add=(level,msg)=>items.push({level,msg});
+  if(!table.sheet)add('bad',`${QUEST_REQUIRED_SHEET_NAME} 시트를 찾지 못했습니다. 내보내기를 차단합니다.`);
+  else if(!table.sheetExact)add('bad',`정확한 ${QUEST_REQUIRED_SHEET_NAME} 시트가 아닙니다: ${table.sheet.name}. 내보내기를 차단합니다.`);
+  else add('ok',`${QUEST_REQUIRED_SHEET_NAME} 시트 확인. 헤더 ${table.headers.length}개.`);
+  ['Index','Type','Tab','Title'].forEach(h=>add(qHasMappedHeader(table,h)?'ok':'bad',qHasMappedHeader(table,h)?`필수 매핑 ${h} 확인.`:`필수 매핑 ${h} 헤더 없음.`));
+  if(template?.row)add('ok',`템플릿 적용: ${template.reason}`); else add('warn','참조할 템플릿 행이 없습니다. 미매핑 컬럼은 엄격하게 확인됩니다.');
+  const need=cells.filter(c=>c.status==='need').length, tmpl=cells.filter(c=>c.status==='template').length;
+  if(need)add('warn',`${need}개 셀은 자동 확정 불가로 '${QUEST_NEED_VALUE}' 처리됩니다.`); else add('ok','수동 기입 셀 없음.');
+  if(tmpl)add('warn',`${tmpl}개 셀은 기존 실데이터 템플릿 값입니다. 신규 퀘스트에 맞는지 확인하세요.`);
   return items;
 }
 function qQuestBuilderBuildRow(m,d){
-  const table=qQuestInsertTable(m);
-  const cells=table.headers.map((h,i)=>qQuestBuilderFieldCell(table.keys[i],h,d,table));
-  const validation1=qQuestBuilderValidateInput(m,d);
-  const validation2=qQuestBuilderValidateSchema(table,cells);
-  const values=cells.map(c=>c.value);
-  const needCount=cells.filter(c=>c.status==='need').length;
-  const badCount=validation1.concat(validation2).filter(v=>v.level==='bad').length;
-  const warnCount=validation1.concat(validation2).filter(v=>v.level==='warn').length;
-  return {headers:table.headers,keys:table.keys,cells,values,validation1,validation2,needCount,badCount,warnCount,sheetName:table.sheet?.name||'시트 미확인'};
+  const table=qQuestInsertTable(m), template=qQuestBuilderChooseTemplate(table,d), resolved=qQuestBuilderResolveAll(m,d);
+  const cells=table.headers.map((h,i)=>qQuestBuilderFieldCell(table.keys[i],h,d,table,resolved,template));
+  const validation1=qQuestBuilderValidateInput(m,d,resolved), validation2=qQuestBuilderValidateSchema(table,cells,template);
+  const values=cells.map(c=>c.value), needCount=cells.filter(c=>c.status==='need').length, badCount=validation1.concat(validation2).filter(v=>v.level==='bad').length, warnCount=validation1.concat(validation2).filter(v=>v.level==='warn').length;
+  return {headers:table.headers,keys:table.keys,cells,values,validation1,validation2,needCount,badCount,warnCount,sheetName:table.sheet?.name||'시트 미확인',sheetExact:table.sheetExact,templateReason:template?.reason||'',resolved,draft:d};
+}
+function qQuestBuilderSummaryHTML(b){
+  const d=b.draft, obj=d.objects.find(o=>qnum(o.type))||{};
+  const list=[['Index',d.index||QUEST_NEED_VALUE],['Type',qHasValue(d.type)?`${d.type} · ${QUEST_TYPE_LABEL[qnum(d.type)]||''}`:QUEST_NEED_VALUE],['Tab',qHasValue(d.tab)?`${d.tab} · ${QUEST_TAB_LABEL[qnum(d.tab)]||''}`:QUEST_NEED_VALUE],['Object',qnum(obj.type)?`${obj.type} · ${QUEST_OBJECT_LABEL[qnum(obj.type)]||''}`:(d.noObject?'없음 확정':QUEST_NEED_VALUE)],['보상',d.noReward?'없음 확정':(qQuestBuilderHasReward(d)?'입력됨':QUEST_NEED_VALUE)],['워프',d.warpIndex||'미사용'],['템플릿',b.templateReason||'없음']];
+  return `<div class="qsummary-grid">${list.map(x=>`<div class="qsummary-item"><b>${qesc(x[0])}</b><span>${qesc(x[1])}</span></div>`).join('')}</div>`;
+}
+function qQuestBuilderPreview(showToastFlag){
+  if(questState.active!=='builder')return;
+  const m=questState.model, target=document.getElementById('qbuilder-result'); if(!m||!target)return;
+  const d=qQuestBuilderCollect(), built=qQuestBuilderBuildRow(m,d); questState.builder=built; target.innerHTML=qQuestBuilderPreviewHTML(built);
+  if(showToastFlag && typeof showToast==='function')showToast(built.badCount?`⛔ 검증 차단 ${built.badCount}건 · 기입 필요 ${built.needCount}칸`:(built.needCount?`⚠ 기입 필요 ${built.needCount}칸`:'✅ 검증 통과'));
 }
 function qQuestBuilderPreviewHTML(b){
+  if(!b.headers.length)return `<div class="qbuilder-empty">${QUEST_REQUIRED_SHEET_NAME} 시트의 헤더를 찾지 못했습니다. 동기화 대상 시트를 확인하세요.</div>`;
   const headerRow=b.headers.map((h,i)=>`<th title="${qesc(b.keys[i])}">${qesc(h||'(빈 헤더)')}</th>`).join('');
   const valueRow=b.cells.map((c,i)=>`<td class="${qesc(c.status)}" contenteditable="true" data-idx="${i}" oninput="qQuestBuilderEditCell(${i},this)" title="${qesc(c.reason||'')}">${qesc(c.value)}</td>`).join('');
-  const rowOnly=qQuestBuilderToTSV(b,false);
-  return `<div class="qexport-meta"><span class="qpill gold">기준 시트 ${qesc(b.sheetName)}</span><span class="qpill">컬럼 ${b.headers.length}</span><span class="qpill ${b.needCount?'':'gold'}">기입 필요 ${b.needCount}</span><span class="qpill">경고 ${b.warnCount}</span></div>
-    <div class="qattention-grid"><div class="qattention-card"><b>빨간 셀</b><p>자동 확정 불가. 직접 수정 필요.</p></div><div class="qattention-card"><b>노란 기본값</b><p>헤더/기존 데이터 기준 안전값. 필요 시 수정.</p></div><div class="qattention-card"><b>파란 셀</b><p>사용자가 미리보기에서 직접 수정한 값.</p></div></div>
-    ${qVerifyBoxHTML('1차 입력값 검증',b.validation1)}${qVerifyBoxHTML('2차 시트 매핑 검증',b.validation2)}
-    <div class="qinline-actions" style="margin-bottom:12px;"><button class="qbtn" onclick="qQuestBuilderExport();return false;">실 삽입 데이터 복사</button><button class="qbtn" onclick="qQuestBuilderDownloadTSV();return false;">헤더 포함 TSV 다운로드</button></div>
+  const rowOnly=qQuestBuilderToTSV(b,false), blocked=b.badCount||b.needCount;
+  return `<div class="qexport-meta"><span class="qpill gold">기준 시트 ${qesc(b.sheetName)}</span><span class="qpill">컬럼 ${b.headers.length}</span><span class="qpill ${b.badCount?'':'gold'}">차단 ${b.badCount}</span><span class="qpill ${b.needCount?'':'gold'}">기입 필요 ${b.needCount}</span><span class="qpill">경고 ${b.warnCount}</span></div>
+    ${qQuestBuilderSummaryHTML(b)}
+    <div class="qattention-grid"><div class="qattention-card"><b>빨간 셀</b><p>자동 확정 불가. 실제 복사 전 수정 필요.</p></div><div class="qattention-card"><b>보라 셀</b><p>기존 ${QUEST_REQUIRED_SHEET_NAME} 템플릿에서 복사된 값.</p></div><div class="qattention-card"><b>초록 셀</b><p>입력값에서 명확히 매핑된 값.</p></div></div>
+    ${qVerifyBoxHTML('1차 퀘스트 구조 검증',b.validation1)}${qVerifyBoxHTML('2차 실데이터 시트 매핑 검증',b.validation2)}
+    <div class="qinline-actions" style="margin-bottom:12px;"><button class="qbtn ${blocked?'blocked':''}" ${blocked?'disabled':''} onclick="qQuestBuilderExport();return false;">실 삽입 데이터 복사</button><button class="qbtn" onclick="qQuestBuilderDownloadTSV();return false;">검토용 TSV 다운로드</button></div>
     <textarea class="qcopy-area" id="qbuilder-copy-area" readonly>${qesc(rowOnly)}</textarea>
     <div class="qexport-wrap" style="margin-top:12px;"><table class="qexport-table"><thead><tr>${headerRow}</tr></thead><tbody><tr>${valueRow}</tr></tbody></table></div>`;
 }
 function qQuestBuilderEditCell(idx,el){
-  const b=questState.builder; if(!b || !b.cells[idx])return;
+  const b=questState.builder; if(!b||!b.cells[idx])return;
   const value=el.innerText.replace(/\r?\n/g,' ').replace(/\t/g,' ').trim();
   b.cells[idx].value=value; b.cells[idx].status='manual'; b.cells[idx].reason='사용자 직접 수정'; b.values[idx]=value;
-  el.classList.remove('need','auto','defaulted','blank'); el.classList.add('manual');
+  el.classList.remove('need','auto','template','blank'); el.classList.add('manual');
+  b.needCount=b.cells.filter(c=>c.status==='need' || c.value===QUEST_NEED_VALUE).length;
   const ta=document.getElementById('qbuilder-copy-area'); if(ta)ta.value=qQuestBuilderToTSV(b,false);
 }
 function qVerifyBoxHTML(title,items){
@@ -2274,127 +2250,31 @@ function qVerifyBoxHTML(title,items){
   return `<div class="qverify-box"><div class="qverify-head"><div class="qverify-title">${qesc(title)}</div><span class="qverify-badge ${cls}">${text}</span></div><ul class="qverify-list">${items.map(i=>`<li class="${qesc(i.level)}">${qesc(i.msg)}</li>`).join('')}</ul></div>`;
 }
 function qQuestBuilderCellText(v){return String(v??'').replace(/\r?\n/g,' / ').replace(/\t/g,' ').trim();}
-function qQuestBuilderToTSV(b,withHeader){
-  const row=b.values.map(qQuestBuilderCellText).join('\t');
-  if(!withHeader)return row;
-  return b.headers.map(qQuestBuilderCellText).join('\t')+'\n'+row;
-}
+function qQuestBuilderToTSV(b,withHeader){const row=b.values.map(qQuestBuilderCellText).join('\t'); return withHeader?b.headers.map(qQuestBuilderCellText).join('\t')+'\n'+row:row;}
 function qQuestBuilderHTMLRow(b){
-  const cells=b.cells.map(c=>{
-    const red=c.status==='need'?'background:#fde2e2;color:#991b1b;font-weight:700;':'';
-    return `<td style="border:1px solid #d7dce5;padding:4px;${red}">${qesc(qQuestBuilderCellText(c.value))}</td>`;
-  }).join('');
+  const cells=b.cells.map(c=>{const red=(c.status==='need'||c.value===QUEST_NEED_VALUE)?'background:#fde2e2;color:#991b1b;font-weight:700;':''; return `<td style="border:1px solid #d7dce5;padding:4px;${red}">${qesc(qQuestBuilderCellText(c.value))}</td>`;}).join('');
   return `<table><tbody><tr>${cells}</tr></tbody></table>`;
 }
 async function qQuestBuilderExport(){
-  if(questState.active!=='builder')return;
-  const b=questState.builder; if(!b){qQuestBuilderPreview(false);}
-  const built=questState.builder; if(!built)return;
-  if(built.needCount && !confirm(`기입 필요 셀이 ${built.needCount}개 있습니다. 그래도 실 삽입용 행을 복사할까요?`))return;
-  const text=qQuestBuilderToTSV(built,false);
-  const html=qQuestBuilderHTMLRow(built);
+  const b=questState.builder||qQuestBuilderBuildRow(questState.model,qQuestBuilderCollect());
+  const need=b.cells.filter(c=>c.status==='need'||c.value===QUEST_NEED_VALUE).length;
+  if(b.badCount||need){ if(typeof showToast==='function')showToast(`복사 차단: 검증 차단 ${b.badCount}건, 기입 필요 ${need}칸을 먼저 해결하세요.`,true); return; }
+  const tsv=qQuestBuilderToTSV(b,false);
   try{
-    if(navigator.clipboard && window.ClipboardItem){
-      await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]);
-    }else if(navigator.clipboard){
-      await navigator.clipboard.writeText(text);
-    }else{
-      throw new Error('Clipboard API 미지원');
-    }
-    if(typeof showToast==='function')showToast('✅ 실 삽입 데이터 1행 복사 완료');
+    const html=qQuestBuilderHTMLRow(b);
+    await navigator.clipboard.write([new ClipboardItem({'text/plain':new Blob([tsv],{type:'text/plain'}),'text/html':new Blob([html],{type:'text/html'})})]);
+    if(typeof showToast==='function')showToast('✅ 실 삽입 데이터 1행을 복사했습니다.');
   }catch(e){
-    const ta=document.querySelector('.qcopy-area'); if(ta){ta.focus();ta.select();}
-    if(typeof showToast==='function')showToast('복사 권한이 없어 텍스트 영역을 선택했습니다. Ctrl+C로 복사하세요.',true);
+    try{await navigator.clipboard.writeText(tsv); if(typeof showToast==='function')showToast('✅ 실 삽입 데이터 1행을 복사했습니다.');}
+    catch(err){const ta=document.getElementById('qbuilder-copy-area'); if(ta){ta.focus();ta.select();document.execCommand('copy');} if(typeof showToast==='function')showToast('복사 영역을 선택했습니다. Ctrl+C로 복사하세요.');}
   }
 }
 function qQuestBuilderDownloadTSV(){
-  if(questState.active!=='builder')return;
-  const b=questState.builder; if(!b){qQuestBuilderPreview(false);} const built=questState.builder; if(!built)return;
-  const blob=new Blob([qQuestBuilderToTSV(built,true)],{type:'text/tab-separated-values;charset=utf-8'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  const idx=qQuestBuilderCellText(built.values[built.keys.indexOf('Index')]||'quest');
-  a.download=`quest-insert-${idx||'row'}.tsv`;
-  a.click(); URL.revokeObjectURL(a.href);
+  const b=questState.builder||qQuestBuilderBuildRow(questState.model,qQuestBuilderCollect());
+  const blob=new Blob([qQuestBuilderToTSV(b,true)],{type:'text/tab-separated-values;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`quest_insert_${b.draft?.index||'draft'}.tsv`; a.click(); URL.revokeObjectURL(a.href);
 }
 
-function qFilterTable(inputId,tableId){const q=(document.getElementById(inputId)?.value||'').toLowerCase(); document.querySelectorAll('#'+tableId+' tbody tr').forEach(tr=>{tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none';});}
-function questPopup(index,ev){ const m=questState.model; if(!m)return; const q=m.quests.find(x=>x.index===index); if(!q)return; document.querySelectorAll('.qpop').forEach(e=>e.remove()); const p=document.createElement('div'); p.className='qpop'; p.innerHTML=`<button class="close" onclick="this.parentElement.remove()">×</button><h4>${q.index}. ${qesc(q.title)}</h4><p><b>Type</b> ${QUEST_TYPE_LABEL[q.type]||q.type} / <b>지역</b> ${QUEST_TAB_LABEL[q.tab]||q.section||'-'}</p><p><b>목표</b> ${qesc(q.detail||q.desc||'')}</p><p><b>Next</b> ${q.next||'-'} / <b>Talk</b> ${q.offerTalk||'-'} → ${q.rewardTalk||'-'}</p>`; document.body.appendChild(p); const x=ev?.clientX||innerWidth/2,y=ev?.clientY||innerHeight/2; p.style.left=Math.min(x+12,innerWidth-440)+'px'; p.style.top=Math.min(y+12,innerHeight-220)+'px';}
-function openQuestRegion(regionId){switchGlobalTab('quest'); questState.active='regions'; questRender(); setTimeout(()=>{document.getElementById('q-region-'+regionId)?.scrollIntoView({behavior:'smooth',block:'start'});},100);}
-
-// ─────────────────────────────────────────────
-//  INIT
-// ─────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', async () => {
-  loadGhCfg();
-  loadStoryDocs();
-
-  // iframe 이벤트 — 인라인 속성 대신 JS에서 등록
-  const iframe = document.getElementById('ssp-iframe');
-  iframe.addEventListener('load', onIframeLoad);
-  iframe.addEventListener('error', onIframeError);
-
-  // 패널 드래그 리사이즈 초기화
-  initPanelResize();
-  Object.assign(mapData, JSON.parse(JSON.stringify(DEFAULT_MAP_DATA)));
-  activeTypeFilters = new Set(Object.keys(typeMeta));
-  activeTypeFilters.delete(DUNGEON_TYPE_KEY);
-  renderFilterBar();
-  if (isGhOk()) await loadFromGithub();
-  const img = document.getElementById('world-image');
-  img.onload = () => { mapImgW=img.naturalWidth||1920; mapImgH=img.naturalHeight||1080; initViewport(); renderAll(); };
-  if (img.complete && img.naturalWidth > 0) { mapImgW=img.naturalWidth; mapImgH=img.naturalHeight; initViewport(); renderAll(); }
-  setupPanZoom();
-});
-
-document.addEventListener('keydown', e => {
-  if ((e.ctrlKey||e.metaKey) && e.key==='k') { e.preventDefault(); openSearchModal(); }
-  if (e.key === 'Escape') {
-    const fsModal = document.getElementById('story-fullscreen-modal');
-    if (fsModal.classList.contains('open')) { closeStoryFullscreen(); return; }
-    if (storyPanelOpen) { closeStoryPanel(); return; }
-    closeSearchModal(); closeLightbox(); closeSettings();
-    document.getElementById('story-manager-modal').classList.remove('open');
-  }
-  if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); if(hasUnsavedChanges) saveToGithub(); }
-});
-
-// ─────────────────────────────────────────────
-//  MAP / VIEWPORT
-// ─────────────────────────────────────────────
-function initViewport(){const vp=document.getElementById('map-viewport'),img=document.getElementById('world-image'),c=document.getElementById('map-container');img.style.width=mapImgW+'px';img.style.height=mapImgH+'px';vp.style.width=mapImgW+'px';vp.style.height=mapImgH+'px';scale=Math.min(c.clientWidth/mapImgW,c.clientHeight/mapImgH)*0.9;panX=(c.clientWidth-mapImgW*scale)/2;panY=(c.clientHeight-mapImgH*scale)/2;applyTransform();}
-function applyTransform(){document.getElementById('map-viewport').style.transform=`translate(${panX}px,${panY}px) scale(${scale})`;document.getElementById('zoom-level').textContent=Math.round(scale*100)+'%';}
-function setupPanZoom(){const c=document.getElementById('map-container');c.addEventListener('pointerdown',e=>{if(e.button===1||(e.button===0&&!isMarkerEl(e.target))){if(mode==='editor'&&isMarkerEl(e.target))return;isPanning=true;panStartX=e.clientX;panStartY=e.clientY;panStartPanX=panX;panStartPanY=panY;c.classList.add('panning');c.setPointerCapture(e.pointerId);}});c.addEventListener('pointermove',e=>{if(isPanning){panX=panStartPanX+(e.clientX-panStartX);panY=panStartPanY+(e.clientY-panStartY);applyTransform();return;}if(dragTarget)handleDragMove(e);});c.addEventListener('pointerup',e=>{if(isPanning){isPanning=false;c.classList.remove('panning');}if(dragTarget)handleDragEnd(e);});c.addEventListener('wheel',e=>{e.preventDefault();const r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,old=scale;scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*(e.deltaY>0?0.9:1.1)));panX=mx-(mx-panX)*(scale/old);panY=my-(my-panY)*(scale/old);applyTransform();},{passive:false});}
-function isMarkerEl(el){return el.closest('.map-marker')!==null;}
-function zoomIn(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.min(MAX_SCALE,scale*1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
-function zoomOut(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.max(MIN_SCALE,scale/1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
-function zoomReset(){initViewport();}
-
-// ─────────────────────────────────────────────
-//  FILTER / MARKERS / CONNECTIONS
-// ─────────────────────────────────────────────
-function renderFilterBar(){const bar=document.getElementById('filter-bar');bar.innerHTML='';Object.entries(typeMeta).forEach(([k,v])=>{if(k===DUNGEON_TYPE_KEY)return;const btn=document.createElement('button');btn.className=`filter-btn ${activeTypeFilters.has(k)?'active':''}`;btn.style.setProperty('--c',v.color);btn.textContent=v.label;btn.onclick=()=>{if(activeTypeFilters.has(k))activeTypeFilters.delete(k);else activeTypeFilters.add(k);btn.classList.toggle('active',activeTypeFilters.has(k));renderMarkers();renderConnections();};bar.appendChild(btn);});}
-function renderAll(){renderFilterBar();renderMarkers();renderConnections();updateStats();if(selectedId&&!mapData[selectedId])selectedId=null;renderDetail();}
-function renderMarkers(){const layer=document.getElementById('markers-layer');layer.innerHTML='';Object.values(mapData).forEach(region=>{if(region.type===DUNGEON_TYPE_KEY)return;if(!activeTypeFilters.has(region.type))return;const el=document.createElement('div');el.className='map-marker'+(region.id===selectedId?' selected':'');el.dataset.id=region.id;el.style.left=(region.x/100*mapImgW)+'px';el.style.top=(region.y/100*mapImgH)+'px';const col=typeMeta[region.type]?.color||'#555d74';el.innerHTML=`<div class="marker-pin"><svg viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.268 21.732 0 14 0z" fill="${col}"/><circle cx="14" cy="13" r="6" fill="rgba(0,0,0,0.3)"/><circle cx="14" cy="13" r="4" fill="#fff" opacity="0.9"/></svg></div><div class="marker-label">${region.name}</div>`;el.addEventListener('pointerdown',e=>{if(mode==='editor'){e.stopPropagation();handleDragStart(e,region.id);}});el.addEventListener('click',()=>{if(!dragTarget){if(selectedId===region.id){selectedId=null;renderAll();}else{selectRegion(region.id);}}});layer.appendChild(el);});}
-function renderConnections(){const svg=document.getElementById('connections-svg');svg.setAttribute('width',mapImgW);svg.setAttribute('height',mapImgH);svg.style.width=mapImgW+'px';svg.style.height=mapImgH+'px';svg.innerHTML='';const drawn=new Set();Object.values(mapData).forEach(r=>{if(r.type===DUNGEON_TYPE_KEY)return;if(!activeTypeFilters.has(r.type))return;(r.connected||[]).forEach(tid=>{const t=mapData[tid];if(!t||t.type===DUNGEON_TYPE_KEY||!activeTypeFilters.has(t.type))return;const k=[r.id,tid].sort().join('|');if(drawn.has(k))return;drawn.add(k);const line=document.createElementNS('http://www.w3.org/2000/svg','line');line.setAttribute('x1',r.x/100*mapImgW);line.setAttribute('y1',r.y/100*mapImgH);line.setAttribute('x2',t.x/100*mapImgW);line.setAttribute('y2',t.y/100*mapImgH);if(selectedId&&(r.id===selectedId||tid===selectedId))line.classList.add('highlight');svg.appendChild(line);});});}
-function selectRegion(id){selectedId=id;renderMarkers();renderConnections();renderDetail();}
-
-// ─────────────────────────────────────────────
-//  DETAIL PANEL
-// ─────────────────────────────────────────────
-function renderDetail(){
-  const body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
-  if(!selectedId||!mapData[selectedId]){
-    if(currentGlobalTab==='dungeon'){actions.innerHTML=mode==='editor'?`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 전체 저장</button>`:'';body.innerHTML=`<div class="empty-state"><div class="icon">🏰</div><p>던전 카드를 클릭하여<br>상세 정보를 확인하세요</p></div>`;}
-    else if(mode==='editor'){actions.innerHTML=`<button class="btn btn-save btn-sm" id="btn-save-github" onclick="saveToGithub()">💾 전체 저장</button><button class="btn btn-success btn-sm" onclick="addRegion()">+ 신규</button>`;body.innerHTML=`<div class="empty-state"><div class="icon">✏️</div><p>마커를 클릭하여 편집하거나<br>새 지역을 추가하세요</p><button class="btn btn-success" onclick="addRegion()" style="margin-top:8px;">+ 신규 지역 추가</button></div>`;}
-    else{actions.innerHTML='';body.innerHTML=`<div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하여<br>지역 정보를 확인하세요</p></div>`;}
-    return;
-  }
-  if(mode==='editor'&&currentGlobalTab==='map') renderEditorDetail();
-  else renderViewerDetail();
-}
-
-function generateTable(arr){if(!arr||arr.length===0)return'<div class="detail-value" style="color:var(--text-dim)">데이터 없음</div>';return`<table class="data-table" style="table-layout:fixed;width:100%;"><thead><tr><th style="width:15%;text-align:center;">인덱스</th><th style="width:35%;">이름</th><th style="width:20%;">타입</th><th style="width:30%;">파일명</th></tr></thead><tbody>${arr.map(i=>`<tr><td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);text-align:center;">${i.idx||'-'}</td><td style="font-weight:600;">${i.name||'-'}</td><td>${i.type||'-'}</td><td style="font-family:'JetBrains Mono',monospace;color:var(--text-dim);font-size:10px;word-break:break-all;">${i.file||'-'}</td></tr>`).join('')}</tbody></table>`;}
 
 function renderViewerDetail(){
   const r=mapData[selectedId],body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
