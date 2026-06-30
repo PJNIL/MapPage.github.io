@@ -517,6 +517,94 @@
   .meta-item { display:flex; align-items:center; gap:8px; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
   .meta-item:last-child { border-bottom:none; }
   .no-image { display:flex; align-items:center; justify-content:center; height:100%; color:var(--text-dim); font-size:12px; }
+
+
+  /* ─────────── QUEST DASHBOARD VIEW ─────────── */
+  #quest-view { width:100%; height:100%; display:none; flex-direction:column; background:var(--bg-secondary); overflow:hidden; }
+  #quest-view.visible { display:flex; }
+  .qv-header { padding:18px 28px 14px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:1px solid var(--border-dim); background:linear-gradient(180deg,rgba(251,191,36,0.05) 0%,transparent 100%); }
+  .qv-header-left { display:flex; align-items:center; gap:14px; min-width:0; }
+  .qv-header-icon { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(74,158,255,0.12)); border:1px solid rgba(251,191,36,0.25); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .qv-header h2 { font-family:'Outfit',sans-serif; font-size:18px; font-weight:800; margin:0; }
+  .qv-header p { font-size:11px; color:var(--text-dim); margin-top:2px; }
+  .qv-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .qv-status { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-dim); padding:5px 10px; border:1px solid var(--border-dim); border-radius:7px; background:var(--bg-tertiary); }
+  .qv-nav { flex-shrink:0; display:flex; gap:4px; padding:10px 22px; border-bottom:1px solid var(--border-dim); background:var(--bg-primary); overflow-x:auto; }
+  .qv-nav::-webkit-scrollbar { height:4px; } .qv-nav::-webkit-scrollbar-thumb { background:var(--border-dim); border-radius:2px; }
+  .qv-tab { border:0; background:transparent; color:var(--text-dim); cursor:pointer; font-family:'Outfit',sans-serif; font-size:11px; font-weight:700; padding:7px 14px; border-radius:8px; white-space:nowrap; transition:all .16s; }
+  .qv-tab:hover { color:var(--text-secondary); background:var(--bg-hover); }
+  .qv-tab.active { color:var(--accent-amber); background:rgba(251,191,36,0.1); }
+  .qv-body { flex:1; overflow-y:auto; padding:22px 28px 40px; }
+  .qv-body::-webkit-scrollbar { width:6px; } .qv-body::-webkit-scrollbar-thumb { background:var(--border-dim); border-radius:3px; }
+  .qv-page { display:none; } .qv-page.active { display:block; }
+  .qv-small-note { font-size:10.5px; line-height:1.6; color:var(--text-dim); background:rgba(0,0,0,.12); border:1px solid var(--border-dim); border-radius:10px; padding:9px 12px; margin-bottom:14px; }
+  .qv-small-note strong { color:var(--text-secondary); font-weight:700; }
+  .qv-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:18px; }
+  .qv-card { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:14px; padding:16px 18px; box-shadow:var(--shadow-sm); }
+  .qv-card h3 { font-family:'Outfit',sans-serif; font-size:13px; font-weight:800; margin:0 0 10px; color:var(--text-primary); }
+  .qv-kpi { display:flex; flex-direction:column; gap:2px; }
+  .qv-kpi .num { font-family:'Outfit',sans-serif; font-size:26px; font-weight:800; color:var(--text-primary); letter-spacing:.2px; }
+  .qv-kpi .label { font-size:11px; color:var(--text-dim); }
+  .qv-section-title { font-family:'Outfit',sans-serif; font-size:15px; font-weight:800; margin:26px 0 10px; display:flex; align-items:center; gap:8px; }
+  .qv-section-title:first-child { margin-top:0; }
+  .qv-region-card { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:16px; padding:18px; margin-bottom:16px; max-width:1120px; }
+  .qv-region-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; border-bottom:1px solid var(--border-dim); padding-bottom:12px; margin-bottom:12px; }
+  .qv-region-head h3 { font-family:'Outfit',sans-serif; font-size:17px; margin:0; }
+  .qv-region-summary { font-size:12px; color:var(--text-secondary); line-height:1.7; margin-top:6px; }
+  .qv-mini-stats { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+  .qv-pill { display:inline-flex; align-items:center; gap:5px; border:1px solid var(--border-dim); background:var(--bg-tertiary); color:var(--text-secondary); padding:4px 9px; border-radius:999px; font-size:10.5px; font-weight:700; font-family:'Outfit',sans-serif; }
+  .qv-pill.main { border-color:rgba(74,158,255,.35); color:var(--accent-blue); background:rgba(74,158,255,.08); }
+  .qv-pill.sub { border-color:rgba(52,211,153,.35); color:var(--accent-green); background:rgba(52,211,153,.08); }
+  .qv-pill.warn { border-color:rgba(251,191,36,.35); color:var(--accent-amber); background:rgba(251,191,36,.08); }
+  .qv-region-layout { display:grid; grid-template-columns:minmax(220px,310px) 1fr; gap:14px; }
+  .qv-breakdown { display:flex; flex-direction:column; gap:8px; }
+  .qv-bar-row { display:grid; grid-template-columns:74px 1fr 34px; align-items:center; gap:8px; font-size:11px; color:var(--text-secondary); }
+  .qv-bar { height:7px; border-radius:999px; background:var(--bg-tertiary); overflow:hidden; border:1px solid var(--border-dim); }
+  .qv-bar > i { display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,var(--accent-blue),var(--accent-amber)); }
+  .qv-chip-row { display:flex; gap:6px; flex-wrap:wrap; align-content:flex-start; }
+  .qv-flow { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .qv-flow-chip { border:1px solid var(--border-dim); background:var(--bg-tertiary); color:var(--text-secondary); border-radius:9px; padding:5px 8px; font-size:10.5px; cursor:pointer; transition:all .15s; max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .qv-flow-chip:hover { color:var(--accent-amber); border-color:rgba(251,191,36,.4); background:rgba(251,191,36,.06); }
+  .qv-searchbar { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; align-items:center; }
+  .qv-input,.qv-select { background:var(--bg-tertiary); border:1px solid var(--border-dim); color:var(--text-primary); border-radius:9px; padding:8px 11px; font-size:12px; outline:none; }
+  .qv-input { min-width:240px; flex:1; }
+  .qv-input:focus,.qv-select:focus { border-color:rgba(251,191,36,.4); }
+  .qv-table-wrap { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:14px; overflow:auto; max-height:70vh; }
+  .qv-table { width:100%; border-collapse:collapse; font-size:11px; min-width:920px; }
+  .qv-table th { position:sticky; top:0; z-index:2; background:var(--bg-tertiary); color:var(--text-dim); font-family:'Outfit',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.4px; text-align:left; padding:8px 10px; border-bottom:1px solid var(--border-dim); }
+  .qv-table td { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.04); color:var(--text-secondary); vertical-align:top; }
+  .qv-table tr:hover td { background:rgba(255,255,255,.025); }
+  .qv-code { font-family:'JetBrains Mono',monospace; color:var(--text-primary); font-size:10.5px; }
+  .qv-usage-layout { display:grid; grid-template-columns:360px 1fr; gap:16px; align-items:start; }
+  .qv-npc-list { display:flex; flex-direction:column; gap:8px; }
+  .qv-entity-card { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:12px; padding:12px; }
+  .qv-entity-top { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
+  .qv-entity-name { font-size:13px; font-weight:800; color:var(--text-primary); }
+  .qv-bestiary-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(158px,1fr)); gap:10px; }
+  .qv-monster-card { background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.08)); border:1px solid var(--border-dim); border-radius:14px; padding:12px; min-height:128px; position:relative; overflow:hidden; }
+  .qv-monster-card::before { content:''; position:absolute; inset:0 0 auto 0; height:3px; background:linear-gradient(90deg,var(--accent-red),var(--accent-amber)); opacity:.75; }
+  .qv-monster-portrait { width:42px; height:42px; border-radius:11px; background:radial-gradient(circle at 35% 30%,rgba(251,191,36,.22),rgba(248,113,113,.1) 45%,rgba(0,0,0,.15)); border:1px solid rgba(251,191,36,.18); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:9px; }
+  .qv-monster-name { font-weight:800; font-size:13px; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .qv-monster-meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-dim); margin:2px 0 8px; }
+  .qv-quest-chips { display:flex; gap:5px; flex-wrap:wrap; }
+  .qv-quest-chip { border:1px solid var(--border-dim); background:var(--bg-tertiary); color:var(--text-secondary); border-radius:7px; padding:3px 6px; font-size:10px; cursor:pointer; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .qv-quest-chip:hover { color:var(--accent-blue); border-color:rgba(74,158,255,.4); }
+  .qv-chain-card { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:14px; padding:14px 16px; margin-bottom:10px; }
+  .qv-chain-title { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:10px; }
+  .qv-chain-title h3 { margin:0; font-size:14px; font-weight:800; }
+  .qv-chain-flow { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .qv-issue { border:1px solid var(--border-dim); border-left:3px solid var(--accent-amber); background:var(--bg-card); border-radius:0 12px 12px 0; padding:12px 14px; margin-bottom:9px; }
+  .qv-issue.error { border-left-color:var(--accent-red); }
+  .qv-issue-title { font-size:12px; font-weight:800; color:var(--text-primary); margin-bottom:4px; }
+  .qv-issue-desc { font-size:11px; line-height:1.6; color:var(--text-secondary); }
+  .qv-empty { color:var(--text-dim); text-align:center; padding:40px 0; }
+  .qv-popup { position:fixed; z-index:20050; width:330px; max-width:90vw; background:var(--bg-elevated); border:1px solid var(--border-active); border-radius:12px; box-shadow:var(--shadow-lg); padding:12px 14px; display:none; }
+  .qv-popup.open { display:block; }
+  .qv-popup h4 { font-size:13px; margin:0 0 6px; }
+  .qv-popup p { font-size:11px; color:var(--text-secondary); line-height:1.6; margin:3px 0; }
+  .qv-popup .close { position:absolute; top:6px; right:8px; border:0; background:transparent; color:var(--text-dim); cursor:pointer; }
+  @media(max-width:980px){ .qv-header{align-items:flex-start;flex-direction:column;} .qv-region-layout,.qv-usage-layout{grid-template-columns:1fr;} .qv-mini-stats{justify-content:flex-start;} }
+
 </style>
 </head>
 <body>
@@ -526,6 +614,7 @@
     <button class="gtab-btn active" id="gtab-map" onclick="switchGlobalTab('map')">Map</button>
     <button class="gtab-btn" id="gtab-dungeon" onclick="switchGlobalTab('dungeon')">Dungeon</button>
     <button class="gtab-btn" id="gtab-story" onclick="switchGlobalTab('story')">Story</button>
+    <button class="gtab-btn" id="gtab-quest" onclick="switchGlobalTab('quest')">Quest</button>
     <div class="gtab-spacer"></div>
     <div class="gtab-right">
       <div class="sync-indicator disconnected" id="sync-status"><div class="sdot"></div><span id="sync-label">연결 안됨</span></div>
@@ -581,6 +670,43 @@
         <div class="sv-body" id="sv-body"></div>
       </div>
 
+      <!-- QUEST VIEW -->
+      <div id="quest-view">
+        <div class="qv-header">
+          <div class="qv-header-left">
+            <div class="qv-header-icon">卷</div>
+            <div>
+              <h2>Quest Scenario Dashboard</h2>
+              <p>Google Docs / Sheets 기반 퀘스트 흐름·리소스 사용·서브 체인 분석</p>
+            </div>
+          </div>
+          <div class="qv-actions">
+            <span class="qv-status" id="qv-sync-status">스냅샷 대기</span>
+            <button class="btn btn-amber btn-sm" onclick="questSyncFromGoogle()">↻ Google 문서 동기화</button>
+            <button class="btn btn-ghost btn-sm" onclick="questDownloadSnapshot()">JSON 다운로드</button>
+          </div>
+        </div>
+        <div class="qv-nav">
+          <button class="qv-tab active" onclick="questShowPage('summary',this)">요약</button>
+          <button class="qv-tab" onclick="questShowPage('regions',this)">지역 플롯</button>
+          <button class="qv-tab" onclick="questShowPage('quests',this)">퀘스트 리스트</button>
+          <button class="qv-tab" onclick="questShowPage('usage',this)">사용 빈도</button>
+          <button class="qv-tab" onclick="questShowPage('chains',this)">서브 체인</button>
+          <button class="qv-tab" onclick="questShowPage('issues',this)">데이터 이슈</button>
+          <button class="qv-tab" onclick="questShowPage('raw',this)">원천 데이터</button>
+        </div>
+        <div class="qv-body" id="qv-body">
+          <div id="qv-page-summary" class="qv-page active"></div>
+          <div id="qv-page-regions" class="qv-page"></div>
+          <div id="qv-page-quests" class="qv-page"></div>
+          <div id="qv-page-usage" class="qv-page"></div>
+          <div id="qv-page-chains" class="qv-page"></div>
+          <div id="qv-page-issues" class="qv-page"></div>
+          <div id="qv-page-raw" class="qv-page"></div>
+        </div>
+      </div>
+
+
     </div>
 
     <!-- RIGHT DETAIL PANEL -->
@@ -591,6 +717,9 @@
     </div>
   </div>
 </div>
+
+
+<div class="qv-popup" id="qv-popup"><button class="close" onclick="questClosePopup()">×</button><div id="qv-popup-body"></div></div>
 
 <!-- ── STORY SLIDE PANEL ── -->
 <div id="story-panel-backdrop" onclick="closeStoryPanel()"></div>
@@ -1280,15 +1409,18 @@ function switchGlobalTab(tab) {
   document.getElementById('gtab-map').className = 'gtab-btn' + (tab === 'map' ? ' active' : '');
   document.getElementById('gtab-dungeon').className = 'gtab-btn' + (tab === 'dungeon' ? ' dungeon-active' : '');
   document.getElementById('gtab-story').className = 'gtab-btn' + (tab === 'story' ? ' story-active' : '');
+  document.getElementById('gtab-quest').className = 'gtab-btn' + (tab === 'quest' ? ' story-active' : '');
 
   const mv = document.getElementById('map-view'),
         dv = document.getElementById('dungeon-view'),
         sv = document.getElementById('story-view'),
+        qv = document.getElementById('quest-view'),
         dp = document.getElementById('detail-panel');
 
   mv.classList.add('hidden');
   dv.classList.remove('visible');
   sv.classList.remove('visible');
+  qv.classList.remove('visible');
   dp.style.display = 'flex';
 
   if (tab === 'map') {
@@ -1303,6 +1435,10 @@ function switchGlobalTab(tab) {
     sv.classList.add('visible');
     dp.style.display = 'none';
     renderStoryView();
+  } else if (tab === 'quest') {
+    qv.classList.add('visible');
+    dp.style.display = 'none';
+    questInitDashboard();
   }
 }
 
@@ -1367,6 +1503,87 @@ function loadGhCfg(){try{const s=localStorage.getItem('wm_gh_cfg');if(s){ghConfi
 function openSettings(){document.getElementById('cfg-token').value=ghConfig.token;document.getElementById('cfg-owner').value=ghConfig.owner;document.getElementById('cfg-repo').value=ghConfig.repo;document.getElementById('cfg-path').value=ghConfig.path;document.getElementById('cfg-branch').value=ghConfig.branch;document.getElementById('cfg-gs-key').value=ghConfig.gsApiKey;document.getElementById('cfg-gs-id').value=ghConfig.gsSheetId;document.getElementById('cfg-claude-key').value=ghConfig.claudeApiKey||'';document.getElementById('cfg-font').value=ghConfig.fontSize;document.getElementById('font-size-val').textContent=ghConfig.fontSize;document.getElementById('settings-modal').classList.add('open');}
 function closeSettings(){document.getElementById('settings-modal').classList.remove('open');}
 function saveSettings(){ghConfig.token=document.getElementById('cfg-token').value.trim();ghConfig.owner=document.getElementById('cfg-owner').value.trim();ghConfig.repo=document.getElementById('cfg-repo').value.trim();ghConfig.path=document.getElementById('cfg-path').value.trim()||'data/mapData.json';ghConfig.branch=document.getElementById('cfg-branch').value.trim()||'main';ghConfig.gsApiKey=document.getElementById('cfg-gs-key').value.trim();ghConfig.gsSheetId=document.getElementById('cfg-gs-id').value.trim();ghConfig.claudeApiKey=document.getElementById('cfg-claude-key').value.trim();ghConfig.fontSize=parseInt(document.getElementById('cfg-font').value)||13;localStorage.setItem('wm_gh_cfg',JSON.stringify(ghConfig));closeSettings();showToast('✅ 설정 저장됨');if(isGhOk()){loadFromGithub().then(loaded=>{if(loaded)renderAll();});}}
+
+
+
+// ─────────────────────────────────────────────
+//  QUEST DASHBOARD — GOOGLE APPS SCRIPT SYNC
+// ─────────────────────────────────────────────
+const QUEST_SYNC_API = {
+  url: "https://script.google.com/macros/s/AKfycbyuOZMpSvXInypWDPYulqcveLKbjdMYg-W4bdHb-oU0jKpsiDGQj_XvE5BfUhLgph34/exec",
+  token: "2003BM2"
+};
+const QUEST_TYPE_LABEL = {0:'메인',1:'서브',2:'특수',3:'업적',4:'임무',5:'문파',6:'이벤트',7:'외전',8:'던전',9:'인스턴스'};
+const QUEST_TAB_LABEL = {0:'하남성',1:'소림사',2:'섬서성',3:'호북성',4:'사천',5:'이후 추가'};
+const QUEST_OBJECT_LABEL = {0:'없음',1:'이동',2:'대화',3:'상호작용',10:'명성',11:'명호',14:'명성 경험치',15:'힘 경험치',16:'맷집 경험치',17:'민첩 경험치',18:'숙련도 경험치',102:'아이템 획득',103:'아이템 판매',104:'아이템 구매',105:'아이템 사용',106:'아이템 착용',107:'무공 사용',108:'스킬 자동',109:'물약 자동',110:'팔괘 장착',152:'장비강화',165:'스킬 획득',405:'퀘스트 완료',452:'전투',453:'보스 전투',454:'전리품',503:'던전 클리어'};
+let questState = { payload:null, data:null, active:false };
+
+function qvEsc(v){return String(v==null?'':v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function qvNum(v){const s=String(v==null?'':v).trim().replace(/^;/,''); if(!s||s==='0/0/0/0/0/0/0') return 0; const n=parseInt(s,10); return Number.isFinite(n)?n:0;}
+function qvSheet(payload,name){return payload?.data?.spreadsheet?.sheets?.find(s=>s.name===name)||null;}
+function qvSetStatus(txt){const el=document.getElementById('qv-sync-status'); if(el) el.textContent=txt;}
+function questJsonpRequest(url, params={}, timeoutMs=90000){return new Promise((resolve,reject)=>{const cb='__questSync_'+Date.now()+'_'+Math.floor(Math.random()*99999); const q=new URLSearchParams({...params,callback:cb}); const script=document.createElement('script'); const timer=setTimeout(()=>{cleanup(); reject(new Error('Quest Sync API timeout'));},timeoutMs); function cleanup(){clearTimeout(timer); delete window[cb]; if(script.parentNode) script.parentNode.removeChild(script);} window[cb]=data=>{cleanup(); resolve(data);}; script.onerror=()=>{cleanup(); reject(new Error('Quest Sync API load failed'));}; script.src=url+'?'+q.toString(); document.body.appendChild(script);});}
+async function questSyncFromGoogle(){qvSetStatus('동기화 중...'); try{const payload=await questJsonpRequest(QUEST_SYNC_API.url,{token:QUEST_SYNC_API.token}); if(!payload.ok) throw new Error(payload.message||payload.errorCode||'API 응답 오류'); localStorage.setItem('questSyncPayload',JSON.stringify(payload)); questState.payload=payload; questState.data=questAnalyzePayload(payload); questRenderDashboard(); qvSetStatus('동기화 완료 · '+new Date().toLocaleString('ko-KR')); showToast('✅ 퀘스트 문서 동기화 완료');}catch(e){qvSetStatus('동기화 실패'); showToast('퀘스트 동기화 실패: '+e.message,true); console.error(e);}}
+function questInitDashboard(){if(questState.active) return; questState.active=true; const cached=localStorage.getItem('questSyncPayload'); if(cached){try{questState.payload=JSON.parse(cached); questState.data=questAnalyzePayload(questState.payload); questRenderDashboard(); qvSetStatus('캐시 로드 · '+(questState.payload.generatedAt||'')); return;}catch(e){console.warn(e);}} questRenderEmpty();}
+function questRenderEmpty(){document.getElementById('qv-page-summary').innerHTML='<div class="qv-empty">Google 문서 동기화 버튼을 눌러 QuestInfo와 시나리오 문서를 불러오세요.</div>'; ['regions','quests','usage','chains','issues','raw'].forEach(id=>document.getElementById('qv-page-'+id).innerHTML='');}
+function questShowPage(page,btn){document.querySelectorAll('.qv-page').forEach(p=>p.classList.remove('active')); document.getElementById('qv-page-'+page)?.classList.add('active'); document.querySelectorAll('.qv-tab').forEach(t=>t.classList.remove('active')); if(btn)btn.classList.add('active'); questClosePopup();}
+function questDownloadSnapshot(){const payload=questState.payload||JSON.parse(localStorage.getItem('questSyncPayload')||'null'); if(!payload){showToast('다운로드할 동기화 데이터가 없습니다.',true); return;} const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='quest_sync_snapshot_'+Date.now()+'.json'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1000);}
+
+function questAnalyzePayload(payload){
+  const questSheet=qvSheet(payload,'퀘스트 리스트');
+  const talkSheet=qvSheet(payload,'퀘스트 대사');
+  const npcSheet=qvSheet(payload,'NPC 정보');
+  const objectSheet=qvSheet(payload,'상호작용 오브젝트');
+  const scenarioText=payload?.data?.scenario?.text||'';
+  const npcMap={};
+  if(npcSheet){(npcSheet.values||[]).forEach((r,i)=>{if(i<2)return; const id=qvNum(r[0]); const name=String(r[1]||'').trim(); if(id&&name&&!name.startsWith(';')) npcMap[id]={id,name,file:r[3]||r[4]||'', raw:r};});}
+  const objectMap={};
+  if(objectSheet){(objectSheet.values||[]).forEach((r,i)=>{if(i<2)return; const id=qvNum(r[0]); const name=String(r[3]||r[2]||'').trim(); if(id&&name&&!String(r[0]).startsWith(';')) objectMap[id]={id,name,quest:qvNum(r[1]),indicator:r[10]||'',progress:r[5]||'',delay:qvNum(r[6])};});}
+  const quests=[]; let section=''; let major='메인 퀘스트';
+  const header=questSheet?.values?.[0]||[]; const idx={}; header.forEach((h,i)=>{if(h)idx[String(h).trim()]=i;});
+  const col=n=>idx[n]??-1;
+  if(questSheet){(questSheet.values||[]).forEach((r,rowNo)=>{if(rowNo<2)return; const first=String(r[0]||'').trim(); if(!first)return; if(first.startsWith(';')){const title=first.replace(/^;/,'').trim(); if(title.includes('서브')) major='서브 퀘스트'; else if(title.includes('화암굴')||title.includes('보통')||title.includes('어려움')||title.includes('매우')) major='시스템/던전'; else if(title) section=title; return;} const qid=qvNum(r[col(';Index')]); if(!qid)return; const type=qvNum(r[col('Type')]); const tab=qvNum(r[col('Tab')]); const q={rowNo,index:qid,next:qvNum(r[col('NextQuest')]),title:String(r[col('BlankField')]||'').trim(),desc:String(r[col('BlankField')+2]||r[col('Desc')+1]||'').trim(),detail:String(r[col('BlankField')+4]||r[col('Detail')+1]||'').trim(),offerNPC:qvNum(r[col('OfferNPC')]),rewardNPC:qvNum(r[col('RewardNPC')]),offerConditionType1:qvNum(r[col('OfferConditionType1')]),offerValue1:qvNum(r[col('OfferValue1')]),offerConditionType2:qvNum(r[col('OfferConditionType2')]),offerValue2:qvNum(r[col('OfferValue2')]),type,tab,region:QUEST_TAB_LABEL[tab]||section||'미지정',section,major,offerTalk:qvNum(r[col('OfferTalk')]),rewardTalk:qvNum(r[col('RewardTalk')]),rewardExp:qvNum(r[col('RewardExp')]),rewardMoney:qvNum(r[col('RewardMoney')]),raw:r,objectives:[]}; for(let n=1;n<=5;n++){const o=qvNum(r[col('Object'+n)]), target=qvNum(r[col('ObjectTarget'+n)]), loc=qvNum(r[col('ObjectLocation'+n)]), val=qvNum(r[col('ObjectValue'+n)]); if(o||target||loc||val){q.objectives.push({slot:n,type:o,label:QUEST_OBJECT_LABEL[o]||('Object '+o),target,location:loc,value:val});}} quests.push(q);});}
+  const qMap=Object.fromEntries(quests.map(q=>[q.index,q]));
+  const contentQuests=quests.filter(q=>q.type===0||q.type===1);
+  const systemQuests=quests.filter(q=>q.type===8||q.type===9);
+  const mainQuests=quests.filter(q=>q.type===0);
+  const subQuests=quests.filter(q=>q.type===1);
+  const talks=[];
+  if(talkSheet){(talkSheet.values||[]).forEach((r,i)=>{if(i<2)return; const group=qvNum(r[6]); const npc=qvNum(r[1]); const name=String(r[4]||'').trim(); const talk=String(r[5]||'').trim(); if(group&&talk) talks.push({group,npc,name,talk});});}
+  const talkGroups={}; talks.forEach(t=>{if(!talkGroups[t.group])talkGroups[t.group]=[]; talkGroups[t.group].push(t);});
+  const regionData={}; Object.values(QUEST_TAB_LABEL).forEach(r=>{regionData[r]={name:r,quests:[],main:[],sub:[],npcs:new Map(),monsters:new Map(),types:{}};});
+  const usageNpc=new Map(), usageMonster=new Map();
+  function ensureUsage(map,id,name,region,kind){if(!id||id>=10000)return null; if(!map.has(id))map.set(id,{id,name:name||('ID '+id),kind,regions:new Set(),quests:[]}); const u=map.get(id); if(name&&u.name.startsWith('ID '))u.name=name; u.regions.add(region); return u;}
+  contentQuests.forEach(q=>{const rd=regionData[q.region]||(regionData[q.region]={name:q.region,quests:[],main:[],sub:[],npcs:new Map(),monsters:new Map(),types:{}}); rd.quests.push(q); if(q.type===0)rd.main.push(q); if(q.type===1)rd.sub.push(q); q.objectives.forEach(o=>{rd.types[o.label]=(rd.types[o.label]||0)+1;}); [[q.offerNPC,'offer'],[q.rewardNPC,'reward']].forEach(([id,role])=>{if(id&&id<10000){const name=npcMap[id]?.name||('ID '+id); rd.npcs.set(id,name); const u=ensureUsage(usageNpc,id,name,q.region,'npc'); if(u)u.quests.push({q,role});}}); q.objectives.forEach(o=>{if(o.type===2&&o.target<10000){const name=npcMap[o.target]?.name||('ID '+o.target); rd.npcs.set(o.target,name); const u=ensureUsage(usageNpc,o.target,name,q.region,'npc'); if(u)u.quests.push({q,role:'objective'});} if((o.type===452||o.type===453)&&o.target<10000){const name=npcMap[o.target]?.name||('ID '+o.target); rd.monsters.set(o.target,name); const u=ensureUsage(usageMonster,o.target,name,q.region,'monster'); if(u)u.quests.push({q,role:o.label});} if(o.type===454&&o.location<10000){const name=npcMap[o.location]?.name||('ID '+o.location); rd.monsters.set(o.location,name); const u=ensureUsage(usageMonster,o.location,name,q.region,'monster'); if(u)u.quests.push({q,role:'전리품'});}});});
+  const subChains=buildQuestChains(subQuests,qMap);
+  const issues=[];
+  contentQuests.forEach(q=>{q.objectives.forEach(o=>{const check=(id,ctx)=>{if(id&&id<10000&&!npcMap[id]) issues.push({level:'warn',title:'ID 매핑 누락',desc:`${q.index} ${q.title} / ${ctx} ID ${id}의 NPC 정보 이름을 찾지 못했습니다.`}); if(id>=10000&&(q.type===0||q.type===1)) issues.push({level:'warn',title:'메인/서브에 10000번대 ID 사용',desc:`${q.index} ${q.title}에서 ID ${id}가 사용되었습니다. 콘텐츠/던전용 ID인지 확인 필요.`});}; if(o.type===2)check(o.target,'대화 목표'); if(o.type===452||o.type===453)check(o.target,'전투 목표'); if(o.type===454)check(o.location,'전리품 드랍 대상');});});
+  const dungeonTabCounts={}; systemQuests.forEach(q=>{dungeonTabCounts[q.region]=(dungeonTabCounts[q.region]||0)+1;}); Object.keys(dungeonTabCounts).forEach(region=>issues.push({level:'info',title:'던전/인스턴스 raw Tab 분포',desc:`${region}: ${dungeonTabCounts[region]}개. 던전은 지역 집계에서 제외하고 보존 데이터로만 처리합니다.`}));
+  ['천명회 검수','천명회 궁병','천명회 단원'].forEach(n=>{if(scenarioText.includes(n)) issues.push({level:'info',title:'수동 Alias 후보',desc:`시나리오 명칭 '${n}'은 실제 데이터에서 흑도복 계열로 들어갔을 수 있습니다. 자동 치환하지 않고 Alias 후보로만 표시합니다.`});});
+  return {payload, npcMap, objectMap, quests, contentQuests, systemQuests, mainQuests, subQuests, talks, talkGroups, regionData, usageNpc:[...usageNpc.values()].sort((a,b)=>a.id-b.id), usageMonster:[...usageMonster.values()].sort((a,b)=>a.id-b.id), subChains, issues};
+}
+
+function buildQuestChains(subQuests,qMap){const subSet=new Set(subQuests.map(q=>q.index)); const adj=new Map(), rev=new Map(); subQuests.forEach(q=>{adj.set(q.index,new Set()); rev.set(q.index,new Set());}); function add(a,b){if(subSet.has(a)&&subSet.has(b)&&a!==b){adj.get(a).add(b); rev.get(b).add(a);}} subQuests.forEach(q=>{add(q.index,q.next); if(q.offerConditionType1===1)add(q.offerValue1,q.index); if(q.offerConditionType2===1)add(q.offerValue2,q.index);}); const seen=new Set(), chains=[]; const roots=subQuests.filter(q=>(rev.get(q.index)?.size||0)===0).sort((a,b)=>a.index-b.index); const start=[...roots,...subQuests.sort((a,b)=>a.index-b.index)]; start.forEach(q=>{if(seen.has(q.index))return; const arr=[]; let cur=q.index, guard=0; while(cur&&subSet.has(cur)&&!seen.has(cur)&&guard++<100){seen.add(cur); arr.push(qMap[cur]); const nexts=[...(adj.get(cur)||[])].sort((a,b)=>a-b); cur=nexts[0]||0;} if(arr.length)chains.push({id:arr[0].index,title:chainTitle(arr),quests:arr});}); return chains;}
+function chainTitle(arr){const names=[...new Set(arr.map(q=>q.title).filter(Boolean))]; return names.length===1?names[0]:(arr[0].title+' → '+arr[arr.length-1].title);}
+function questObjectiveSummary(q){return q.objectives.map(o=>{let target=''; if(o.type===2)target=' / '+(questState.data?.npcMap?.[o.target]?.name||o.target); else if(o.type===452||o.type===453)target=' / '+(questState.data?.npcMap?.[o.target]?.name||o.target); else if(o.type===454)target=' / '+(questState.data?.npcMap?.[o.location]?.name||o.location)+' 드랍'; else if(o.type===3)target=' / '+(questState.data?.objectMap?.[o.target]?.name||o.target); return o.label+target+(o.value?` x${o.value}`:'');}).join(', ')||'-';}
+function questRenderDashboard(){const d=questState.data; if(!d)return questRenderEmpty(); renderQuestSummary(d); renderQuestRegions(d); renderQuestList(d); renderQuestUsage(d); renderQuestChains(d); renderQuestIssues(d); renderQuestRaw(d);}
+function renderQuestSummary(d){const content=d.contentQuests.length; const regions=Object.values(d.regionData).filter(r=>r.quests.length); document.getElementById('qv-page-summary').innerHTML=`<div class="qv-small-note"><strong>집계 기준</strong> 메인/서브 Type=0/1 중심. 던전/인스턴스 Type=8/9는 보존만. 자동 Alias는 금지하고 불일치는 데이터 이슈로 표시.</div><div class="qv-grid"><div class="qv-card"><div class="qv-kpi"><span class="num">${content}</span><span class="label">메인/서브 판단 대상</span></div></div><div class="qv-card"><div class="qv-kpi"><span class="num">${d.mainQuests.length}</span><span class="label">메인 퀘스트</span></div></div><div class="qv-card"><div class="qv-kpi"><span class="num">${d.subQuests.length}</span><span class="label">서브 퀘스트</span></div></div><div class="qv-card"><div class="qv-kpi"><span class="num">${d.subChains.length}</span><span class="label">서브 체인</span></div></div><div class="qv-card"><div class="qv-kpi"><span class="num">${d.usageNpc.length}</span><span class="label">사용 NPC</span></div></div><div class="qv-card"><div class="qv-kpi"><span class="num">${d.usageMonster.length}</span><span class="label">사용 몬스터</span></div></div></div><div class="qv-section-title">지역별 상세 퀘스트 요약</div>${regions.map(regionCardHtml).join('')}`;}
+function regionCardHtml(r){const max=Math.max(...Object.values(r.types),1); const topNpc=[...r.npcs.entries()].slice(0,8); const topMon=[...r.monsters.entries()].slice(0,12); const qs=[...r.quests].sort((a,b)=>a.index-b.index); return `<div class="qv-region-card"><div class="qv-region-head"><div><h3>${qvEsc(r.name)}</h3><div class="qv-region-summary">${r.main.length}개의 메인 흐름과 ${r.sub.length}개의 서브 퀘스트를 기준으로, 등장 NPC/몬스터와 목표 타입을 확인합니다.</div></div><div class="qv-mini-stats"><span class="qv-pill">NPC ${r.npcs.size}</span><span class="qv-pill">몬스터 ${r.monsters.size}</span><span class="qv-pill main">메인 ${r.main.length}</span><span class="qv-pill sub">서브 ${r.sub.length}</span></div></div><div class="qv-region-layout"><div><h3>목표 타입</h3><div class="qv-breakdown">${Object.entries(r.types).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="qv-bar-row"><span>${qvEsc(k)}</span><div class="qv-bar"><i style="width:${Math.max(6,v/max*100)}%"></i></div><b>${v}</b></div>`).join('')||'<span class="qv-empty">타입 없음</span>'}</div></div><div><h3>진행 흐름</h3><div class="qv-flow">${qs.slice(0,55).map(q=>`<button class="qv-flow-chip" onclick="questOpenPopup(event,${q.index})">${q.index}. ${qvEsc(q.title)}</button>`).join('')}${qs.length>55?`<span class="qv-pill warn">+${qs.length-55}</span>`:''}</div><h3 style="margin-top:14px;">주요 NPC</h3><div class="qv-chip-row">${topNpc.map(([id,n])=>`<span class="qv-pill">${id} ${qvEsc(n)}</span>`).join('')||'<span class="qv-empty">없음</span>'}</div><h3 style="margin-top:14px;">주요 몬스터</h3><div class="qv-chip-row">${topMon.map(([id,n])=>`<span class="qv-pill warn">${id} ${qvEsc(n)}</span>`).join('')||'<span class="qv-empty">없음</span>'}</div></div></div></div>`;}
+function renderQuestRegions(d){document.getElementById('qv-page-regions').innerHTML=`<div class="qv-small-note">지역 플롯 요약은 Docs 원문을 자동 발췌하지 않고, QuestInfo의 지역별 수량과 목표 구조를 기준으로 정리합니다.</div>${Object.values(d.regionData).filter(r=>r.quests.length).map(regionCardHtml).join('')}`;}
+function renderQuestList(d){const rows=d.quests.sort((a,b)=>a.index-b.index).map(q=>`<tr data-q="${q.index} ${q.title} ${q.desc} ${q.detail} ${q.region} ${QUEST_TYPE_LABEL[q.type]}"><td class="qv-code">${q.index}</td><td>${qvEsc(q.title)}</td><td>${qvEsc(q.region)}</td><td>${QUEST_TYPE_LABEL[q.type]||q.type}</td><td>${qvEsc(q.desc||q.detail)}</td><td>${qvEsc(questObjectiveSummary(q))}</td><td class="qv-code">${q.next||'-'}</td><td><button class="qv-quest-chip" onclick="questOpenPopup(event,${q.index})">보기</button></td></tr>`).join(''); document.getElementById('qv-page-quests').innerHTML=`<div class="qv-searchbar"><input class="qv-input" placeholder="퀘스트명, 인덱스, 지역, 목표 검색" oninput="questFilterTable('qv-quest-table',this.value)"><select class="qv-select" onchange="questFilterQuestType(this.value)"><option value="">전체 타입</option><option value="0">메인</option><option value="1">서브</option><option value="8">던전</option><option value="9">인스턴스</option></select></div><div class="qv-table-wrap"><table class="qv-table" id="qv-quest-table"><thead><tr><th>Index</th><th>퀘스트</th><th>지역</th><th>Type</th><th>설명</th><th>목표</th><th>Next</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;}
+function renderQuestUsage(d){const npcByRegion={}, monByRegion={}; d.usageNpc.forEach(u=>[...u.regions].forEach(r=>(npcByRegion[r]||(npcByRegion[r]=[])).push(u))); d.usageMonster.forEach(u=>[...u.regions].forEach(r=>(monByRegion[r]||(monByRegion[r]=[])).push(u))); const npcHtml=Object.keys(npcByRegion).sort().map(r=>`<div class="qv-section-title">${qvEsc(r)} NPC</div><div class="qv-npc-list">${npcByRegion[r].sort((a,b)=>a.id-b.id).map(u=>usageEntityHtml(u)).join('')}</div>`).join(''); const monHtml=Object.keys(monByRegion).sort().map(r=>`<div class="qv-section-title">${qvEsc(r)} 몬스터 도감</div><div class="qv-bestiary-grid">${monByRegion[r].sort((a,b)=>a.id-b.id).map(u=>monsterCardHtml(u)).join('')}</div>`).join(''); document.getElementById('qv-page-usage').innerHTML=`<div class="qv-small-note">메인/서브 퀘스트에서 실제 사용된 ID 10000 미만 엔티티만 표시합니다. 지역별 구분, 지역 내 ID 오름차순입니다.</div><div class="qv-searchbar"><input class="qv-input" placeholder="NPC/몬스터 이름 또는 ID 검색" oninput="questFilterUsage(this.value)"><select class="qv-select" onchange="questToggleUsageKind(this.value)"><option value="all">NPC + 몬스터</option><option value="npc">NPC만</option><option value="monster">몬스터만</option></select></div><div class="qv-usage-layout"><div id="qv-usage-npc">${npcHtml||'<div class="qv-empty">NPC 사용 정보 없음</div>'}</div><div id="qv-usage-monster">${monHtml||'<div class="qv-empty">몬스터 사용 정보 없음</div>'}</div></div>`;}
+function usageEntityHtml(u){return `<div class="qv-entity-card qv-use-item" data-kind="npc" data-search="${qvEsc((u.id+' '+u.name).toLowerCase())}"><div class="qv-entity-top"><span class="qv-entity-name">${u.id}. ${qvEsc(u.name)}</span><span class="qv-pill">${u.quests.length}회</span></div><div class="qv-quest-chips">${u.quests.slice(0,10).map(x=>`<button class="qv-quest-chip" onclick="questOpenPopup(event,${x.q.index})">${x.q.index}. ${qvEsc(x.q.title)}</button>`).join('')}${u.quests.length>10?`<span class="qv-pill">+${u.quests.length-10}</span>`:''}</div></div>`;}
+function monsterCardHtml(u){return `<div class="qv-monster-card qv-use-item" data-kind="monster" data-search="${qvEsc((u.id+' '+u.name).toLowerCase())}"><div class="qv-monster-portrait">👹</div><div class="qv-monster-name">${qvEsc(u.name)}</div><div class="qv-monster-meta">ID ${u.id} · ${u.quests.length}회</div><div class="qv-quest-chips">${u.quests.slice(0,5).map(x=>`<button class="qv-quest-chip" onclick="questOpenPopup(event,${x.q.index})">${x.q.index}</button>`).join('')}${u.quests.length>5?`<span class="qv-pill">+${u.quests.length-5}</span>`:''}</div></div>`;}
+function renderQuestChains(d){document.getElementById('qv-page-chains').innerHTML=`<div class="qv-small-note">개별 퀘스트가 아니라 NextQuest와 선행 조건 연결을 기준으로 묶은 체인입니다. 이름은 보조 정보로만 사용합니다.</div>${d.subChains.map(c=>`<div class="qv-chain-card"><div class="qv-chain-title"><h3>${qvEsc(c.title)}</h3><span class="qv-pill sub">${c.quests.length}단계</span></div><div class="qv-chain-flow">${c.quests.map(q=>`<button class="qv-flow-chip" onclick="questOpenPopup(event,${q.index})">${q.index}. ${qvEsc(q.title)}</button>`).join('<span style="color:var(--text-dim)">→</span>')}</div></div>`).join('')||'<div class="qv-empty">서브 체인 없음</div>'}`;}
+function renderQuestIssues(d){document.getElementById('qv-page-issues').innerHTML=`${d.issues.map(i=>`<div class="qv-issue ${i.level==='error'?'error':''}"><div class="qv-issue-title">${qvEsc(i.title)}</div><div class="qv-issue-desc">${qvEsc(i.desc)}</div></div>`).join('')||'<div class="qv-empty">표시할 데이터 이슈가 없습니다.</div>'}`;}
+function renderQuestRaw(d){document.getElementById('qv-page-raw').innerHTML=`<div class="qv-grid"><div class="qv-card"><h3>Docs</h3><p class="detail-value">${qvEsc(d.payload.sources.doc.title)}<br>${d.payload.sources.doc.lineCount} lines</p></div><div class="qv-card"><h3>Sheets</h3><p class="detail-value">${qvEsc(d.payload.sources.sheet.title)}<br>${d.payload.sources.sheet.sheetCount} sheets / ${d.payload.sources.sheet.totalRows} rows</p></div></div><div class="qv-table-wrap" style="max-height:58vh;"><pre style="white-space:pre-wrap;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-secondary);padding:14px;">${qvEsc(JSON.stringify(d.payload.diagnostics,null,2))}</pre></div>`;}
+function questFilterTable(tableId,q){q=String(q||'').toLowerCase(); document.querySelectorAll('#'+tableId+' tbody tr').forEach(tr=>{tr.style.display=(!q||tr.dataset.q.toLowerCase().includes(q))?'':'none';});}
+function questFilterQuestType(type){document.querySelectorAll('#qv-quest-table tbody tr').forEach(tr=>{const cells=tr.children; tr.style.display=(!type||cells[3].textContent===QUEST_TYPE_LABEL[type])?'':'none';});}
+function questFilterUsage(q){q=String(q||'').toLowerCase(); document.querySelectorAll('.qv-use-item').forEach(el=>{const ok=!q||el.dataset.search.includes(q); if(!ok)el.style.display='none'; else if(!el.dataset.hiddenByKind)el.style.display='';});}
+function questToggleUsageKind(kind){document.querySelectorAll('.qv-use-item').forEach(el=>{if(kind==='all'||el.dataset.kind===kind){delete el.dataset.hiddenByKind; el.style.display='';} else {el.dataset.hiddenByKind='1'; el.style.display='none';}});}
+function questOpenPopup(ev,index){const q=questState.data?.quests?.find(x=>x.index===index); if(!q)return; const pop=document.getElementById('qv-popup'), body=document.getElementById('qv-popup-body'); body.innerHTML=`<h4>${q.index}. ${qvEsc(q.title)}</h4><p><b>지역</b> ${qvEsc(q.region)} · <b>Type</b> ${QUEST_TYPE_LABEL[q.type]||q.type}</p><p><b>설명</b> ${qvEsc(q.desc||q.detail||'-')}</p><p><b>목표</b> ${qvEsc(questObjectiveSummary(q))}</p><p><b>Next</b> ${q.next||'-'} · <b>Talk</b> ${q.offerTalk||'-'} / ${q.rewardTalk||'-'}</p>`; const x=Math.min(window.innerWidth-350,ev.clientX+12), y=Math.min(window.innerHeight-220,ev.clientY+12); pop.style.left=Math.max(10,x)+'px'; pop.style.top=Math.max(54,y)+'px'; pop.classList.add('open'); ev.stopPropagation();}
+function questClosePopup(){document.getElementById('qv-popup')?.classList.remove('open');}
+document.addEventListener('click',e=>{if(!e.target.closest('.qv-popup')&&!e.target.closest('.qv-flow-chip')&&!e.target.closest('.qv-quest-chip'))questClosePopup();});
 
 // ─────────────────────────────────────────────
 //  INIT
