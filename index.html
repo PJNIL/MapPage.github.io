@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>World Map Reference Viewer &amp; Editor</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Map Reference Viewer & Editor</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
@@ -520,331 +519,371 @@
   .no-image { display:flex; align-items:center; justify-content:center; height:100%; color:var(--text-dim); font-size:12px; }
 
 
-  /* ─────────── QUEST DASHBOARD VIEW ─────────── */
-  #quest-view { position:absolute; inset:0; width:100%; height:100%; display:none; flex-direction:column; background:var(--bg-secondary); overflow:hidden; min-width:0; min-height:0; z-index:30; }
-  #quest-view.visible { display:flex; }
-  #quest-frame { position:absolute; inset:0; width:100%; height:100%; flex:1 1 auto; min-width:0; min-height:0; border:0; display:block; background:#080c14; overflow:hidden; }
-  .qv-header { padding:18px 28px 14px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:1px solid var(--border-dim); background:linear-gradient(180deg,rgba(251,191,36,0.05) 0%,transparent 100%); }
-  .qv-header-left { display:flex; align-items:center; gap:14px; min-width:0; }
-  .qv-header-icon { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(74,158,255,0.12)); border:1px solid rgba(251,191,36,0.25); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-  .qv-header h2 { font-family:'Outfit',sans-serif; font-size:18px; font-weight:800; margin:0; }
-  .qv-header p { font-size:11px; color:var(--text-dim); margin-top:2px; }
-  .qv-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
-  .qv-status { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-dim); padding:5px 10px; border:1px solid var(--border-dim); border-radius:7px; background:var(--bg-tertiary); }
-  .qv-nav { flex-shrink:0; display:flex; gap:4px; padding:10px 22px; border-bottom:1px solid var(--border-dim); background:var(--bg-primary); overflow-x:auto; }
-  .qv-nav::-webkit-scrollbar { height:4px; } .qv-nav::-webkit-scrollbar-thumb { background:var(--border-dim); border-radius:2px; }
-  .qv-tab { border:0; background:transparent; color:var(--text-dim); cursor:pointer; font-family:'Outfit',sans-serif; font-size:11px; font-weight:700; padding:7px 14px; border-radius:8px; white-space:nowrap; transition:all .16s; }
-  .qv-tab:hover { color:var(--text-secondary); background:var(--bg-hover); }
-  .qv-tab.active { color:var(--accent-amber); background:rgba(251,191,36,0.1); }
-  .qv-body { flex:1; overflow-y:auto; padding:22px 28px 40px; }
-  .qv-body::-webkit-scrollbar { width:6px; } .qv-body::-webkit-scrollbar-thumb { background:var(--border-dim); border-radius:3px; }
-  .qv-page { display:none; } .qv-page.active { display:block; }
-  .qv-small-note { font-size:10.5px; line-height:1.6; color:var(--text-dim); background:rgba(0,0,0,.12); border:1px solid var(--border-dim); border-radius:10px; padding:9px 12px; margin-bottom:14px; }
-  .qv-small-note strong { color:var(--text-secondary); font-weight:700; }
-  .qv-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:18px; }
-  .qv-card { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:14px; padding:16px 18px; box-shadow:var(--shadow-sm); }
-  .qv-card h3 { font-family:'Outfit',sans-serif; font-size:13px; font-weight:800; margin:0 0 10px; color:var(--text-primary); }
-  .qv-kpi { display:flex; flex-direction:column; gap:2px; }
-  .qv-kpi .num { font-family:'Outfit',sans-serif; font-size:26px; font-weight:800; color:var(--text-primary); letter-spacing:.2px; }
-  .qv-kpi .label { font-size:11px; color:var(--text-dim); }
-  .qv-section-title { font-family:'Outfit',sans-serif; font-size:15px; font-weight:800; margin:26px 0 10px; display:flex; align-items:center; gap:8px; }
-  .qv-section-title:first-child { margin-top:0; }
-  .qv-region-card { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:16px; padding:18px; margin-bottom:16px; max-width:1120px; }
-  .qv-region-head { display:flex; align-items:flex-start; justify-content:space-between; gap:14px; border-bottom:1px solid var(--border-dim); padding-bottom:12px; margin-bottom:12px; }
-  .qv-region-head h3 { font-family:'Outfit',sans-serif; font-size:17px; margin:0; }
-  .qv-region-summary { font-size:12px; color:var(--text-secondary); line-height:1.7; margin-top:6px; }
-  .qv-mini-stats { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
-  .qv-pill { display:inline-flex; align-items:center; gap:5px; border:1px solid var(--border-dim); background:var(--bg-tertiary); color:var(--text-secondary); padding:4px 9px; border-radius:999px; font-size:10.5px; font-weight:700; font-family:'Outfit',sans-serif; }
-  .qv-pill.main { border-color:rgba(74,158,255,.35); color:var(--accent-blue); background:rgba(74,158,255,.08); }
-  .qv-pill.sub { border-color:rgba(52,211,153,.35); color:var(--accent-green); background:rgba(52,211,153,.08); }
-  .qv-pill.warn { border-color:rgba(251,191,36,.35); color:var(--accent-amber); background:rgba(251,191,36,.08); }
-  .qv-region-layout { display:grid; grid-template-columns:minmax(220px,310px) 1fr; gap:14px; }
-  .qv-breakdown { display:flex; flex-direction:column; gap:8px; }
-  .qv-bar-row { display:grid; grid-template-columns:74px 1fr 34px; align-items:center; gap:8px; font-size:11px; color:var(--text-secondary); }
-  .qv-bar { height:7px; border-radius:999px; background:var(--bg-tertiary); overflow:hidden; border:1px solid var(--border-dim); }
-  .qv-bar > i { display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,var(--accent-blue),var(--accent-amber)); }
-  .qv-chip-row { display:flex; gap:6px; flex-wrap:wrap; align-content:flex-start; }
-  .qv-flow { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
-  .qv-flow-chip { border:1px solid var(--border-dim); background:var(--bg-tertiary); color:var(--text-secondary); border-radius:9px; padding:5px 8px; font-size:10.5px; cursor:pointer; transition:all .15s; max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .qv-flow-chip:hover { color:var(--accent-amber); border-color:rgba(251,191,36,.4); background:rgba(251,191,36,.06); }
-  .qv-searchbar { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; align-items:center; }
-  .qv-input,.qv-select { background:var(--bg-tertiary); border:1px solid var(--border-dim); color:var(--text-primary); border-radius:9px; padding:8px 11px; font-size:12px; outline:none; }
-  .qv-input { min-width:240px; flex:1; }
-  .qv-input:focus,.qv-select:focus { border-color:rgba(251,191,36,.4); }
-  .qv-table-wrap { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:14px; overflow:auto; max-height:70vh; }
-  .qv-table { width:100%; border-collapse:collapse; font-size:11px; min-width:920px; }
-  .qv-table th { position:sticky; top:0; z-index:2; background:var(--bg-tertiary); color:var(--text-dim); font-family:'Outfit',sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.4px; text-align:left; padding:8px 10px; border-bottom:1px solid var(--border-dim); }
-  .qv-table td { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.04); color:var(--text-secondary); vertical-align:top; }
-  .qv-table tr:hover td { background:rgba(255,255,255,.025); }
-  .qv-code { font-family:'JetBrains Mono',monospace; color:var(--text-primary); font-size:10.5px; }
-  .qv-usage-layout { display:grid; grid-template-columns:360px 1fr; gap:16px; align-items:start; }
-  .qv-npc-list { display:flex; flex-direction:column; gap:8px; }
-  .qv-entity-card { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:12px; padding:12px; }
-  .qv-entity-top { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
-  .qv-entity-name { font-size:13px; font-weight:800; color:var(--text-primary); }
-  .qv-bestiary-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(158px,1fr)); gap:10px; }
-  .qv-monster-card { background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.08)); border:1px solid var(--border-dim); border-radius:14px; padding:12px; min-height:128px; position:relative; overflow:hidden; }
-  .qv-monster-card::before { content:''; position:absolute; inset:0 0 auto 0; height:3px; background:linear-gradient(90deg,var(--accent-red),var(--accent-amber)); opacity:.75; }
-  .qv-monster-portrait { width:42px; height:42px; border-radius:11px; background:radial-gradient(circle at 35% 30%,rgba(251,191,36,.22),rgba(248,113,113,.1) 45%,rgba(0,0,0,.15)); border:1px solid rgba(251,191,36,.18); display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:9px; }
-  .qv-monster-name { font-weight:800; font-size:13px; color:var(--text-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .qv-monster-meta { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-dim); margin:2px 0 8px; }
-  .qv-quest-chips { display:flex; gap:5px; flex-wrap:wrap; }
-  .qv-quest-chip { border:1px solid var(--border-dim); background:var(--bg-tertiary); color:var(--text-secondary); border-radius:7px; padding:3px 6px; font-size:10px; cursor:pointer; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .qv-quest-chip:hover { color:var(--accent-blue); border-color:rgba(74,158,255,.4); }
-  .qv-chain-card { background:var(--bg-card); border:1px solid var(--border-dim); border-radius:14px; padding:14px 16px; margin-bottom:10px; }
-  .qv-chain-title { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:10px; }
-  .qv-chain-title h3 { margin:0; font-size:14px; font-weight:800; }
-  .qv-chain-flow { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
-  .qv-issue { border:1px solid var(--border-dim); border-left:3px solid var(--accent-amber); background:var(--bg-card); border-radius:0 12px 12px 0; padding:12px 14px; margin-bottom:9px; }
-  .qv-issue.error { border-left-color:var(--accent-red); }
-  .qv-issue-title { font-size:12px; font-weight:800; color:var(--text-primary); margin-bottom:4px; }
-  .qv-issue-desc { font-size:11px; line-height:1.6; color:var(--text-secondary); }
-  .qv-empty { color:var(--text-dim); text-align:center; padding:40px 0; }
-  .qv-popup { position:fixed; z-index:20050; width:330px; max-width:90vw; background:var(--bg-elevated); border:1px solid var(--border-active); border-radius:12px; box-shadow:var(--shadow-lg); padding:12px 14px; display:none; }
-  .qv-popup.open { display:block; }
-  .qv-popup h4 { font-size:13px; margin:0 0 6px; }
-  .qv-popup p { font-size:11px; color:var(--text-secondary); line-height:1.6; margin:3px 0; }
-  .qv-popup .close { position:absolute; top:6px; right:8px; border:0; background:transparent; color:var(--text-dim); cursor:pointer; }
-  @media(max-width:980px){ .qv-header{align-items:flex-start;flex-direction:column;} .qv-region-layout,.qv-usage-layout{grid-template-columns:1fr;} .qv-mini-stats{justify-content:flex-start;} }
+  /* ─────────── QUEST DASHBOARD FULL INTEGRATION (NO IFRAME) ─────────── */
+  #quest-view { width:100%; height:100%; display:none; background:#080c14; overflow:hidden; min-width:0; min-height:0; }
+  #quest-view.visible { display:block; }
+  .qapp { display:grid; grid-template-columns:280px minmax(0,1fr); width:100%; height:100%; min-height:0; background:radial-gradient(circle at top left,#172036,#080c14 42%,#05070d); color:#eef3ff; font-family:Pretendard,Inter,'Noto Sans KR',system-ui,-apple-system,Segoe UI,sans-serif; }
+  .qside { height:100%; padding:26px 18px; background:linear-gradient(180deg,#121826,#080c14); border-right:1px solid #2a354a; overflow:auto; min-width:0; }
+  .qbrand { display:flex; gap:12px; align-items:center; margin-bottom:28px; }
+  .qlogo { width:44px; height:44px; border-radius:14px; background:linear-gradient(135deg,#f8c66a,#9a5a1b); display:grid; place-items:center; color:#111; font-weight:900; }
+  .qbrand h1 { font-size:18px; line-height:1.2; margin:0; color:#eef3ff; }
+  .qbrand p, .qmuted { color:#9fb0ce; margin:0; }
+  .qnavtitle { font-size:12px; color:#d9a441; text-transform:uppercase; letter-spacing:.08em; margin:18px 0 10px; }
+  .qnav button { width:100%; display:flex; justify-content:space-between; align-items:center; background:transparent; border:0; color:#d9e5ff; padding:12px 10px; border-radius:10px; text-align:left; font-weight:800; cursor:pointer; font-family:inherit; }
+  .qnav button:hover, .qnav button.active { background:#1b2538; color:#fff; }
+  .qnav span { background:#2a354a; color:#f6d78b; border-radius:99px; padding:2px 8px; font-size:11px; }
+  .qsourcebox { font-size:12px; color:#94a3b8; border-top:1px solid #2a354a; padding-top:16px; margin-top:18px; line-height:1.7; }
+  .qactions { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .qbtn { border:1px solid #334056; background:#1b2538; color:#f6d78b; border-radius:10px; padding:10px 14px; cursor:pointer; font-weight:900; font-family:inherit; }
+  .qbtn:hover { border-color:#d9a441; background:#263147; }
+  .qmain { height:100%; overflow:auto; min-width:0; padding:28px; scroll-behavior:smooth; }
+  .qmain::-webkit-scrollbar,.qside::-webkit-scrollbar{width:8px;height:8px}.qmain::-webkit-scrollbar-thumb,.qside::-webkit-scrollbar-thumb{background:#2a354a;border-radius:10px}
+  .qhero { padding:28px; border:1px solid #3b465b; background:linear-gradient(135deg,rgba(27,37,56,.98),rgba(25,28,36,.92)); border-radius:22px; margin-bottom:24px; box-shadow:0 18px 45px rgba(0,0,0,.28); }
+  .qeyebrow { color:#f6d78b; font-weight:900; letter-spacing:.11em; font-size:13px; text-transform:uppercase; margin-bottom:10px; }
+  .qhero h2 { font-size:34px; line-height:1.18; margin:0 0 12px; color:#fff; letter-spacing:-.03em; }
+  .qhero p { color:#9fb0ce; line-height:1.75; margin:0 0 14px; }
+  .qcriteria { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:14px; }
+  .qcrit { border:1px solid #2f3c54; background:#111724; border-radius:12px; padding:11px 12px; font-size:12px; color:#b7c7e6; }
+  .qcrit b { color:#f6d78b; display:block; font-size:11px; margin-bottom:4px; }
+  .qsection { margin:26px 0 38px; }
+  .qsection h2 { color:#fff; font-size:25px; margin:0 0 10px; letter-spacing:-.02em; }
+  .qsection .qdesc { color:#a8b6d4; margin-bottom:16px; }
+  .qgrid { display:grid; gap:14px; }
+  .qstats { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .qcard { background:linear-gradient(180deg,#121a2a,#0f1624); border:1px solid #2a354a; border-radius:16px; padding:18px; min-width:0; }
+  .qcard h3 { font-size:15px; margin:0 0 10px; color:#fff; }
+  .qcard .qnum { font-size:28px; font-weight:900; color:#fff; margin-bottom:4px; }
+  .qcard .qlabel { color:#9fb0ce; font-size:12px; }
+  .qregion-card { margin-bottom:20px; padding:20px; border-radius:18px; border:1px solid #2a354a; background:linear-gradient(180deg,#121a2a,#0f1624); }
+  .qregion-head { display:flex; align-items:start; justify-content:space-between; gap:16px; margin-bottom:14px; }
+  .qregion-head h3 { font-size:22px; margin:0 0 6px; }
+  .qpillrow { display:flex; flex-wrap:wrap; gap:8px; }
+  .qpill { display:inline-flex; gap:6px; align-items:center; border:1px solid #334056; background:#172036; color:#d9e5ff; border-radius:999px; padding:5px 10px; font-size:12px; font-weight:800; }
+  .qpill.gold { color:#f6d78b; border-color:rgba(217,164,65,.45); background:rgba(217,164,65,.08); }
+  .qtwocol { display:grid; grid-template-columns:1.2fr .8fr; gap:14px; }
+  .qmini-title { color:#f6d78b; font-size:12px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; font-weight:900; }
+  .qbars { display:grid; gap:8px; }
+  .qbar { display:grid; grid-template-columns:90px 1fr 36px; align-items:center; gap:10px; color:#c7d7f5; font-size:12px; }
+  .qbar-track { height:8px; border-radius:999px; background:#1d2638; overflow:hidden; }
+  .qbar-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,#d9a441,#60a5fa); }
+  .qflow { display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+  .qnode { border:1px solid #334056; background:#141d2e; color:#dbe8ff; padding:7px 10px; border-radius:10px; font-size:12px; cursor:pointer; max-width:240px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .qnode:hover { border-color:#d9a441; color:#fff; }
+  .qtable-wrap { overflow:auto; border:1px solid #2a354a; border-radius:16px; background:#0f1624; }
+  .qtable { width:100%; border-collapse:collapse; min-width:980px; }
+  .qtable th { position:sticky; top:0; z-index:1; background:#172036; color:#f6d78b; text-align:left; padding:10px; font-size:12px; border-bottom:1px solid #2a354a; }
+  .qtable td { padding:10px; border-bottom:1px solid #202b3f; color:#dce7fb; font-size:12px; vertical-align:top; }
+  .qtable tr:hover td { background:#111b2b; }
+  .qsearchline { display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+  .qinput, .qselect { background:#111724; border:1px solid #2a354a; color:#eef3ff; border-radius:10px; padding:10px 12px; outline:none; font-family:inherit; }
+  .qinput { min-width:280px; flex:1; }
+  .qfreq-region { margin-bottom:24px; }
+  .qfreq-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .qfreq-head h3 { margin:0; font-size:20px; }
+  .qfreq-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:12px; }
+  .qentity { border:1px solid #2a354a; border-radius:16px; background:#101827; padding:14px; min-height:128px; }
+  .qentity.monster { background:radial-gradient(circle at top right,rgba(217,164,65,.12),#101827 45%); }
+  .qentity .qid { color:#9fb0ce; font-family:'JetBrains Mono',monospace; font-size:11px; }
+  .qentity .qname { font-weight:900; font-size:16px; color:#fff; margin:3px 0 8px; }
+  .qentity .qcount { color:#f6d78b; font-weight:900; margin-bottom:8px; }
+  .qchips { display:flex; flex-wrap:wrap; gap:6px; }
+  .qchip { border:1px solid #34425a; background:#172036; color:#dce7fb; border-radius:999px; padding:3px 8px; font-size:11px; cursor:pointer; }
+  .qchip:hover { border-color:#d9a441; color:#fff; }
+  .qchain-card { border:1px solid #2a354a; border-radius:18px; padding:18px; background:linear-gradient(180deg,#121a2a,#0e1522); margin-bottom:14px; }
+  .qchain-card h3 { margin:0 0 8px; font-size:18px; }
+  .qchain-meta { color:#9fb0ce; font-size:12px; margin-bottom:12px; }
+  .qstorybox { white-space:pre-wrap; line-height:1.85; color:#c9d8f3; background:#0f1624; border:1px solid #2a354a; border-radius:16px; padding:16px; max-height:420px; overflow:auto; }
+  .qissue { border-left:4px solid #f87171; background:#151b27; border-radius:12px; padding:12px 14px; margin-bottom:10px; color:#d9e5ff; }
+  .qissue.warn { border-color:#fbbf24; }
+  .qdetails { margin-bottom:12px; border:1px solid #2a354a; border-radius:16px; overflow:hidden; background:#101827; }
+  .qdetails summary { cursor:pointer; padding:14px 16px; color:#f6d78b; font-weight:900; background:#141d2e; }
+  .qdetails .qinside { padding:14px; }
+  .qraw { white-space:pre-wrap; font-family:'JetBrains Mono',monospace; font-size:11px; color:#c6d4ee; line-height:1.55; }
+  .qhidden { display:none !important; }
+  .qpop { position:fixed; z-index:30000; max-width:420px; background:#101827; border:1px solid #d9a441; border-radius:14px; padding:14px; box-shadow:0 18px 55px rgba(0,0,0,.55); color:#eef3ff; }
+  .qpop h4 { margin:0 0 8px; font-size:15px; } .qpop p{margin:4px 0;color:#bfd0ef;font-size:12px;line-height:1.55}.qpop .close{float:right;background:transparent;border:0;color:#f6d78b;cursor:pointer;font-weight:900}
+  @media (max-width:1100px){.qapp{grid-template-columns:230px minmax(0,1fr)}.qstats{grid-template-columns:repeat(2,minmax(0,1fr))}.qcriteria{grid-template-columns:1fr}.qtwocol{grid-template-columns:1fr}.qhero h2{font-size:28px}}
+  @media (max-width:760px){.qapp{grid-template-columns:1fr}.qside{height:auto}.qmain{padding:16px}.qhero{padding:20px}.qstats{grid-template-columns:1fr}}
 
 </style>
 </head>
 <body>
 <div id="app-root">
-<div id="global-tabs">
-<div class="gtab-brand"><div class="gtab-logo">W</div><div class="gtab-title">CHEONSANGBI TOOL</div></div>
-<button class="gtab-btn active" id="gtab-map" onclick="switchGlobalTab('map')">Map</button>
-<button class="gtab-btn" id="gtab-dungeon" onclick="switchGlobalTab('dungeon')" style=";display:none!important;">Dungeon</button>
-<button class="gtab-btn" id="gtab-story" onclick="switchGlobalTab('story')" style=";display:none!important;">Story</button>
-<button class="gtab-btn" id="gtab-quest" onclick="switchGlobalTab('quest')">Quest Dashboard</button>
-<div class="gtab-spacer"></div>
-<div class="gtab-right">
-<div class="sync-indicator disconnected" id="sync-status"><div class="sdot"></div><span id="sync-label">연결 안됨</span></div>
-<div class="unsaved-dot" id="unsaved-dot"></div>
-<button class="btn-icon" onclick="openSearchModal()" style="font-size:14px;" title="Ctrl+K">🔍</button>
-<button class="btn-icon" onclick="openSettings()">⚙</button>
+  <div id="global-tabs">
+    <div class="gtab-brand"><div class="gtab-logo">W</div><div class="gtab-title">WORLD EDITOR</div></div>
+    <button class="gtab-btn active" id="gtab-map" onclick="switchGlobalTab('map')">Map</button>
+    <button class="gtab-btn" id="gtab-quest" onclick="switchGlobalTab('quest')">Quest Dashboard</button>
+    <button class="gtab-btn" id="gtab-dungeon" onclick="switchGlobalTab('dungeon')" style="display:none">Dungeon</button>
+    <button class="gtab-btn" id="gtab-story" onclick="switchGlobalTab('story')" style="display:none">Story</button>
+    <div class="gtab-spacer"></div>
+    <div class="gtab-right">
+      <div class="sync-indicator disconnected" id="sync-status"><div class="sdot"></div><span id="sync-label">연결 안됨</span></div>
+      <div class="unsaved-dot" id="unsaved-dot"></div>
+      <button class="btn-icon" onclick="openSearchModal()" title="Ctrl+K" style="font-size:14px;">🔍</button>
+      <button class="btn-icon" onclick="openSettings()">⚙</button>
+    </div>
+  </div>
+
+  <div id="main-layout">
+    <div id="left-panel">
+
+      <!-- MAP VIEW -->
+      <div id="map-view">
+        <div id="topbar">
+          <div class="topbar-left"><div class="mode-toggle"><button id="btn-viewer" class="active" onclick="setMode('viewer')">VIEWER</button><button id="btn-editor" onclick="setMode('editor')">EDITOR</button></div></div>
+          <div class="topbar-right"></div>
+        </div>
+        <div id="filter-bar"></div>
+        <div class="edit-indicator" id="edit-indicator">⚠ EDIT MODE — 마커를 드래그하여 위치를 조정하세요</div>
+        <div id="map-container"><div id="map-viewport"><img id="world-image" src="Worldmap.png" alt="World Map" draggable="false"><svg id="connections-svg"></svg><div id="markers-layer"></div></div></div>
+        <div class="zoom-controls"><button onclick="zoomIn()">+</button><button onclick="zoomOut()">−</button><button onclick="zoomReset()">⌂</button></div>
+        <div class="zoom-level" id="zoom-level">100%</div>
+      </div>
+
+      <!-- DUNGEON VIEW -->
+      <div id="dungeon-view">
+        <div class="dv-header">
+          <div class="dv-header-left"><div class="dv-header-icon">⚔</div><div><h2>Dungeons & Contents</h2><div class="dv-count" id="dungeon-count">0 Dungeons</div></div></div>
+          <div class="dv-search-wrap"><span style="color:var(--text-dim);font-size:13px;">🔍</span><input type="text" id="dungeon-filter" placeholder="던전 검색..." oninput="filterDungeonCards(this.value)"></div>
+        </div>
+        <div class="dv-body" id="dungeon-body"></div>
+      </div>
+
+      <!-- STORY VIEW -->
+      <div id="story-view">
+        <div class="sv-header">
+          <div class="sv-header-left">
+            <div class="sv-header-icon">📖</div>
+            <div>
+              <h2>World Lore &amp; Story</h2>
+              <p id="sv-doc-count">문서 0개 등록됨</p>
+            </div>
+          </div>
+          <div class="sv-toolbar">
+            <div class="sv-search-wrap">
+              <span style="color:var(--text-dim);font-size:13px;">🔍</span>
+              <input type="text" id="sv-search" placeholder="스토리 검색..." oninput="filterStoryCards(this.value)">
+            </div>
+            <button class="btn btn-amber btn-sm" onclick="openStoryManager()">📁 문서 관리</button>
+          </div>
+        </div>
+        <div class="sv-body" id="sv-body"></div>
+      </div>
+
+      <!-- QUEST DASHBOARD VIEW: no iframe, data from Google Docs + Sheets only -->
+      <div id="quest-view">
+        <div class="qapp">
+          <aside class="qside">
+            <div class="qbrand"><div class="qlogo">武</div><div><h1>천상비M2<br>퀘스트 대시보드</h1><p>검증형 기획 툴</p></div></div>
+            <div class="qnavtitle">Sheets</div>
+            <nav class="qnav" id="qnav"></nav>
+            <div class="qsourcebox" id="qsourcebox">Sources<br>동기화 대기 중</div>
+            <div class="qactions">
+              <button class="qbtn" onclick="questSyncFromGoogle()">↻ 동기화</button>
+              <button class="qbtn" onclick="questDownloadSnapshot()">JSON</button>
+            </div>
+            <div class="qmuted" id="qstatus" style="font-size:12px;margin-top:10px;">준비 완료</div>
+          </aside>
+          <main class="qmain" id="qmain">
+            <section class="qhero">
+              <div class="qeyebrow">Mobile Murim Fantasy MMORPG · Quest Flow Audit</div>
+              <h2>퀘스트 흐름·수량·리소스 사용 검증 대시보드</h2>
+              <p>Google Docs와 Google Sheets 두 문서에서만 데이터를 읽어와 QuestInfo 기반으로 정규화·집계합니다. 동기화 버튼을 눌러 최신 문서를 반영하세요.</p>
+              <div class="qcriteria"><div class="qcrit"><b>집계 기준</b>메인/서브 Type=0/1 중심. 던전/인스턴스 Type=8/9는 보존만.</div><div class="qcrit"><b>연결 기준</b>서브 체인은 NextQuest와 선행 조건 퀘스트로 판정.</div><div class="qcrit"><b>이름 기준</b>자동 Alias 금지. 불일치는 데이터 이슈로 표시.</div></div>
+            </section>
+            <div id="qcontent"></div>
+          </main>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- RIGHT DETAIL PANEL -->
+    <div id="detail-panel">
+      <div class="panel-header"><h2 id="panel-title">Region Details</h2><div class="panel-actions" id="panel-actions"></div></div>
+      <div class="panel-body" id="panel-body"><div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하세요</p></div></div>
+      <div class="stats-bar"><span>Regions: <em id="stat-count">0</em></span><span>Connections: <em id="stat-conn">0</em></span></div>
+    </div>
+  </div>
 </div>
-</div>
-<div id="main-layout">
-<div id="left-panel">
-<!-- MAP VIEW -->
-<div id="map-view">
-<div id="topbar">
-<div class="topbar-left"><div class="mode-toggle"><button class="active" id="btn-viewer" onclick="setMode('viewer')">VIEWER</button><button id="btn-editor" onclick="setMode('editor')">EDITOR</button></div></div>
-<div class="topbar-right"></div>
-</div>
-<div id="filter-bar"></div>
-<div class="edit-indicator" id="edit-indicator">⚠ EDIT MODE — 마커를 드래그하여 위치를 조정하세요</div>
-<div id="map-container"><div id="map-viewport"><img alt="World Map" draggable="false" id="world-image" src="Worldmap.png"/><svg id="connections-svg"></svg><div id="markers-layer"></div></div></div>
-<div class="zoom-controls"><button onclick="zoomIn()">+</button><button onclick="zoomOut()">−</button><button onclick="zoomReset()">⌂</button></div>
-<div class="zoom-level" id="zoom-level">100%</div>
-</div>
-<!-- DUNGEON VIEW -->
-<div id="dungeon-view">
-<div class="dv-header">
-<div class="dv-header-left"><div class="dv-header-icon">⚔</div><div><h2>Dungeons &amp; Contents</h2><div class="dv-count" id="dungeon-count">0 Dungeons</div></div></div>
-<div class="dv-search-wrap"><span style="color:var(--text-dim);font-size:13px;">🔍</span><input id="dungeon-filter" oninput="filterDungeonCards(this.value)" placeholder="던전 검색..." type="text"/></div>
-</div>
-<div class="dv-body" id="dungeon-body"></div>
-</div>
-<!-- STORY VIEW -->
-<div id="story-view">
-<div class="sv-header">
-<div class="sv-header-left">
-<div class="sv-header-icon">📖</div>
-<div>
-<h2>World Lore &amp; Story</h2>
-<p id="sv-doc-count">문서 0개 등록됨</p>
-</div>
-</div>
-<div class="sv-toolbar">
-<div class="sv-search-wrap">
-<span style="color:var(--text-dim);font-size:13px;">🔍</span>
-<input id="sv-search" oninput="filterStoryCards(this.value)" placeholder="스토리 검색..." type="text"/>
-</div>
-<button class="btn btn-amber btn-sm" onclick="openStoryManager()">📁 문서 관리</button>
-</div>
-</div>
-<div class="sv-body" id="sv-body"></div>
-</div>
-<!-- QUEST VIEW -->
-<div id="quest-view"><iframe id="quest-frame" loading="eager" title="Quest Dashboard"></iframe></div>
-</div>
-<!-- RIGHT DETAIL PANEL -->
-<div id="detail-panel">
-<div class="panel-header"><h2 id="panel-title">Region Details</h2><div class="panel-actions" id="panel-actions"></div></div>
-<div class="panel-body" id="panel-body"><div class="empty-state"><div class="icon">🗺</div><p>마커를 클릭하세요</p></div></div>
-<div class="stats-bar"><span>Regions: <em id="stat-count">0</em></span><span>Connections: <em id="stat-conn">0</em></span></div>
-</div>
-</div>
-</div>
-<div class="qv-popup" id="qv-popup"><button class="close" onclick="questClosePopup()">×</button><div id="qv-popup-body"></div></div>
+
 <!-- ── STORY SLIDE PANEL ── -->
 <div id="story-panel-backdrop" onclick="closeStoryPanel()"></div>
 <div id="story-slide-panel">
-<div id="ssp-resize-handle"></div>
-<div class="ssp-header">
-<div class="ssp-header-left">
-<div class="ssp-icon">📖</div>
-<div>
-<div class="ssp-title" id="ssp-title">스토리</div>
-<div class="ssp-region" id="ssp-region-label"></div>
+  <div id="ssp-resize-handle" id="ssp-resize-handle"></div>
+  <div class="ssp-header">
+    <div class="ssp-header-left">
+      <div class="ssp-icon">📖</div>
+      <div>
+        <div class="ssp-title" id="ssp-title">스토리</div>
+        <div class="ssp-region" id="ssp-region-label"></div>
+      </div>
+    </div>
+    <div class="ssp-actions">
+      <a id="ssp-gdoc-link" href="#" target="_blank" class="btn btn-ghost btn-sm" style="text-decoration:none;">↗ 원본 문서</a>
+      <button class="ssp-close-btn" title="전체화면" onclick="openStoryFullscreen()" style="font-size:13px;">⛶</button>
+      <button class="ssp-close-btn" onclick="closeStoryPanel()">✕</button>
+    </div>
+  </div>
+  <div class="ssp-tabs">
+    <button class="ssp-tab active" id="ssp-tab-doc" onclick="setSspTab('doc')">📄 문서 보기</button>
+    <button class="ssp-tab" id="ssp-tab-ai" onclick="setSspTab('ai')">✨ AI 플롯 요약</button>
+  </div>
+  <div class="ssp-body" id="ssp-body">
+    <!-- 문서 보기 탭 -->
+    <div id="ssp-doc-pane" style="position:absolute;inset:0;display:flex;flex-direction:column;">
+      <div class="ssp-loading" id="ssp-loading" style="position:absolute;inset:0;">
+        <div class="ssp-loading-spinner"></div>
+        <p>문서를 불러오는 중...</p>
+      </div>
+      <div class="ssp-error" id="ssp-error" style="position:absolute;inset:0;">
+        <div class="icon">⚠️</div>
+        <h4>문서를 불러올 수 없습니다</h4>
+        <p>구글 문서의 공유 설정이 <strong>"링크 있는 사용자 보기 가능"</strong>으로 설정되어 있는지 확인해주세요.<br><br>
+        또는 <a id="ssp-error-link" href="#" target="_blank">문서를 직접 열어보세요 ↗</a></p>
+      </div>
+      <iframe id="ssp-iframe" src="" title="Story Document"
+        style="display:none;width:100%;height:100%;border:none;background:#fff;flex:1;"></iframe>
+    </div>
+    <!-- AI 플롯 요약 탭 -->
+    <div id="ssp-ai-pane" style="position:absolute;inset:0;display:none;overflow-y:auto;padding:20px 22px;">
+      <div id="ssp-ai-idle" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;gap:16px;color:var(--text-dim);text-align:center;">
+        <div style="font-size:40px;opacity:0.2;">✨</div>
+        <div>
+          <p style="font-family:'Outfit',sans-serif;font-size:14px;color:var(--text-secondary);font-weight:600;margin-bottom:6px;">AI 플롯 요약</p>
+          <p style="font-size:11px;line-height:1.7;max-width:280px;">문서 텍스트를 가져와 Claude가<br>주요 플롯·등장인물·핵심 사건을<br>깔끔하게 정리해드려요.</p>
+        </div>
+        <button class="btn btn-amber" onclick="runAiSummary()" id="ssp-ai-run-btn">✨ 요약 생성하기</button>
+      </div>
+      <div id="ssp-ai-loading" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100%;gap:14px;color:var(--text-dim);">
+        <div class="ssp-loading-spinner"></div>
+        <p style="font-size:12px;font-family:'Outfit',sans-serif;" id="ssp-ai-loading-msg">문서 텍스트 불러오는 중...</p>
+      </div>
+      <div id="ssp-ai-error" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100%;gap:12px;text-align:center;padding:24px;color:var(--text-dim);">
+        <div style="font-size:36px;opacity:0.3;">⚠️</div>
+        <p style="font-family:'Outfit',sans-serif;font-size:13px;color:var(--text-secondary);">요약 생성에 실패했습니다</p>
+        <p style="font-size:11px;line-height:1.7;" id="ssp-ai-error-msg"></p>
+        <button class="btn btn-ghost btn-sm" onclick="runAiSummary()">다시 시도</button>
+      </div>
+      <div id="ssp-ai-result" style="display:none;"></div>
+    </div>
+  </div>
 </div>
-</div>
-<div class="ssp-actions">
-<a class="btn btn-ghost btn-sm" href="#" id="ssp-gdoc-link" style="text-decoration:none;" target="_blank">↗ 원본 문서</a>
-<button class="ssp-close-btn" onclick="openStoryFullscreen()" style="font-size:13px;" title="전체화면">⛶</button>
-<button class="ssp-close-btn" onclick="closeStoryPanel()">✕</button>
-</div>
-</div>
-<div class="ssp-tabs">
-<button class="ssp-tab active" id="ssp-tab-doc" onclick="setSspTab('doc')">📄 문서 보기</button>
-<button class="ssp-tab" id="ssp-tab-ai" onclick="setSspTab('ai')">✨ AI 플롯 요약</button>
-</div>
-<div class="ssp-body" id="ssp-body">
-<!-- 문서 보기 탭 -->
-<div id="ssp-doc-pane" style="position:absolute;inset:0;display:flex;flex-direction:column;">
-<div class="ssp-loading" id="ssp-loading" style="position:absolute;inset:0;">
-<div class="ssp-loading-spinner"></div>
-<p>문서를 불러오는 중...</p>
-</div>
-<div class="ssp-error" id="ssp-error" style="position:absolute;inset:0;">
-<div class="icon">⚠️</div>
-<h4>문서를 불러올 수 없습니다</h4>
-<p>구글 문서의 공유 설정이 <strong>"링크 있는 사용자 보기 가능"</strong>으로 설정되어 있는지 확인해주세요.<br/><br/>
-        또는 <a href="#" id="ssp-error-link" target="_blank">문서를 직접 열어보세요 ↗</a></p>
-</div>
-<iframe id="ssp-iframe" src="" style="display:none;width:100%;height:100%;border:none;background:#fff;flex:1;" title="Story Document"></iframe>
-</div>
-<!-- AI 플롯 요약 탭 -->
-<div id="ssp-ai-pane" style="position:absolute;inset:0;display:none;overflow-y:auto;padding:20px 22px;">
-<div id="ssp-ai-idle" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;gap:16px;color:var(--text-dim);text-align:center;">
-<div style="font-size:40px;opacity:0.2;">✨</div>
-<div>
-<p style="font-family:'Outfit',sans-serif;font-size:14px;color:var(--text-secondary);font-weight:600;margin-bottom:6px;">AI 플롯 요약</p>
-<p style="font-size:11px;line-height:1.7;max-width:280px;">문서 텍스트를 가져와 Claude가<br/>주요 플롯·등장인물·핵심 사건을<br/>깔끔하게 정리해드려요.</p>
-</div>
-<button class="btn btn-amber" id="ssp-ai-run-btn" onclick="runAiSummary()">✨ 요약 생성하기</button>
-</div>
-<div id="ssp-ai-loading" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100%;gap:14px;color:var(--text-dim);">
-<div class="ssp-loading-spinner"></div>
-<p id="ssp-ai-loading-msg" style="font-size:12px;font-family:'Outfit',sans-serif;">문서 텍스트 불러오는 중...</p>
-</div>
-<div id="ssp-ai-error" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100%;gap:12px;text-align:center;padding:24px;color:var(--text-dim);">
-<div style="font-size:36px;opacity:0.3;">⚠️</div>
-<p style="font-family:'Outfit',sans-serif;font-size:13px;color:var(--text-secondary);">요약 생성에 실패했습니다</p>
-<p id="ssp-ai-error-msg" style="font-size:11px;line-height:1.7;"></p>
-<button class="btn btn-ghost btn-sm" onclick="runAiSummary()">다시 시도</button>
-</div>
-<div id="ssp-ai-result" style="display:none;"></div>
-</div>
-</div>
-</div>
+
 <!-- ── STORY FULLSCREEN MODAL ── -->
 <div id="story-fullscreen-modal">
-<div class="sfm-header">
-<div class="sfm-header-left">
-<div class="ssp-icon">📖</div>
-<div>
-<div class="ssp-title" id="sfm-title">스토리</div>
-<div class="ssp-region" id="sfm-region-label"></div>
-</div>
-</div>
-<div class="ssp-actions">
-<a class="btn btn-ghost btn-sm" href="#" id="sfm-gdoc-link" style="text-decoration:none;" target="_blank">↗ 원본 문서</a>
-<button class="ssp-close-btn" onclick="closeStoryFullscreen()" style="font-size:13px;" title="패널로 돌아가기">⊡</button>
-<button class="ssp-close-btn" onclick="closeStoryFullscreen();closeStoryPanel()">✕</button>
-</div>
-</div>
-<div class="ssp-tabs" style="background:var(--bg-secondary);padding:10px 20px;">
-<button class="ssp-tab active" id="sfm-tab-doc" onclick="setSfmTab('doc')">📄 문서 보기</button>
-<button class="ssp-tab" id="sfm-tab-ai" onclick="setSfmTab('ai')">✨ AI 플롯 요약</button>
-</div>
-<div class="sfm-body">
-<!-- 문서 보기 -->
-<div id="sfm-doc-pane" style="position:absolute;inset:0;display:flex;flex-direction:column;">
-<div id="sfm-loading" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--text-dim);">
-<div class="ssp-loading-spinner"></div>
-<p style="font-size:12px;font-family:'Outfit',sans-serif;">문서를 불러오는 중...</p>
-</div>
-<iframe id="sfm-iframe" src="" style="display:none;width:100%;height:100%;border:none;background:#fff;" title="Story Fullscreen"></iframe>
-</div>
-<!-- AI 요약 (슬라이드 패널과 동일 구조) -->
-<div id="sfm-ai-pane" style="position:absolute;inset:0;display:none;overflow-y:auto;padding:40px 15%;"></div>
-</div>
+  <div class="sfm-header">
+    <div class="sfm-header-left">
+      <div class="ssp-icon">📖</div>
+      <div>
+        <div class="ssp-title" id="sfm-title">스토리</div>
+        <div class="ssp-region" id="sfm-region-label"></div>
+      </div>
+    </div>
+    <div class="ssp-actions">
+      <a id="sfm-gdoc-link" href="#" target="_blank" class="btn btn-ghost btn-sm" style="text-decoration:none;">↗ 원본 문서</a>
+      <button class="ssp-close-btn" title="패널로 돌아가기" onclick="closeStoryFullscreen()" style="font-size:13px;">⊡</button>
+      <button class="ssp-close-btn" onclick="closeStoryFullscreen();closeStoryPanel()">✕</button>
+    </div>
+  </div>
+  <div class="ssp-tabs" style="background:var(--bg-secondary);padding:10px 20px;">
+    <button class="ssp-tab active" id="sfm-tab-doc" onclick="setSfmTab('doc')">📄 문서 보기</button>
+    <button class="ssp-tab" id="sfm-tab-ai" onclick="setSfmTab('ai')">✨ AI 플롯 요약</button>
+  </div>
+  <div class="sfm-body">
+    <!-- 문서 보기 -->
+    <div id="sfm-doc-pane" style="position:absolute;inset:0;display:flex;flex-direction:column;">
+      <div id="sfm-loading" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--text-dim);">
+        <div class="ssp-loading-spinner"></div>
+        <p style="font-size:12px;font-family:'Outfit',sans-serif;">문서를 불러오는 중...</p>
+      </div>
+      <iframe id="sfm-iframe" src="" title="Story Fullscreen"
+        style="display:none;width:100%;height:100%;border:none;background:#fff;"></iframe>
+    </div>
+    <!-- AI 요약 (슬라이드 패널과 동일 구조) -->
+    <div id="sfm-ai-pane" style="position:absolute;inset:0;display:none;overflow-y:auto;padding:40px 15%;"></div>
+  </div>
 </div>
 <div class="modal-overlay" id="story-manager-modal" onclick="if(event.target===this)closeStoryManager()">
-<div class="modal" style="width:620px;max-width:94vw;">
-<div class="modal-head">
-<h3>📁 스토리 문서 관리</h3>
-<button class="modal-close" onclick="closeStoryManager()">×</button>
-</div>
-<div class="modal-body">
-<div class="sm-help" style="margin-bottom:16px;">
-<strong>사용 방법:</strong> 구글 문서를 <strong>"링크 있는 사용자 보기 가능"</strong>으로 공유 설정 후,
-        문서 URL에서 ID를 복사해 등록하세요.<br/>
+  <div class="modal" style="width:620px;max-width:94vw;">
+    <div class="modal-head">
+      <h3>📁 스토리 문서 관리</h3>
+      <button class="modal-close" onclick="closeStoryManager()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="sm-help" style="margin-bottom:16px;">
+        <strong>사용 방법:</strong> 구글 문서를 <strong>"링크 있는 사용자 보기 가능"</strong>으로 공유 설정 후,
+        문서 URL에서 ID를 복사해 등록하세요.<br>
         URL 형식: <code>docs.google.com/document/d/<strong>[문서 ID]</strong>/edit</code>
+      </div>
+
+      <!-- Add Form -->
+      <div class="sm-add-form">
+        <div class="sm-add-form-title">➕ 새 문서 등록</div>
+        <div class="form-row" style="margin-bottom:10px;">
+          <div class="form-group">
+            <label>지역명 / 제목</label>
+            <input class="form-input" id="sm-new-name" placeholder="예: 엘프숲" autocomplete="off">
+          </div>
+          <div class="form-group" style="flex:2;">
+            <label>Google Docs 문서 ID</label>
+            <input class="form-input" id="sm-new-docid" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms" autocomplete="off">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:10px;">
+          <label>설명 (선택)</label>
+          <input class="form-input" id="sm-new-desc" placeholder="이 지역 스토리에 대한 간단한 설명">
+        </div>
+        <div style="display:flex;justify-content:flex-end;">
+          <button class="btn btn-amber" onclick="addStoryDoc()">+ 등록</button>
+        </div>
+      </div>
+
+      <!-- Doc List -->
+      <div id="sm-doc-list" class="sm-doc-list"></div>
+
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
+        <button class="btn btn-ghost" onclick="closeStoryManager()">닫기</button>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- Add Form -->
-<div class="sm-add-form">
-<div class="sm-add-form-title">➕ 새 문서 등록</div>
-<div class="form-row" style="margin-bottom:10px;">
-<div class="form-group">
-<label>지역명 / 제목</label>
-<input autocomplete="off" class="form-input" id="sm-new-name" placeholder="예: 엘프숲"/>
-</div>
-<div class="form-group" style="flex:2;">
-<label>Google Docs 문서 ID</label>
-<input autocomplete="off" class="form-input" id="sm-new-docid" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms"/>
-</div>
-</div>
-<div class="form-group" style="margin-bottom:10px;">
-<label>설명 (선택)</label>
-<input class="form-input" id="sm-new-desc" placeholder="이 지역 스토리에 대한 간단한 설명"/>
-</div>
-<div style="display:flex;justify-content:flex-end;">
-<button class="btn btn-amber" onclick="addStoryDoc()">+ 등록</button>
-</div>
-</div>
-<!-- Doc List -->
-<div class="sm-doc-list" id="sm-doc-list"></div>
-<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px;">
-<button class="btn btn-ghost" onclick="closeStoryManager()">닫기</button>
-</div>
-</div>
-</div>
-</div>
+
 <!-- ── OTHER MODALS ── -->
 <div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearchModal()">
-<div class="search-box">
-<div class="search-input-wrap"><span class="search-icon">🔍</span><input autocomplete="off" id="search-input" oninput="performSearch(this.value)" placeholder="NPC 또는 몬스터 이름 / 인덱스 검색..." type="text"/><kbd style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:4px;padding:2px 7px;">ESC</kbd></div>
-<div class="search-tabs"><button class="search-tab active" onclick="setSearchTab('all',this)">전체</button><button class="search-tab" onclick="setSearchTab('monster',this)">몬스터</button><button class="search-tab" onclick="setSearchTab('npc',this)">NPC</button></div>
-<div class="search-results" id="search-results"><div class="search-empty">검색어를 입력하세요</div></div>
+  <div class="search-box">
+    <div class="search-input-wrap"><span class="search-icon">🔍</span><input type="text" id="search-input" placeholder="NPC 또는 몬스터 이름 / 인덱스 검색..." oninput="performSearch(this.value)" autocomplete="off"><kbd style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);background:var(--bg-tertiary);border:1px solid var(--border-dim);border-radius:4px;padding:2px 7px;">ESC</kbd></div>
+    <div class="search-tabs"><button class="search-tab active" onclick="setSearchTab('all',this)">전체</button><button class="search-tab" onclick="setSearchTab('monster',this)">몬스터</button><button class="search-tab" onclick="setSearchTab('npc',this)">NPC</button></div>
+    <div class="search-results" id="search-results"><div class="search-empty">검색어를 입력하세요</div></div>
+  </div>
 </div>
-</div>
+
 <div class="modal-overlay" id="settings-modal">
-<div class="modal">
-<div class="modal-head"><h3>⚙ 환경 설정</h3><button class="modal-close" onclick="closeSettings()">×</button></div>
-<div class="modal-body">
-<div class="config-section"><div class="config-title">GITHUB 동기화</div><div class="form-group"><label>Personal Access Token</label><input class="form-input" id="cfg-token" type="password"/></div><div class="form-row"><div class="form-group"><label>Owner</label><input class="form-input" id="cfg-owner"/></div><div class="form-group"><label>Repo</label><input class="form-input" id="cfg-repo"/></div></div><div class="form-row" style="margin-top:10px;"><div class="form-group"><label>파일 경로</label><input class="form-input" id="cfg-path" placeholder="data/mapData.json" value="data/mapData.json"/></div><div class="form-group"><label>브랜치</label><input class="form-input" id="cfg-branch" placeholder="main" value="main"/></div></div></div>
-<div class="config-section"><div class="config-title">GOOGLE SHEETS API</div><div class="form-group"><label>API Key</label><input class="form-input" id="cfg-gs-key" type="password"/></div><div class="form-group"><label>Spreadsheet ID</label><input class="form-input" id="cfg-gs-id" placeholder="1RH5uCwe..."/></div></div>
-<div class="config-section">
-<div class="config-title">CLAUDE API</div>
-<div class="form-group">
-<label>API Key</label>
-<input class="form-input" id="cfg-claude-key" placeholder="sk-ant-api03-..." type="password"/>
-</div>
-<div style="font-size:11px;color:var(--text-dim);margin-top:-8px;line-height:1.6;">
-<a href="https://console.anthropic.com" style="color:var(--accent-amber);" target="_blank">console.anthropic.com</a>에서 발급 · 브라우저에만 저장됨 · AI 플롯 요약 기능에 사용
+  <div class="modal">
+    <div class="modal-head"><h3>⚙ 환경 설정</h3><button class="modal-close" onclick="closeSettings()">×</button></div>
+    <div class="modal-body">
+      <div class="config-section"><div class="config-title">GITHUB 동기화</div><div class="form-group"><label>Personal Access Token</label><input class="form-input" id="cfg-token" type="password"></div><div class="form-row"><div class="form-group"><label>Owner</label><input class="form-input" id="cfg-owner"></div><div class="form-group"><label>Repo</label><input class="form-input" id="cfg-repo"></div></div><div class="form-row" style="margin-top:10px;"><div class="form-group"><label>파일 경로</label><input class="form-input" id="cfg-path" placeholder="data/mapData.json" value="data/mapData.json"></div><div class="form-group"><label>브랜치</label><input class="form-input" id="cfg-branch" placeholder="main" value="main"></div></div></div>
+      <div class="config-section"><div class="config-title">GOOGLE SHEETS API</div><div class="form-group"><label>API Key</label><input class="form-input" id="cfg-gs-key" type="password"></div><div class="form-group"><label>Spreadsheet ID</label><input class="form-input" id="cfg-gs-id" placeholder="1RH5uCwe..."></div></div>
+      <div class="config-section">
+        <div class="config-title">CLAUDE API</div>
+        <div class="form-group">
+          <label>API Key</label>
+          <input class="form-input" id="cfg-claude-key" type="password" placeholder="sk-ant-api03-...">
         </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:-8px;line-height:1.6;">
+          <a href="https://console.anthropic.com" target="_blank" style="color:var(--accent-amber);">console.anthropic.com</a>에서 발급 · 브라우저에만 저장됨 · AI 플롯 요약 기능에 사용
+        </div>
+      </div>
+      <div class="config-section"><div class="config-title">UI 설정</div><div class="form-group"><label>마커 글자 크기: <span id="font-size-val">13</span>px</label><input type="range" id="cfg-font" min="8" max="24" value="13" style="width:100%" oninput="document.getElementById('font-size-val').textContent=this.value;document.documentElement.style.setProperty('--marker-font-size',this.value+'px');"></div></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;"><button class="btn btn-primary" onclick="saveSettings()">저장</button></div>
+    </div>
+  </div>
 </div>
-<div class="config-section"><div class="config-title">UI 설정</div><div class="form-group"><label>마커 글자 크기: <span id="font-size-val">13</span>px</label><input id="cfg-font" max="24" min="8" oninput="document.getElementById('font-size-val').textContent=this.value;document.documentElement.style.setProperty('--marker-font-size',this.value+'px');" style="width:100%" type="range" value="13"/></div></div>
-<div style="display:flex;gap:8px;justify-content:flex-end;"><button class="btn btn-primary" onclick="saveSettings()">저장</button></div>
-</div>
-</div>
-</div>
-<div id="lightbox-modal" onclick="if(event.target===this)closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">×</button><img alt="" id="lightbox-img" src=""/></div>
+
+<div id="lightbox-modal" onclick="if(event.target===this)closeLightbox()"><button class="lightbox-close" onclick="closeLightbox()">×</button><img id="lightbox-img" src="" alt=""></div>
 <div id="toast"></div>
+
 <script>
 // ─────────────────────────────────────────────
 //  CONSTANTS & STATE
@@ -1353,34 +1392,50 @@ function updateSvDocCount() {
 //  GLOBAL TAB SWITCH
 // ─────────────────────────────────────────────
 function switchGlobalTab(tab) {
-  if (tab === 'dungeon' || tab === 'story') tab = 'map';
   currentGlobalTab = tab;
-  ['map','quest'].forEach(function(k){
-    var b=document.getElementById('gtab-'+k);
-    if(b) b.className='gtab-btn' + (tab===k ? (k==='quest' ? ' story-active' : ' active') : '');
-  });
-  var db=document.getElementById('gtab-dungeon'); if(db) db.className='gtab-btn';
-  var sb=document.getElementById('gtab-story'); if(sb) sb.className='gtab-btn';
+  const mapBtn = document.getElementById('gtab-map');
+  const questBtn = document.getElementById('gtab-quest');
+  const dungeonBtn = document.getElementById('gtab-dungeon');
+  const storyBtn = document.getElementById('gtab-story');
+  if (mapBtn) mapBtn.className = 'gtab-btn' + (tab === 'map' ? ' active' : '');
+  if (questBtn) questBtn.className = 'gtab-btn' + (tab === 'quest' ? ' story-active' : '');
+  if (dungeonBtn) dungeonBtn.className = 'gtab-btn' + (tab === 'dungeon' ? ' dungeon-active' : '');
+  if (storyBtn) storyBtn.className = 'gtab-btn' + (tab === 'story' ? ' story-active' : '');
 
-  var map=document.getElementById('map-view');
-  var quest=document.getElementById('quest-view');
-  var detail=document.getElementById('detail-panel');
-  var dungeon=document.getElementById('dungeon-view');
-  var story=document.getElementById('story-view');
+  const mv = document.getElementById('map-view'),
+        dv = document.getElementById('dungeon-view'),
+        sv = document.getElementById('story-view'),
+        qv = document.getElementById('quest-view'),
+        dp = document.getElementById('detail-panel');
 
-  if(map) map.classList.toggle('hidden', tab !== 'map');
-  if(dungeon) dungeon.classList.remove('visible');
-  if(story) story.classList.remove('visible');
-  if(quest) quest.classList.toggle('visible', tab === 'quest');
-  if(detail) detail.style.display = (tab === 'quest') ? 'none' : 'flex';
+  if (mv) mv.classList.add('hidden');
+  if (dv) dv.classList.remove('visible');
+  if (sv) sv.classList.remove('visible');
+  if (qv) qv.classList.remove('visible');
+  if (dp) dp.style.display = 'flex';
 
-  if(tab === 'quest') {
-    questInitDashboard();
-  } else {
+  if (tab === 'map') {
+    if (mv) mv.classList.remove('hidden');
+    if (dp) dp.style.display = 'flex';
+    document.getElementById('panel-title').textContent = mode === 'viewer' ? 'Region Details' : 'Region Editor';
+    selectedId = null;
     renderDetail();
-    setTimeout(function(){ fitMapToView && fitMapToView(); renderConnections && renderConnections(); }, 60);
+    setTimeout(() => { initViewport(); renderAll(); }, 60);
+  } else if (tab === 'quest') {
+    if (qv) qv.classList.add('visible');
+    if (dp) dp.style.display = 'none';
+    if (!questState.model) questTryLoadCache(); else questRender();
+  } else if (tab === 'dungeon') {
+    if (dv) dv.classList.add('visible');
+    document.getElementById('panel-title').textContent = 'Dungeon Details';
+    selectedId = null; renderDungeonBrowser(); renderDetail();
+  } else if (tab === 'story') {
+    if (sv) sv.classList.add('visible');
+    if (dp) dp.style.display = 'none';
+    renderStoryView();
   }
 }
+
 
 // ─────────────────────────────────────────────
 //  DUNGEON VIEW
@@ -1446,138 +1501,236 @@ function saveSettings(){ghConfig.token=document.getElementById('cfg-token').valu
 
 
 
-
 // ─────────────────────────────────────────────
-//  QUEST DASHBOARD — v6.1 FULL UI + APPS SCRIPT SYNC
+//  QUEST DASHBOARD — GOOGLE DOCS/SHEETS SYNC
 // ─────────────────────────────────────────────
 const QUEST_SYNC_API = {
-  url: "https://script.google.com/macros/s/AKfycbyuOZMpSvXInypWDPYulqcveLKbjdMYg-W4bdHb-oU0jKpsiDGQj_XvE5BfUhLgph34/exec",
-  token: "2003BM2"
+  url: 'https://script.google.com/macros/s/AKfycbyuOZMpSvXInypWDPYulqcveLKbjdMYg-W4bdHb-oU0jKpsiDGQj_XvE5BfUhLgph34/exec',
+  token: '2003BM2'
 };
-const QUEST_V61_STYLE = "\n:root{--bg:#080c14;--panel:#111724;--panel2:#151d2c;--line:#2a354a;--text:#eef3ff;--muted:#9fb0ce;--gold:#d9a441;--blue:#60a5fa;--red:#f87171;--green:#34d399;--purple:#a78bfa;--orange:#fb923c;--soft:#1d2638}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top left,#172036,#080c14 42%,#05070d);color:var(--text);font-family:Pretendard,Inter,system-ui,-apple-system,Segoe UI,sans-serif}.app{display:grid;grid-template-columns:280px 1fr;min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;padding:26px 18px;background:linear-gradient(180deg,#121826,#080c14);border-right:1px solid var(--line);overflow:auto}.brand{display:flex;gap:12px;align-items:center;margin-bottom:28px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#f8c66a,#9a5a1b);display:grid;place-items:center;color:#111;font-weight:900}h1,h2,h3,h4,p{margin-top:0}.brand h1{font-size:18px;line-height:1.2;margin:0}.brand p,.muted{color:var(--muted)}.navtitle{font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin:18px 0 10px}.nav button{width:100%;display:flex;justify-content:space-between;align-items:center;background:transparent;border:0;color:#d9e5ff;padding:12px 10px;border-radius:10px;text-align:left;font-weight:800;cursor:pointer}.nav button:hover,.nav button.active{background:#1b2538;color:#fff}.nav span{background:#2a354a;color:#f6d78b;border-radius:99px;padding:2px 8px;font-size:11px}.sourcebox{font-size:12px;color:#94a3b8;border-top:1px solid var(--line);padding-top:16px;margin-top:18px;line-height:1.7}.main{padding:28px;max-width:1800px;width:100%;margin:0 auto}.hero{padding:28px;border:1px solid #3b465b;background:linear-gradient(135deg,rgba(27,37,56,.98),rgba(25,28,36,.92));border-radius:22px;margin-bottom:24px;box-shadow:0 18px 45px rgba(0,0,0,.26)}.eyebrow{color:#f6d78b;font-size:12px;font-weight:900;letter-spacing:.1em}.hero h1{font-size:32px;margin:10px 0}.hero p{color:#c6d3ea;max-width:1120px;line-height:1.65}.method-note{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.method-note div{background:#0f1624;border:1px solid #344159;border-radius:14px;padding:12px}.method-note b{display:block;color:#f6d78b;margin-bottom:4px}.page{display:none;animation:fade .16s ease-out}.page.active{display:block}@keyframes fade{from{opacity:.3;transform:translateY(6px)}to{opacity:1;transform:none}}.section-title{font-size:26px;margin:20px 0 6px}.grid{display:grid;gap:14px}.stats-grid{grid-template-columns:repeat(6,1fr)}.stat{background:linear-gradient(180deg,#151d2d,#101624);border:1px solid var(--line);border-radius:18px;padding:18px;min-height:130px}.stat p{color:#aebbd2;font-weight:800;font-size:13px}.stat strong{display:block;font-size:30px;margin:10px 0}.stat span{color:#91a1bf;font-size:12px}.stat.gold{border-color:#6b5424}.stat.blue{border-color:#275b90}.stat.red{border-color:#7a3030}.stat.green{border-color:#22694f}.stat.purple{border-color:#51437d}.stat.orange{border-color:#7b4b24}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}.panel,.region-card,.chain-card,.issue-card{background:rgba(17,23,36,.96);border:1px solid var(--line);border-radius:18px;padding:18px}.bar-row{display:grid;grid-template-columns:130px 1fr 46px 52px;gap:10px;align-items:center;margin:10px 0;color:#cbd5e1;font-size:13px}.bar-track{height:10px;background:#0b1020;border-radius:99px;overflow:hidden}.bar-track i{display:block;height:100%;background:linear-gradient(90deg,#7ca7ff,#f6d78b);border-radius:99px}.tone-main{background:#60a5fa!important}.tone-sub{background:#34d399!important}.region-card{margin:16px 0}.region-head,.entity-head,.chain-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}.region-head small,.entity-head small,.chain-head small{color:var(--gold);font-weight:900}.region-head strong,.entity-head b,.chain-head b{font-size:22px;color:#f6d78b}.plot-summary{font-size:15px;line-height:1.75;color:#dbeafe;background:#0d1422;border-left:4px solid var(--gold);padding:14px;border-radius:10px}.region-meta,.chipline,.quest-chipline,.flowline{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.badge{display:inline-flex;align-items:center;gap:4px;border:1px solid #3a4760;background:#182134;color:#dce8ff;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;margin:2px}.badge.monster{background:#231823;border-color:#6b324f;color:#ffcade}.badge.warn{background:#2d2114;border-color:#875c24;color:#fed7aa}.badge.obj{background:#102820;border-color:#1f7a59;color:#bbf7d0}.badge.kind{background:#122840;border-color:#24619a;color:#bfdbfe}.badge.design{background:#281c3a;border-color:#664a9b;color:#ddd6fe}.badge.reward{background:#14241a;border-color:#287044;color:#bbf7d0}.badge.drop{background:#33200d;border-color:#9a601e;color:#fed7aa}.badge.talk{background:#1b2131;color:#c7d2fe}.badge.sub{background:#123326;border-color:#22835e;color:#bbf7d0}.badge.link{background:#0f2740;border-color:#2d6b9f;color:#bfdbfe}.badge.role{background:#171b2b;border-color:#3f4c67;color:#dbeafe}.region-metrics,.region-resource-grid,.chain-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.region-resource-grid{grid-template-columns:1fr 1fr 1fr}.fold{background:#0d1320;border:1px solid var(--line);border-radius:16px;margin:14px 0;overflow:hidden}.fold>summary{cursor:pointer;list-style:none;padding:16px 18px;font-weight:900;color:#f6d78b;background:#121a29}.fold>summary::-webkit-details-marker{display:none}.system-fold>summary{color:#c4b5fd}.page-tools{display:grid;grid-template-columns:1fr 170px 170px 130px;gap:10px;margin:16px 0}input,select,.btn{background:#0f1624;border:1px solid #344159;color:#f3f6ff;border-radius:12px;padding:12px 14px;font-weight:700}.btn{cursor:pointer}.table-wrap{overflow:auto;border-top:1px solid var(--line)}table{width:100%;border-collapse:collapse;font-size:13px;min-width:1150px}th{position:sticky;top:0;background:#151d2d;color:#f8d78d;text-align:left;padding:12px;border-bottom:1px solid var(--line);z-index:1}td{vertical-align:top;padding:12px;border-bottom:1px solid #202a3e;color:#dbe5f5}td small{display:block;color:#8fa0bf;margin-top:5px}.index-btn,.qchip{border:1px solid #3a4760;background:#111a2b;color:#eaf1ff;border-radius:9px;padding:6px 8px;font-weight:900;cursor:pointer}.qchip{font-size:12px;margin:3px;max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.qchip.sub{border-color:#22835e;color:#bbf7d0}.qchip.other{border-color:#63508b;color:#ddd6fe}.subrow{background:rgba(20,80,60,.08)}.systemrow{background:rgba(85,68,120,.08)}.entity-region h3{margin:24px 0 12px}.entity-region h3 span{color:#94a3b8;font-size:14px}.entity-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.entity-card{background:#101725;border:1px solid #29364b;border-radius:16px;padding:14px;min-height:185px}.entity-card.combat{border-color:#6b324f}.entity-card.talk{border-color:#285b72}.entity-head h4{margin:4px 0 0}.entity-card p{color:#9fb0ce;margin:8px 0}.chain-card{margin:14px 0}.flowline{align-items:center;background:#0d1422;border-radius:12px;padding:10px}.arrow{color:#f6d78b;font-weight:900;margin:0 2px}.issue-card{margin:14px 0}.alias-table table{min-width:650px}.check{border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0;background:#111724}.check b{float:right}.check.pass{border-color:#236b4f}.check.warn{border-color:#875c24}.check.fail{border-color:#7a3030}.raw-view{height:72vh;overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0d1320}.raw-table{min-width:900px}.raw-table td:first-child{color:#f6d78b;width:80px}.popover{position:fixed;z-index:50;display:none;max-width:520px;background:#111827;border:1px solid #52627c;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:16px}.popover:before{content:'';position:absolute;top:-8px;left:18px;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid #52627c}.popover h3{margin-bottom:8px}.meta{display:flex;flex-wrap:wrap;gap:4px}.muted{color:#94a3b8}@media(max-width:1300px){.stats-grid{grid-template-columns:repeat(3,1fr)}.entity-grid{grid-template-columns:repeat(3,1fr)}.method-note,.two,.region-metrics,.region-resource-grid,.chain-grid{grid-template-columns:1fr}}@media(max-width:900px){.app{display:block}.sidebar{position:static;height:auto}.page-tools{grid-template-columns:1fr}.entity-grid,.stats-grid{grid-template-columns:1fr}.main{padding:18px}}\n\n/* v6 visual refinements */\n.hero p.audit-note{font-size:12.5px;line-height:1.55;color:#93a4bf;max-width:980px;margin-bottom:0}.method-note{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}.method-note div{padding:9px 10px;border-radius:10px;background:rgba(15,22,36,.68)}.method-note b{font-size:11px;margin-bottom:2px}.method-note span{font-size:11px;color:#8fa0bd;line-height:1.45}.compact-muted,.page>.muted{font-size:12.5px;color:#8fa0bd}.compact-title{margin-top:28px}.regional-summary{margin-top:22px}.summary-region-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.summary-region-card{background:linear-gradient(180deg,#151d2d,#0f1624);border:1px solid #2a354a;border-radius:20px;padding:18px;box-shadow:0 12px 30px rgba(0,0,0,.18)}.summary-region-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.summary-region-head small{color:#d9a441;font-weight:900;font-size:11px}.summary-region-head h3{font-size:22px;margin:5px 0 0}.summary-region-head strong{font-size:26px;color:#f6d78b}.region-kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}.region-kpi-strip span{background:#0d1422;border:1px solid #263349;border-radius:12px;padding:9px;text-align:center;color:#9fb0ce;font-size:12px}.region-kpi-strip b{display:block;color:#fff;font-size:18px;margin-top:2px}.summary-region-body{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}.summary-block{background:rgba(13,20,34,.72);border:1px solid #243047;border-radius:14px;padding:12px}.summary-block h4{font-size:13px;color:#f6d78b;margin:0 0 9px}.mini-bar{display:grid;grid-template-columns:74px 1fr 28px;gap:8px;align-items:center;font-size:12px;color:#c7d2e8;margin:7px 0}.mini-bar div{height:8px;background:#0b1020;border-radius:99px;overflow:hidden}.mini-bar i{display:block;height:100%;background:linear-gradient(90deg,#60a5fa,#d9a441);border-radius:99px}.mini-pill-line{display:flex;gap:5px;flex-wrap:wrap}.mini-pill{font-size:11px;border:1px solid #344159;background:#111a2a;color:#dce8ff;border-radius:999px;padding:4px 7px}.mini-pill.npc{background:#112136;border-color:#265a82;color:#bfdbfe}.mini-pill.monster{background:#291520;border-color:#7a334e;color:#fecdd3}.flow-panel{margin-top:13px;background:#0d1422;border:1px solid #263349;border-radius:14px;padding:12px}.flow-title{display:flex;justify-content:space-between;color:#8fa0bd;font-size:12px;margin-bottom:10px}.flow-title b{color:#f6d78b}.flow-track{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.flow-node{min-width:76px;max-width:88px;height:78px;border:1px solid #344159;background:#111a2a;border-radius:14px;color:#eaf1ff;display:grid;grid-template-rows:auto auto 1fr;align-items:center;text-align:center;padding:7px;cursor:pointer}.flow-node:hover{transform:translateY(-2px);border-color:#d9a441}.flow-node em{font-style:normal;font-size:9px;color:#9fb0ce}.flow-node strong{font-size:14px;color:#f6d78b}.flow-node span{font-size:10px;line-height:1.2;color:#dbe5f5;overflow:hidden}.flow-node.monster{border-color:#7a334e;background:linear-gradient(180deg,#291520,#111a2a)}.flow-node.npc{border-color:#265a82;background:linear-gradient(180deg,#112136,#111a2a)}.flow-node.move{border-color:#4b5563}.flow-node.object{border-color:#287044;background:linear-gradient(180deg,#102820,#111a2a)}.usage-tools{grid-template-columns:1fr 150px 145px 145px 110px}.usage-split{display:grid;grid-template-columns:.95fr 1.35fr;gap:14px}.usage-column{background:rgba(17,23,36,.82);border:1px solid #263349;border-radius:18px;padding:14px}.usage-column-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.usage-column-head h4{margin:0;color:#f6d78b}.usage-column-head span{font-size:12px;color:#9fb0ce}.npc-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.npc-resource-card{min-height:160px;background:#101725;border-color:#285b72}.npc-card-head{display:flex;justify-content:space-between;gap:10px}.npc-card-head small{color:#8fbce7;font-size:11px}.npc-card-head h4{margin:4px 0;font-size:17px}.npc-card-head b{color:#bfdbfe;font-size:22px}.monster-codex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.monster-codex-card{min-height:220px;background:radial-gradient(circle at top,#372031,#111725 58%);border-color:#6b324f;position:relative;overflow:hidden}.monster-codex-card:after{content:'';position:absolute;right:-35px;top:-45px;width:120px;height:120px;background:rgba(248,113,113,.08);border-radius:50%;pointer-events:none}.monster-card-top{display:grid;grid-template-columns:58px 1fr auto;gap:10px;align-items:center;position:relative;z-index:1}.monster-portrait{width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,#4b1f35,#0f172a);border:1px solid #8b415e;display:grid;place-items:center;box-shadow:inset 0 0 18px rgba(255,255,255,.05)}.monster-portrait span{font-size:26px;font-weight:900;color:#fecdd3}.monster-title small{font-size:11px;color:#fda4af}.monster-title h4{margin:3px 0;font-size:18px}.monster-title em{font-style:normal;color:#9fb0ce;font-size:11px}.monster-card-top>b{color:#fecdd3}.monster-statline{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0;position:relative;z-index:1}.monster-statline span{background:rgba(0,0,0,.18);border:1px solid #4a2b3c;border-radius:10px;padding:6px 8px;font-size:12px;color:#d8c3cd}.monster-statline b{color:#fff}.monster-column .qchip{max-width:180px}.entity-card[data-entity-kind=\"npc\"][style*=\"display: none\"],.entity-card[data-entity-kind=\"monster\"][style*=\"display: none\"]{display:none!important}@media(max-width:1500px){.summary-region-grid{grid-template-columns:1fr}.usage-split{grid-template-columns:1fr}.monster-codex-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:900px){.usage-tools{grid-template-columns:1fr}.summary-region-body{grid-template-columns:1fr}.region-kpi-strip{grid-template-columns:repeat(2,1fr)}.npc-card-grid,.monster-codex-grid{grid-template-columns:1fr}}\n\n";
-const QUEST_V61_INNER_JS = "\nconst DASH=JSON.parse(document.getElementById('dashboardData').textContent); const questByIndex=Object.fromEntries(DASH.quests.map(q=>[q.index,q]));\nfunction showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'})}\ndocument.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));\nfunction resetQuestFilters(){document.getElementById('questSearch').value='';document.getElementById('questRegion').value='';document.getElementById('questKind').value='';applyQuestFilters();}\nfunction applyQuestFilters(){const s=(document.getElementById('questSearch')?.value||'').toLowerCase();const r=document.getElementById('questRegion')?.value||'';const k=document.getElementById('questKind')?.value||'';let visible=0;document.querySelectorAll('.quest-row').forEach(row=>{const okS=!s||row.dataset.search.includes(s);const okR=!r||row.dataset.region===r;const okK=!k||row.dataset.kind===k;row.style.display=(okS&&okR&&okK)?'':'none'; if(okS&&okR&&okK) visible++;});const box=document.getElementById('questNoResults'); if(box) box.style.display=visible?'none':'block';}\n['questSearch','questRegion','questKind'].forEach(id=>document.getElementById(id)?.addEventListener('input',applyQuestFilters));\nfunction resetEntityFilters(){document.getElementById('entitySearch').value='';document.getElementById('entityRegion').value='';document.getElementById('entityKind').value='';document.getElementById('entityUsage').value='';applyEntityFilters();}\nfunction applyEntityFilters(){const s=(document.getElementById('entitySearch')?.value||'').toLowerCase();const r=document.getElementById('entityRegion')?.value||'';const k=document.getElementById('entityKind')?.value||'';const u=document.getElementById('entityUsage')?.value||'';document.querySelectorAll('.entity-card').forEach(card=>{const count=parseInt(card.dataset.count||'0',10),sub=parseInt(card.dataset.sub||'0',10);const okS=!s||card.dataset.search.includes(s);const okR=!r||card.dataset.region===r;const okK=!k||card.dataset.entityKind===k;const okU=!u||(u==='low'&&count<=1)||(u==='sub0'&&sub===0);card.style.display=(okS&&okR&&okK&&okU)?'':'none';});document.querySelectorAll('.entity-region').forEach(sec=>{const any=[...sec.querySelectorAll('.entity-card')].some(c=>c.style.display!=='none');sec.style.display=any?'':'none';})}\n['entitySearch','entityRegion','entityKind','entityUsage'].forEach(id=>document.getElementById(id)?.addEventListener('input',applyEntityFilters));\nfunction applyChainFilters(){const s=(document.getElementById('chainSearch')?.value||'').toLowerCase();const r=document.getElementById('chainRegion')?.value||'';document.querySelectorAll('.chain-card').forEach(card=>{const okS=!s||card.dataset.search.includes(s);const okR=!r||card.dataset.region===r;card.style.display=(okS&&okR)?'':'none';})}\n['chainSearch','chainRegion'].forEach(id=>document.getElementById(id)?.addEventListener('input',applyChainFilters));\nfunction showQuestPopover(ev,index){ev.preventDefault();ev.stopPropagation();const q=questByIndex[index];if(!q)return;const pop=document.getElementById('questPopover');const targets=(q.targets||[]).map(x=>`<span class=\"badge obj\">${escapeHtml(x)}</span>`).join('')||'<span class=\"muted\">\ubaa9\ud45c \uc5c6\uc74c</span>';const rewards=(q.rewards||[]).map(x=>`<span class=\"badge reward\">${escapeHtml(x)}</span>`).join('')||'<span class=\"muted\">\ubcf4\uc0c1 \uc5c6\uc74c</span>';pop.innerHTML=`<h3>${q.index} \u00b7 ${escapeHtml(q.title)}</h3><div class=\"meta\"><span class=\"badge kind\">${escapeHtml(q.kind)}</span><span class=\"badge design\">${escapeHtml(q.designClass)}</span><span class=\"badge\">${escapeHtml(q.region)}</span><span class=\"badge talk\">\uc81c\uacf5 ${q.offerTalk}</span><span class=\"badge talk\">\uc644\ub8cc ${q.rewardTalk}</span></div><p>${escapeHtml(q.desc||q.detail||'\uc124\uba85 \uc5c6\uc74c')}</p><p><b>NextQuest</b> ${q.nextQuest || '-'}</p><p><b>NPC</b> \uc81c\uacf5: ${escapeHtml(q.offerNPC)} / \uc644\ub8cc: ${escapeHtml(q.rewardNPC)}</p><div class=\"chipline\">${targets}</div><div class=\"chipline\">${rewards}</div>`;const rect=ev.currentTarget.getBoundingClientRect();pop.style.left=Math.min(rect.left,window.innerWidth-540)+'px';pop.style.top=Math.min(rect.bottom+10,window.innerHeight-280)+'px';pop.style.display='block';}\nfunction escapeHtml(str){return String(str??'').replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[m]));}\ndocument.addEventListener('click',()=>{document.getElementById('questPopover').style.display='none';});document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('questPopover').style.display='none';});\n";
 const QUEST_TYPE_LABEL = {0:'메인',1:'서브',2:'특수',3:'업적',4:'임무',5:'문파',6:'이벤트',7:'외전',8:'던전',9:'인스턴스'};
-const QUEST_TAB_LABEL = {0:'하남성',1:'소림사',2:'섬서성',3:'호북성',4:'사천',5:'이후 추가'};
-const QUEST_OBJECT_LABEL = {0:'없음',1:'이동',2:'대화',3:'상호작용',10:'명성 달성',11:'명호 달성',12:'변신 달성',13:'나이 달성',14:'명성 경험치 상승',15:'힘 경험치 상승',16:'맷집 경험치 상승',17:'민첩 경험치 상승',18:'숙련도 경험치 상승',19:'힘 달성',20:'맷집 달성',21:'민첩 달성',22:'숙련도 달성',101:'아이템 분해',102:'아이템 획득',103:'아이템 판매',104:'아이템 구매',105:'아이템 사용',106:'아이템 착용',107:'무공 사용',108:'스킬 자동 사용',109:'물약 자동 사용',110:'팔괘 장착',151:'아이템 제작 시도',152:'장비 강화 시도',153:'속성 강화 시도',154:'장비 재련 시도',155:'각인 시도',156:'세공 시도',157:'각성 시도',158:'경지 시도',159:'염원 시도',160:'경맥 초기화 횟수',161:'경맥 관통 횟수',162:'무공 돌파 횟수',165:'무공 획득',201:'아이템 제작 성공',202:'장비 강화 성공',203:'속성 강화 성공',204:'장비 재련 성공',208:'경맥 달성',405:'특정 퀘스트 완료',451:'유저 처치',452:'일반 몬스터 처치',453:'보스 몬스터 처치',454:'전리품 드랍 획득',455:'화속성 몬스터 처치',456:'수속성 몬스터 처치',457:'목속성 몬스터 처치',458:'금속성 몬스터 처치',459:'토속성 몬스터 처치',460:'보스 토벌전 몬스터 처치',461:'포달랍궁 몬스터 처치',462:'월드 던전 몬스터 처치',463:'도감',501:'특수 던전 입장',502:'정벌단 정벌 완료',503:'특정 던전 클리어',504:'무한의 탑 시도',505:'무한의 탑 클리어',506:'방파 정벌 완료'};
-const QUEST_TYPE_DETAIL_LABEL = {0:'기본값',1:'튜토리얼',2:'PC 변신 업그레이드',3:'PC 변신 선택',4:'PC 변신 재설정',5:'제한 시간',6:'연계',7:'반복',8:'분기 제시',9:'아이템 시작',10:'인스턴스 맵 입장 시작'};
-const QUEST_REGION_SUMMARY = {
-  '하남성':'낙양성에서 출도를 꿈꾸던 주인공은 흉포화된 짐승과 북망산의 이상 현상을 조사하다가 마기의 결정과 자신의 내부에 잠든 힘을 드러낸다. 이후 녹림채의 마기 유통, 숭산 거점, 북망산 장군묘 사건으로 조사가 확대되고, 북망강시황을 쓰러뜨린 뒤 소림사와 마불 봉인 문제를 확인하기 위해 다음 지역으로 향한다.',
-  '소림사':'일행은 외인을 막는 소림사에 왕대협의 이름으로 들어가고, 팔천옥 탈취와 봉인석 훼손으로 마불의 기운이 퍼진 상황을 알게 된다. 십팔나한진과 각 전각의 봉인석 정화 과정에서 주인공의 마기, 린과 이백의 내면, 천명회의 흔적이 겹쳐 드러나며 사건은 섬서성 추적으로 이어진다.',
-  '섬서성':'천명회 간부의 행방을 쫓아 섬서성에 도착한 일행은 녹림이 막은 길목, 화산파·무당파 비무 대회, 살인 사건, 화산파 장문인의 부재를 함께 조사한다. 하오문 정보와 유월의 합류를 통해 암매의 암약과 화암굴의 진상을 추적하고, 사건을 수습한 뒤 호북성으로 이동하는 흐름으로 마무리된다.'
-};
-let questState = { payload:null, dash:null, active:false };
+const QUEST_TAB_LABEL = {0:'하남성',1:'소림사',2:'섬서성',3:'호북성',4:'사천'};
+const QUEST_OBJECT_LABEL = {0:'없음',1:'이동',2:'대화',3:'상호작용',10:'명성',15:'힘 경험치',16:'맷집 경험치',17:'민첩 경험치',18:'숙련도 경험치',102:'아이템 획득',103:'아이템 판매',104:'아이템 구매',105:'아이템 사용',106:'아이템 착용',107:'무공 사용',108:'스킬 자동 사용',109:'물약 자동 사용',110:'팔괘 장착',152:'장비 강화',165:'무공 획득',405:'퀘스트 완료',452:'전투',453:'보스 전투',454:'전리품',503:'던전 클리어'};
+let questState = {payload:null, model:null, active:'summary'};
 
-function qEsc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function qNum(v){const s=String(v==null?'':v).trim().replace(/^;/,''); if(!s||s==='0/0/0/0/0/0/0'||s.toLowerCase()==='nan') return 0; const n=parseInt(s,10); return Number.isFinite(n)?n:0;}
-function qSheet(payload,name){return payload?.data?.spreadsheet?.sheets?.find(s=>s.name===name)||null;}
-function qRegionOrder(r){return {'하남성':0,'소림사':1,'섬서성':2,'호북':3,'호북성':3,'사천':4}[r]??99;}
-function qDesignClass(objectives){const types=new Set(objectives.map(o=>o.type)); if(types.has(454)&&types.has(3)) return '전리품+상호작용'; if((types.has(452)||types.has(453)||types.has(454))&&types.has(3)) return '전투+상호작용'; if(types.has(454)) return '전리품 획득'; if(types.has(452)||types.has(453)) return '전투'; if(types.has(3)) return '상호작용'; if(types.has(2)) return '대화'; if(types.has(1)) return '이동'; if([...types].some(t=>[10,15,16,17,18,19,20,21,22].includes(t))) return '달성/성장'; return '기타';}
-function qDesignKey(cls){if(cls.includes('전투')||cls.includes('전리품')) return 'monster'; if(cls==='대화') return 'npc'; if(cls==='이동') return 'move'; if(cls.includes('상호작용')) return 'object'; return 'etc';}
-function qPct(n,d){return d?Math.round(n/d*1000)/10:0;}
-function qJsonpRequest(url, params={}, timeoutMs=90000){return new Promise((resolve,reject)=>{const cb='__questSync_'+Date.now()+'_'+Math.floor(Math.random()*99999); const q=new URLSearchParams({...params,callback:cb}); const script=document.createElement('script'); const timer=setTimeout(()=>{cleanup(); reject(new Error('Quest Sync API timeout'));},timeoutMs); function cleanup(){clearTimeout(timer); delete window[cb]; if(script.parentNode) script.parentNode.removeChild(script);} window[cb]=data=>{cleanup(); resolve(data);}; script.onerror=()=>{cleanup(); reject(new Error('Quest Sync API load failed'));}; script.src=url+'?'+q.toString(); document.body.appendChild(script);});}
-
+function questJsonpRequest(url, params={}, timeoutMs=90000){
+  return new Promise((resolve,reject)=>{
+    const cb='__questSyncCallback_'+Date.now()+'_'+Math.floor(Math.random()*100000);
+    const q=new URLSearchParams({...params, callback:cb});
+    const s=document.createElement('script');
+    const timer=setTimeout(()=>{cleanup();reject(new Error('Quest Sync API timeout'));}, timeoutMs);
+    function cleanup(){clearTimeout(timer);delete window[cb];if(s.parentNode)s.parentNode.removeChild(s);}
+    window[cb]=(data)=>{cleanup();resolve(data);};
+    s.onerror=()=>{cleanup();reject(new Error('Quest Sync API script load failed'));};
+    s.src=url+'?'+q.toString();
+    document.body.appendChild(s);
+  });
+}
+function qsetStatus(msg){const el=document.getElementById('qstatus'); if(el) el.textContent=msg;}
 async function questSyncFromGoogle(){
-  qSetFrameStatus('동기화 중...');
+  qsetStatus('동기화 중...');
   try{
-    const payload=await qJsonpRequest(QUEST_SYNC_API.url,{token:QUEST_SYNC_API.token});
-    if(!payload.ok) throw new Error(payload.message||payload.errorCode||'API 응답 오류');
-    localStorage.setItem('questSyncPayload',JSON.stringify(payload));
-    questState.payload=payload;
-    questState.dash=qAnalyzePayload(payload);
-    qRenderQuestFrame();
-    showToast('✅ 퀘스트 문서 동기화 완료');
-  }catch(e){
-    qSetFrameStatus('동기화 실패: '+e.message);
-    showToast('퀘스트 동기화 실패: '+e.message,true);
-    console.error(e);
-  }
+    const payload=await questJsonpRequest(QUEST_SYNC_API.url,{token:QUEST_SYNC_API.token});
+    if(!payload || !payload.ok) throw new Error((payload && (payload.message||payload.errorCode)) || 'API 응답 오류');
+    localStorage.setItem('questSyncPayload', JSON.stringify(payload));
+    questState.payload=payload; questState.model=questBuildModel(payload); questRender();
+    qsetStatus('동기화 완료 '+new Date().toLocaleString('ko-KR'));
+    if(typeof showToast==='function') showToast('✅ 퀘스트 동기화 완료');
+  }catch(e){qsetStatus('동기화 실패'); if(typeof showToast==='function') showToast('퀘스트 동기화 실패: '+e.message,true); console.error(e);}
 }
-function questInitDashboard(){
-  if(questState.active) return;
-  questState.active=true;
-  const cached=localStorage.getItem('questSyncPayload');
-  if(cached){try{questState.payload=JSON.parse(cached); questState.dash=qAnalyzePayload(questState.payload); qRenderQuestFrame(); return;}catch(e){console.warn(e);}}
-  qRenderQuestEmptyFrame();
-}
-function qSetFrameStatus(msg){const frame=document.getElementById('quest-frame'); if(frame?.contentWindow){try{frame.contentWindow.postMessage({type:'questStatus',message:msg},'*');}catch(e){}}}
-function questOpenRegionPlotFromMap(regionName){
-  switchGlobalTab('quest');
-  setTimeout(()=>{const frame=document.getElementById('quest-frame'); if(frame?.contentWindow) frame.contentWindow.postMessage({type:'showRegionPlot',region:regionName},'*');},300);
-}
-function qDownloadQuestSnapshot(){
-  const payload=questState.payload||JSON.parse(localStorage.getItem('questSyncPayload')||'null');
-  if(!payload){showToast('다운로드할 동기화 데이터가 없습니다.',true); return;}
+function questDownloadSnapshot(){
+  const payload=questState.payload || JSON.parse(localStorage.getItem('questSyncPayload')||'null');
+  if(!payload){ if(typeof showToast==='function') showToast('저장된 동기화 데이터가 없습니다.',true); return; }
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='quest_sync_snapshot_'+Date.now()+'.json'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},1000);
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='quest-sync-snapshot.json'; a.click(); URL.revokeObjectURL(a.href);
 }
-
-function qAnalyzePayload(payload){
-  const questSheet=qSheet(payload,'퀘스트 리스트');
-  const talkSheet=qSheet(payload,'퀘스트 대사');
-  const npcSheet=qSheet(payload,'NPC 정보');
-  const objectSheet=qSheet(payload,'상호작용 오브젝트');
-  const scenarioText=payload?.data?.scenario?.text||'';
-  const scenarioLines=scenarioText.split(/\r?\n/);
-  const npcMap={0:{id:0,name:'자동/없음',section:'시스템'}};
-  let npcSection='';
-  if(npcSheet){(npcSheet.values||[]).forEach((r,i)=>{const first=String(r[0]||'').trim(); if(first.startsWith(';')){npcSection=first.replace(/^;/,'').trim(); return;} const id=qNum(r[0]); const name=String(r[1]||'').trim(); if(id&&name) npcMap[id]={id,name,section:npcSection,file:r[3]||r[4]||'',raw:r};});}
-  const objectMap={};
-  if(objectSheet){(objectSheet.values||[]).forEach((r,i)=>{if(i<1)return; const id=qNum(r[0]); const name=String(r[3]||r[2]||r[10]||'').trim(); if(id&&name&&!String(r[0]).startsWith(';')) objectMap[id]={id,name,quest:qNum(r[1]),indicator:r[10]||'',progress:r[5]||'',delay:qNum(r[6])};});}
-  const quests=[]; let section='', major='메인 퀘스트';
-  const header=(questSheet?.values||[])[0]||[]; const idx={}; header.forEach((h,i)=>{if(h) idx[String(h).trim()]=i;}); const col=n=>idx[n]??-1;
-  if(questSheet){(questSheet.values||[]).forEach((r,rowNo)=>{if(rowNo<2)return; const first=String(r[0]||'').trim(); if(!first)return; if(first.startsWith(';')){const title=first.replace(/^;/,'').trim(); if(title.includes('서브')) major='서브 퀘스트'; else if(title.includes('화암굴')||title.includes('보통')||title.includes('어려움')||title.includes('매우')||title.includes('던전')) major='시스템/던전'; else if(title) section=title; return;} const qid=qNum(r[col(';Index')]); if(!qid)return; const type=qNum(r[col('Type')]); const tab=qNum(r[col('Tab')]); const objectives=[]; for(let n=1;n<=5;n++){const o=qNum(r[col('Object'+n)]), target=qNum(r[col('ObjectTarget'+n)]), loc=qNum(r[col('ObjectLocation'+n)]), val=qNum(r[col('ObjectValue'+n)]); if(o||target||loc||val) objectives.push({slot:n,type:o,label:QUEST_OBJECT_LABEL[o]||('Object '+o),target,location:loc,value:val});}
-    const kind=QUEST_TYPE_LABEL[type]||String(type); const designClass=qDesignClass(objectives); const q={rowNo,index:qid,nextQuest:qNum(r[col('NextQuest')]),title:String(r[col('BlankField')]||'').trim(),desc:String(r[col('BlankField')+2]||r[col('Desc')+1]||'').trim(),detail:String(r[col('BlankField')+4]||r[col('Detail')+1]||'').trim(),offerNPCId:qNum(r[col('OfferNPC')]),rewardNPCId:qNum(r[col('RewardNPC')]),offerConditionType1:qNum(r[col('OfferConditionType1')]),offerValue1:qNum(r[col('OfferValue1')]),offerConditionType2:qNum(r[col('OfferConditionType2')]),offerValue2:qNum(r[col('OfferValue2')]),type,tab,region:QUEST_TAB_LABEL[tab]||section||'미지정',section,major,kind,designClass,offerTalk:qNum(r[col('OfferTalk')]),rewardTalk:qNum(r[col('RewardTalk')]),rewardExp:qNum(r[col('RewardExp')]),rewardMoney:qNum(r[col('RewardMoney')]),typeDetail:QUEST_TYPE_DETAIL_LABEL[qNum(r[col('TypeDetail[1]')])]||String(qNum(r[col('TypeDetail[1]')])),objectives,rewards:[],targets:[]};
-    q.offerNPC=(npcMap[q.offerNPCId]?.name)||'자동/없음'; q.rewardNPC=(npcMap[q.rewardNPCId]?.name)||'자동/없음';
-    for(const o of objectives){q.targets.push(qObjectiveText(o,npcMap,objectMap));}
-    if(q.rewardExp) q.rewards.push('경험치 '+q.rewardExp); if(q.rewardMoney) q.rewards.push('동전 '+q.rewardMoney);
-    quests.push(q);
-  });}
-  const qMap=Object.fromEntries(quests.map(q=>[q.index,q]));
-  const content=quests.filter(q=>q.type===0||q.type===1); const main=quests.filter(q=>q.type===0); const sub=quests.filter(q=>q.type===1); const systems=quests.filter(q=>q.type===8||q.type===9);
-  const talks=[]; if(talkSheet){(talkSheet.values||[]).forEach((r,i)=>{if(i<1)return; const group=qNum(r[6]); const npc=qNum(r[1]); const name=String(r[4]||'').trim(); const talk=String(r[5]||'').trim(); if(group&&talk) talks.push({group,npc,name,talk});});}
-  const plotRegions=qParseScenarioRegions(scenarioLines);
-  const regionNames=[...new Set(content.map(q=>q.region).concat(plotRegions.map(r=>r.name)))].sort((a,b)=>qRegionOrder(a)-qRegionOrder(b)||a.localeCompare(b,'ko'));
-  const regionData={}; regionNames.forEach(name=>{regionData[name]={name,main:[],sub:[],quests:[],npcs:new Map(),monsters:new Map(),types:{},plot:plotRegions.find(r=>r.name===name)||null};});
-  for(const q of content){const rd=regionData[q.region]||(regionData[q.region]={name:q.region,main:[],sub:[],quests:[],npcs:new Map(),monsters:new Map(),types:{},plot:null}); rd.quests.push(q); if(q.type===0)rd.main.push(q); if(q.type===1)rd.sub.push(q); rd.types[q.designClass]=(rd.types[q.designClass]||0)+1; [q.offerNPCId,q.rewardNPCId].forEach(id=>{if(id>0&&id<10000){const e=rd.npcs.get(id)||{id,name:npcMap[id]?.name||('NPC '+id),count:0,main:0,sub:0,quests:[],roles:new Set()}; e.count++; if(q.type===0)e.main++; if(q.type===1)e.sub++; e.quests.push(q.index); e.roles.add(q.offerNPCId===id?'제공':'완료'); rd.npcs.set(id,e);}}); for(const o of q.objectives){let id=0, entityKind=''; if(o.type===2){id=o.target; entityKind='npc';} else if(o.type===452||o.type===453){id=o.target; entityKind='monster';} else if(o.type===454){id=o.location; entityKind='monster';} else if(o.type===3){id=o.target; entityKind='object';}
-      if(id>0&&id<10000){if(entityKind==='npc'){const e=rd.npcs.get(id)||{id,name:npcMap[id]?.name||objectMap[id]?.name||('NPC '+id),count:0,main:0,sub:0,quests:[],roles:new Set()}; e.count++; if(q.type===0)e.main++; if(q.type===1)e.sub++; e.quests.push(q.index); e.roles.add(o.label); rd.npcs.set(id,e);} else if(entityKind==='monster'){const e=rd.monsters.get(id)||{id,name:npcMap[id]?.name||('몬스터 '+id),count:0,main:0,sub:0,quests:[],roles:new Set()}; e.count++; if(q.type===0)e.main++; if(q.type===1)e.sub++; e.quests.push(q.index); e.roles.add(o.label); rd.monsters.set(id,e);}}
-    }}
-  const chains=qBuildSubChains(sub,qMap);
-  const issues=qBuildIssues(quests,systems,regionData,npcMap);
-  return {payload,quests,content,main,sub,systems,talks,npcMap,objectMap,regionData,regionNames,plotRegions,chains,issues,generatedAt:payload.generatedAt,sources:payload.sources};
+function questTryLoadCache(){
+  try{ const p=JSON.parse(localStorage.getItem('questSyncPayload')||'null'); if(p&&p.ok){questState.payload=p; questState.model=questBuildModel(p); questRender(); qsetStatus('캐시 로드 완료'); return true;} }catch(e){}
+  questRenderEmpty(); return false;
 }
-function qObjectiveText(o,npcMap,objectMap){if(o.type===1) return `${o.label}: 맵 ${o.target||'-'} / 좌표 ${o.location||'-'},${o.value||'-'}`; if(o.type===2) return `${o.label}: ${(npcMap[o.target]?.name)||('NPC '+o.target)} / 목표 ${o.value||1}`; if(o.type===3) return `${o.label}: ${(objectMap[o.target]?.name)||('오브젝트 '+o.target)} / 목표 ${o.value||1}`; if(o.type===452||o.type===453) return `${o.label}: ${(npcMap[o.target]?.name)||('NPC '+o.target)} / 목표 ${o.value||1}`; if(o.type===454) return `${o.label}: ${(npcMap[o.location]?.name)||'드랍 대상 미지정'} / 목표 ${o.value||1}`; return `${o.label}: ${o.target||''} / 목표 ${o.value||''}`;}
-function qParseScenarioRegions(lines){const markers=[]; lines.forEach((line,i)=>{const m=String(line).trim().match(/^(\d+)-1\)\s*(.+?)\s*플롯/); if(m) markers.push({regionIndex:parseInt(m[1],10),name:m[2],plotLine:i});}); const out=[]; for(let a=0;a<markers.length;a++){const r=markers[a]; const end=a+1<markers.length?markers[a+1].plotLine:lines.findIndex(x=>String(x).trim().startsWith('#99.')); const stop=end>0?end:lines.length; let plotStart=r.plotLine, qList=stop; for(let i=r.plotLine;i<stop;i++){const s=String(lines[i]).trim(); if(s.startsWith(`${r.regionIndex}-2)`)&&s.includes('퀘스트 리스트')) qList=i; if(s.startsWith('#플롯')) plotStart=i+1;} const plotLines=[]; const meta={factions:[],monsters:[],npcs:[]}; let pending=''; for(let i=r.plotLine;i<Math.min(qList,stop);i++){const s=String(lines[i]).trim(); if(!s) continue; if(s.startsWith('#등장 세력')){pending='factions'; continue;} if(s.startsWith('#등장 몬스터')){pending='monsters'; continue;} if(s.startsWith('#등장 인물')){pending='npcs'; continue;} if(s.startsWith('#플롯')){pending=''; continue;} if(pending){meta[pending]=meta[pending].concat(s.split(/[,，]/).map(x=>x.trim()).filter(Boolean)); pending='';}}
-    for(let i=plotStart;i<Math.min(qList,stop);i++){const s=String(lines[i]||'').trim(); if(!s||s.startsWith('#')||/^\d+-\d+\)/.test(s)) continue; plotLines.push({line:i+1,text:lines[i]});}
-    out.push({name:r.name,regionIndex:r.regionIndex,line:r.plotLine+1,plotLines,summary:QUEST_REGION_SUMMARY[r.name]||plotLines.map(x=>x.text).join(' ').slice(0,420),...meta});}
-  return out;}
-function qBuildSubChains(sub,qMap){const subIds=new Set(sub.map(q=>q.index)); const prev=new Map(); sub.forEach(q=>{if(q.nextQuest&&subIds.has(q.nextQuest)) prev.set(q.nextQuest,q.index); [q.offerValue1,q.offerValue2].forEach(v=>{if((q.offerConditionType1===1||q.offerConditionType2===1)&&subIds.has(v)&&!prev.has(q.index)) prev.set(q.index,v);});}); const starts=sub.filter(q=>!prev.has(q.index)).sort((a,b)=>a.index-b.index); const chains=[]; const seen=new Set(); for(const st of starts){let cur=st, list=[]; while(cur&&!seen.has(cur.index)){list.push(cur); seen.add(cur.index); const nx=cur.nextQuest&&subIds.has(cur.nextQuest)?qMap[cur.nextQuest]:null; cur=nx;} chains.push({id:st.index,title:st.title||('Chain '+st.index),region:st.region,quests:list});} sub.filter(q=>!seen.has(q.index)).forEach(q=>chains.push({id:q.index,title:q.title||('Chain '+q.index),region:q.region,quests:[q]})); return chains;}
-function qBuildIssues(quests,systems,regionData,npcMap){const issues=[]; const systemByTab={}; systems.forEach(q=>{systemByTab[q.region]=(systemByTab[q.region]||0)+1;}); if(Object.keys(systemByTab).length) issues.push({level:'warn',title:'던전/인스턴스 raw Tab 분포',desc:'던전/인스턴스는 지역 분석에서 제외됩니다. 원본 Tab 기준 분포: '+Object.entries(systemByTab).map(([k,v])=>`${k} ${v}`).join(', ')}); quests.forEach(q=>{[q.offerNPCId,q.rewardNPCId].forEach(id=>{if(id&&id<10000&&!npcMap[id]) issues.push({level:'error',title:'NPC 매핑 누락',desc:`Quest ${q.index}에서 NPC ID ${id}의 이름을 찾지 못했습니다.`});}); q.objectives.forEach(o=>{const id=(o.type===454?o.location:o.target); if(id&&id<10000&&(o.type===452||o.type===453||o.type===454)&&!npcMap[id]) issues.push({level:'error',title:'몬스터 매핑 누락',desc:`Quest ${q.index}에서 대상 ID ${id}의 이름을 찾지 못했습니다.`});});}); ['천명회 검수','천명회 궁병','천명회 단원'].forEach(name=>issues.push({level:'warn',title:'수동 Alias 후보',desc:`시나리오 명칭 '${name}'은 실제 데이터에서 흑도복 계열로 들어간 것으로 보입니다. 자동 치환하지 않고 Alias 후보로만 표시합니다.`})); return issues.slice(0,80);}
-
-function qRenderQuestEmptyFrame(){
-  const frame=document.getElementById('quest-frame');
-  frame.srcdoc=qBuildFrameShell({html:`<section class="hero"><div class="eyebrow">MOBILE MURIM FANTASY MMORPG · QUEST FLOW AUDIT</div><h1>퀘스트 흐름·수량·리소스 사용 검증 대시보드</h1><p class="audit-note">Google 문서 동기화 버튼을 눌러 [AI_Data] Docs와 QuestInfo Sheets를 불러오세요.</p><div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="parent.questSyncFromGoogle()">↻ Google 문서 동기화</button></div><div id="frameStatus" class="sourcebox" style="margin-top:18px">대기 중</div></section>`, data:{quests:[]}});
+function qesc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function qnum(v){const n=parseInt(String(v??'').replace(/,/g,''),10);return Number.isFinite(n)?n:0;}
+function qcleanHeader(v){return String(v||'').trim().replace(/^;/,'');}
+function qfindSheet(payload, name){return (payload.data?.spreadsheet?.sheets||[]).find(s=>s.name===name || s.name.includes(name));}
+function qrowObj(headers,row){const o={}; headers.forEach((h,i)=>{if(!h)return; let key=h; if(o.hasOwnProperty(key)){let c=1; while(o.hasOwnProperty(key+'.'+c))c++; key=key+'.'+c;} o[key]=row[i]??'';}); return o;}
+function qparseTable(sheet){
+  const values=sheet?.values||[]; let headerIndex=-1;
+  for(let i=0;i<values.length;i++){ if(values[i].some(c=>qcleanHeader(c)==='Index' || qcleanHeader(c)==='NextQuest')){headerIndex=i; break;} }
+  if(headerIndex<0) return {headers:[], rows:[]};
+  const headers=values[headerIndex].map(qcleanHeader);
+  const rows=[]; let section='';
+  for(let i=headerIndex+1;i<values.length;i++){
+    const row=values[i]; const first=String(row[0]||'').trim();
+    if(!first && row.every(c=>!String(c||'').trim())) continue;
+    if(first.startsWith(';') && !/^;?\d+$/.test(first)){section=first.replace(/^;/,'').trim(); continue;}
+    const idx=qnum(first); if(!idx) continue;
+    const obj=qrowObj(headers,row); obj.__row=i+1; obj.__section=section; rows.push(obj);
+  }
+  return {headers, rows};
 }
-function qRenderQuestFrame(){const frame=document.getElementById('quest-frame'); frame.srcdoc=qBuildQuestFrameHtml(questState.dash);}
-function qBuildFrameShell({html,data}){return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>천상비M2 퀘스트 대시보드</title><style>${QUEST_V61_STYLE}\n.btn{border:1px solid var(--line);background:rgba(217,164,65,.12);color:var(--gold);border-radius:10px;padding:9px 14px;font-weight:800;cursor:pointer}.btn:hover{background:rgba(217,164,65,.22)}.top-action{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.plot-text{background:#0d1421;border:1px solid var(--line);border-radius:14px;padding:14px;max-height:360px;overflow:auto;line-height:1.8;color:var(--muted);font-size:13px}.plot-text p{margin:0 0 10px}.frame-status{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}</style></head><body>${html}<script id="dashboardData" type="application/json">${JSON.stringify(data||{quests:[]}).replace(/</g,'\\u003C')}<\/script><script>${QUEST_V61_INNER_JS}\nwindow.addEventListener('message',function(e){if(!e.data)return;if(e.data.type==='questStatus'){var el=document.getElementById('frameStatus');if(el)el.textContent=e.data.message;}if(e.data.type==='showRegionPlot'){showPage('regions'); setTimeout(function(){var id='region-'+String(e.data.region||'').replace(/\\s+/g,'_'); var el=document.getElementById(id); if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},80);}});<\/script></body></html>`;}
-function qBuildQuestFrameHtml(d){const pages=qRenderPages(d); const nav=[['summary','요약',d.content.length],['regions','지역 플롯',d.regionNames.length],['quests','퀘스트 리스트',d.quests.length],['frequency','사용 빈도',qEntityCount(d)],['subquests','서브 체인',d.chains.length],['issues','데이터 이슈',d.issues.length],['data-docs','데이터 문서',''],['validation','검증',''],['raw','원문 전체','']].map((x,i)=>`<button class="${i===0?'active':''}" data-page="${x[0]}">${x[1]}${x[2]!==''?` <span>${x[2]}</span>`:''}</button>`).join(''); const source=`Docs ${d.sources?.doc?.title||''}<br>Sheets ${d.sources?.sheet?.title||''}<br>동기화 ${qEsc(d.generatedAt||'')}`;
-  const html=`<div class="app"><aside class="sidebar"><div class="brand"><div class="logo">武</div><div><h1>천상비M2<br>퀘스트 대시보드</h1><p>검증형 기획 툴</p></div></div><nav class="nav"><div class="navtitle">Sheets</div>${nav}</nav><div class="sourcebox"><b>Sources</b><br>${source}<div class="top-action"><button class="btn" onclick="parent.questSyncFromGoogle()">↻ 동기화</button><button class="btn" onclick="parent.qDownloadQuestSnapshot()">JSON</button></div><div id="frameStatus" class="frame-status">준비 완료</div></div></aside><main class="main"><section class="hero"><div class="eyebrow">MOBILE MURIM FANTASY MMORPG · QUEST FLOW AUDIT</div><h1>퀘스트 흐름·수량·리소스 사용 검증 대시보드</h1><p class="audit-note">이번 버전은 v6.1 대시보드의 화면 구조와 스타일을 유지하면서, 실제 데이터는 Google Docs와 Google Sheets 두 문서에서 동기화합니다.</p><div class="method-note"><div><b>집계 기준</b><span>메인/서브 Type=0/1 중심. 던전/인스턴스 Type=8/9는 보존만.</span></div><div><b>연결 기준</b><span>서브 체인은 NextQuest와 선행 조건 퀘스트로 판정.</span></div><div><b>이름 기준</b><span>자동 Alias 금지. 불일치는 데이터 이슈로 표시.</span></div></div></section>${pages}<div id="questPopover" class="quest-popover"></div></main></div>`; return qBuildFrameShell({html,data:{quests:d.quests}});}
-function qEntityCount(d){let n=0; d.regionNames.forEach(r=>{const rd=d.regionData[r]; if(rd){n+=rd.npcs.size+rd.monsters.size;}}); return n;}
-function qRenderPages(d){return [qRenderSummary(d),qRenderRegions(d),qRenderQuests(d),qRenderFrequency(d),qRenderSubquests(d),qRenderIssues(d),qRenderDataDocs(d),qRenderValidation(d),qRenderRaw(d)].join('');}
-function qRenderSummary(d){const cards=[['전체 판단 대상',d.content.length,'메인/서브 Type=0/1'],['메인 퀘스트',d.main.length,'지역 흐름 기준'],['서브 퀘스트',d.sub.length,`${d.chains.length}개 체인`],['사용 엔티티',qEntityCount(d),'ID 10000 미만'],['보존 던전/시스템',d.systems.length,'요약 제외'],['데이터 이슈',d.issues.length,'검토 필요']].map(([t,n,s])=>`<article class="stat"><b>${n}</b><span>${t}</span><small>${s}</small></article>`).join(''); const rCards=d.regionNames.map(r=>qRenderRegionSummaryCard(d,r)).join(''); return `<section id="summary" class="page active"><h2 class="section-title">요약</h2><div class="stats-grid">${cards}</div><section class="regional-summary"><h2 class="section-title compact-title">지역별 상세 퀘스트 요약</h2><p class="muted compact-muted">메인/서브만 기준으로 계산했습니다. 던전/인스턴스는 제외되며, 진행 흐름은 메인 퀘스트 순서 기준입니다.</p><div class="summary-region-grid">${rCards}</div></section></section>`;}
-function qRenderRegionSummaryCard(d,r){const rd=d.regionData[r]; if(!rd)return''; const typeRows=Object.entries(rd.types).sort((a,b)=>b[1]-a[1]).map(([k,v])=>qMiniBar(k,v,rd.main.length||rd.quests.length)).join('')||'<p class="muted">표시할 타입 없음</p>'; const topNpc=[...rd.npcs.values()].sort((a,b)=>b.count-a.count||a.id-b.id).slice(0,7).map(e=>`<span class="mini-pill npc">${e.id} ${qEsc(e.name)} ${e.count}회</span>`).join('')||'<span class="muted">NPC 없음</span>'; const topMon=[...rd.monsters.values()].sort((a,b)=>b.count-a.count||a.id-b.id).slice(0,7).map(e=>`<span class="mini-pill monster">${e.id} ${qEsc(e.name)} ${e.count}회</span>`).join('')||'<span class="muted">몬스터 없음</span>'; return `<article class="summary-region-card" id="region-${qEsc(r).replace(/\s+/g,'_')}"><div class="summary-region-head"><div><small>REGION SNAPSHOT</small><h3>${qEsc(r)}</h3></div><strong>${rd.quests.length}개</strong></div><div class="region-kpi-strip"><span>NPC <b>${rd.npcs.size}</b>종</span><span>몬스터 <b>${rd.monsters.size}</b>종</span><span>메인 <b>${rd.main.length}</b>개</span><span>서브 <b>${rd.sub.length}</b>개</span></div><div class="summary-region-body"><div class="summary-block"><h4>메인 퀘스트 목표 타입</h4>${typeRows}</div><div class="summary-block"><h4>주요 NPC</h4><div class="mini-pill-line">${topNpc}</div><h4 style="margin-top:14px">주요 몬스터</h4><div class="mini-pill-line">${topMon}</div></div></div><div class="flow-panel"><div class="flow-title"><b>지역 진행 흐름</b><span>클릭 시 퀘스트 정보</span></div><div class="flow-track">${qFlowNodes(rd.main)}</div></div></article>`;}
-function qMiniBar(label,count,total){return `<div class="mini-bar"><span>${qEsc(label)}</span><div><i style="width:${qPct(count,total)}%"></i></div><b>${count}</b></div>`;}
-function qFlowNodes(qs){return qs.sort((a,b)=>a.index-b.index).map(q=>`<button class="flow-node ${qDesignKey(q.designClass)}" onclick="showQuestPopover(event,${q.index})" title="${q.index} · ${qEsc(q.title)}"><em>${qDesignKey(q.designClass)}</em><strong>${q.index}</strong><span>${qEsc(q.targets[0]||q.designClass)}</span></button>`).join('')||'<span class="muted">표시할 퀘스트 없음</span>';}
-function qRenderRegions(d){return `<section id="regions" class="page"><h2 class="section-title">지역 플롯</h2><p class="muted">[AI_Data]천상비M2_퀘스트 배경지식 문서의 지역별 플롯 본문을 기준으로 표시합니다.</p>${d.regionNames.map(r=>{const rd=d.regionData[r], p=rd?.plot; return `<article class="region-card" id="plot-${qEsc(r).replace(/\s+/g,'_')}"><h3>${qEsc(r)}</h3><p>${qEsc(rd?.plot?.summary||QUEST_REGION_SUMMARY[r]||'플롯 요약 없음')}</p><div class="tagline"><span>메인 ${rd?.main.length||0}</span><span>서브 ${rd?.sub.length||0}</span><span>NPC ${rd?.npcs.size||0}</span><span>몬스터 ${rd?.monsters.size||0}</span></div><details><summary>플롯 원문 보기</summary><div class="plot-text">${(p?.plotLines||[]).map(x=>`<p><b>L${x.line}</b> ${qEsc(x.text)}</p>`).join('')||'<p>플롯 본문을 찾지 못했습니다.</p>'}</div></details></article>`;}).join('')}</section>`;}
-function qRenderQuests(d){const regionOpts=d.regionNames.map(r=>`<option>${qEsc(r)}</option>`).join(''); const rows=d.quests.sort((a,b)=>a.index-b.index).map(q=>`<tr class="quest-row" data-search="${qEsc((q.index+' '+q.title+' '+q.desc+' '+q.detail+' '+q.region+' '+q.kind+' '+q.designClass).toLowerCase())}" data-region="${qEsc(q.region)}" data-kind="${qEsc(q.kind)}"><td>${q.index}</td><td><button class="linklike" onclick="showQuestPopover(event,${q.index})">${qEsc(q.title)}</button></td><td>${qEsc(q.region)}</td><td>${qEsc(q.kind)}</td><td>${qEsc(q.designClass)}</td><td>${qEsc(q.desc||q.detail)}</td><td>${qEsc((q.targets||[]).join(', '))}</td><td>${q.nextQuest||'-'}</td></tr>`).join(''); return `<section id="quests" class="page"><h2 class="section-title">퀘스트 리스트 전체</h2><div class="page-tools"><input id="questSearch" placeholder="검색: 인덱스, 퀘스트명, 목표, NPC"><select id="questRegion"><option value="">전체 지역</option>${regionOpts}</select><select id="questKind"><option value="">전체 타입</option><option>메인</option><option>서브</option><option>던전</option><option>인스턴스</option></select><button onclick="resetQuestFilters()">초기화</button></div><div class="table-wrap"><table><thead><tr><th>Index</th><th>퀘스트</th><th>지역</th><th>Kind</th><th>타입</th><th>설명</th><th>목표</th><th>Next</th></tr></thead><tbody>${rows}</tbody></table></div><div id="questNoResults" class="empty" style="display:none">검색 결과 없음</div></section>`;}
-function qRenderFrequency(d){const regionOpts=d.regionNames.map(r=>`<option>${qEsc(r)}</option>`).join(''); const sections=d.regionNames.map(r=>{const rd=d.regionData[r]; if(!rd)return''; const npcs=[...rd.npcs.values()].sort((a,b)=>a.id-b.id).map(e=>qEntityCard(e,r,'npc')).join(''); const mons=[...rd.monsters.values()].sort((a,b)=>a.id-b.id).map(e=>qMonsterCard(e,r)).join(''); return `<section class="entity-region"><h3>${qEsc(r)} <span>${rd.npcs.size} NPC · ${rd.monsters.size} 몬스터 · ID 오름차순</span></h3><div class="usage-split"><div class="usage-column"><div class="usage-column-head"><h4>NPC 사용</h4><span>${rd.npcs.size}종</span></div><div class="npc-card-grid">${npcs||'<p class="muted">NPC 없음</p>'}</div></div><div class="usage-column monster-column"><div class="usage-column-head"><h4>몬스터 도감형 사용 현황</h4><span>${rd.monsters.size}종</span></div><div class="monster-codex-grid">${mons||'<p class="muted">몬스터 없음</p>'}</div></div></div></section>`;}).join(''); return `<section id="frequency" class="page"><h2 class="section-title">사용 빈도</h2><p class="muted compact-muted">메인/서브 Type=0/1, ID 10000 미만 엔티티만 표시합니다. 지역별·ID 오름차순 기준입니다.</p><div class="page-tools usage-tools"><input id="entitySearch" placeholder="검색: ID, 이름, 퀘스트"><select id="entityRegion"><option value="">전체 지역</option>${regionOpts}</select><select id="entityKind"><option value="">NPC+몬스터</option><option value="npc">NPC만</option><option value="monster">몬스터만</option></select><select id="entityUsage"><option value="">전체 사용량</option><option value="low">1회 이하</option><option value="sub0">서브 미사용</option></select><button onclick="resetEntityFilters()">초기화</button></div>${sections}</section>`;}
-function qEntityCard(e,r,kind){return `<article class="entity-card npc-resource-card" data-entity-kind="${kind}" data-search="${qEsc((e.id+' '+e.name+' '+e.quests.join(' ')).toLowerCase())}" data-region="${qEsc(r)}" data-id="${e.id}" data-count="${e.count}" data-sub="${e.sub}"><div class="npc-card-head"><div><small>ID ${e.id}</small><h4>${qEsc(e.name)}</h4></div><b>${e.count}</b></div><p>메인 ${e.main} · 서브 ${e.sub}</p><div class="chipline">${[...e.roles].map(x=>`<span class="badge role">${qEsc(x)}</span>`).join('')}</div><div class="quest-chipline">${[...new Set(e.quests)].map(id=>`<button class="quest-chip" onclick="showQuestPopover(event,${id})">${id}</button>`).join('')}</div></article>`;}
-function qMonsterCard(e,r){return `<article class="entity-card monster-codex-card" data-entity-kind="monster" data-search="${qEsc((e.id+' '+e.name+' '+e.quests.join(' ')).toLowerCase())}" data-region="${qEsc(r)}" data-id="${e.id}" data-count="${e.count}" data-sub="${e.sub}"><div class="monster-card-top"><div class="monster-portrait"><span>${qEsc((e.name||'敵')[0])}</span></div><div class="monster-title"><small>ID ${e.id}</small><h4>${qEsc(e.name)}</h4><em>${qEsc(r)}</em></div><b>${e.count}회</b></div><div class="monster-statline"><span>메인 <b>${e.main}</b></span><span>서브 <b>${e.sub}</b></span></div><div class="chipline">${[...e.roles].map(x=>`<span class="badge role">${qEsc(x)}</span>`).join('')}</div><div class="quest-chipline">${[...new Set(e.quests)].map(id=>`<button class="quest-chip" onclick="showQuestPopover(event,${id})">${id}</button>`).join('')}</div></article>`;}
-function qRenderSubquests(d){const regionOpts=[...new Set(d.chains.map(c=>c.region))].sort((a,b)=>qRegionOrder(a)-qRegionOrder(b)||a.localeCompare(b,'ko')).map(r=>`<option>${qEsc(r)}</option>`).join(''); const cards=d.chains.map(c=>`<article class="chain-card" data-region="${qEsc(c.region)}" data-search="${qEsc((c.id+' '+c.title+' '+c.quests.map(q=>q.title+' '+q.index).join(' ')).toLowerCase())}"><div class="chain-head"><div><small>${qEsc(c.region)} · ${c.quests.length}개 연결</small><h3>${qEsc(c.title)}</h3></div><b>${c.id}</b></div><div class="chain-flow">${c.quests.map(q=>`<button class="chain-node ${qDesignKey(q.designClass)}" onclick="showQuestPopover(event,${q.index})"><strong>${q.index}</strong><span>${qEsc(q.title)}</span><em>${qEsc(q.designClass)}</em></button>`).join('<span class="arrow">→</span>')}</div></article>`).join(''); return `<section id="subquests" class="page"><h2 class="section-title">서브 퀘스트 체인</h2><p class="muted">개별 퀘스트가 아니라 NextQuest와 선행 조건 연결을 기준으로 묶은 체인입니다.</p><div class="page-tools"><input id="chainSearch" placeholder="검색: 체인명, 퀘스트명, Index"><select id="chainRegion"><option value="">전체 지역</option>${regionOpts}</select></div>${cards||'<p class="muted">서브 체인 없음</p>'}</section>`;}
-function qRenderIssues(d){return `<section id="issues" class="page"><h2 class="section-title">데이터 이슈</h2>${d.issues.map(x=>`<article class="issue ${x.level==='error'?'error':'warn'}"><b>${qEsc(x.level.toUpperCase())}</b><h3>${qEsc(x.title)}</h3><p>${qEsc(x.desc)}</p></article>`).join('')||'<p class="muted">검출된 이슈 없음</p>'}</section>`;}
-function qRenderDataDocs(d){return `<section id="data-docs" class="page"><h2 class="section-title">데이터 문서</h2><article class="doc-card"><h3>Google Docs</h3><p>${qEsc(d.sources?.doc?.title||'')}</p><p class="muted">line ${d.sources?.doc?.lineCount||0} · ${qEsc(d.sources?.doc?.lastUpdated||'')}</p></article><article class="doc-card"><h3>Google Sheets</h3><p>${qEsc(d.sources?.sheet?.title||'')}</p><p class="muted">sheets ${d.sources?.sheet?.sheetCount||0} · rows ${d.sources?.sheet?.totalRows||0}</p></article></section>`;}
-function qRenderValidation(d){return `<section id="validation" class="page"><h2 class="section-title">검증</h2><article class="check pass"><b>PASS</b><h3>Docs/Sheets 동기화</h3><p>두 원천 문서에서 데이터를 읽어와 화면을 렌더링했습니다.</p></article><article class="check pass"><b>PASS</b><h3>던전/인스턴스 제외</h3><p>Type=8/9는 요약·지역·사용 빈도에서 제외하고 보존만 합니다.</p></article><article class="check pass"><b>PASS</b><h3>서브 체인화</h3><p>${d.sub.length}개 서브 퀘스트를 ${d.chains.length}개 체인으로 묶었습니다.</p></article></section>`;}
-function qRenderRaw(d){const lines=(d.payload?.data?.scenario?.lines||[]).slice(0,1200); return `<section id="raw" class="page"><h2 class="section-title">원문 전체</h2><p class="muted">성능 보호를 위해 화면에는 앞 1,200줄을 우선 표시합니다. 전체 원문은 JSON 다운로드에서 확인 가능합니다.</p><div class="raw-view"><table class="raw-table"><tbody>${lines.map((x,i)=>`<tr><td>${i+1}</td><td>${qEsc(x)}</td></tr>`).join('')}</tbody></table></div></section>`;}
+function qBuildNameMap(payload){
+  const map={0:'플레이어'};
+  const npcSheet=qfindSheet(payload,'NPC 정보');
+  if(npcSheet){
+    (npcSheet.values||[]).forEach(row=>{const id=qnum(row[0]); const name=String(row[1]||'').trim(); if(id && name && name!=='Name') map[id]=name;});
+  }
+  const talkSheet=qfindSheet(payload,'퀘스트 대사');
+  if(talkSheet){
+    (talkSheet.values||[]).forEach(row=>{const id=qnum(row[2]); const name=String(row[5]||'').trim(); if(id && name && name!=='Name') map[id]=name;});
+  }
+  const questSheet=qfindSheet(payload,'퀘스트 리스트');
+  if(questSheet){
+    (questSheet.values||[]).forEach(row=>{ for(let i=0;i<row.length-2;i++){ const id=qnum(row[i+2]); const name=String(row[i]||'').trim(); if(id && name && !map[id] && !/^\d+$/.test(name)) map[id]=name; } });
+  }
+  return map;
+}
+function qParseQuests(payload){
+  const table=qparseTable(qfindSheet(payload,'퀘스트 리스트'));
+  return table.rows.map(o=>{
+    const title=o['BlankField'] || o['Title'] || o['Name'] || ('Quest '+o['Index']);
+    const desc=o['BlankField.1'] || o['Desc'] || '';
+    const detail=o['BlankField.2'] || o['Detail'] || desc;
+    const quest={
+      index:qnum(o['Index']), next:qnum(o['NextQuest']), title, desc, detail,
+      offerNpc:qnum(o['OfferNPC']), rewardNpc:qnum(o['RewardNPC']),
+      condType1:qnum(o['OfferConditionType1']), condValue1:qnum(o['OfferValue1']), condType2:qnum(o['OfferConditionType2']), condValue2:qnum(o['OfferValue2']),
+      type:qnum(o['Type']), tab:qnum(o['Tab']), section:o.__section||'',
+      offerTalk:qnum(o['OfferTalk']), rewardTalk:qnum(o['RewardTalk']),
+      rewardExp:qnum(o['RewardExp']), rewardMoney:qnum(o['RewardMoney']), rewardItem1:qnum(o['RewardItem1']), itemValue1:qnum(o['ItemValue1']),
+      questDropItem:qnum(o['QuestDropItem']), dropPercent:String(o['DropPercent']||''), row:o.__row,
+      objects:[]
+    };
+    for(let n=1;n<=5;n++){
+      const type=qnum(o['Object'+n]); const target=qnum(o['ObjectTarget'+n]); const loc=qnum(o['ObjectLocation'+n]); const val=qnum(o['ObjectValue'+n]);
+      if(type||target||loc||val) quest.objects.push({slot:n,type,target,location:loc,value:val,label:QUEST_OBJECT_LABEL[type]||String(type)});
+    }
+    return quest;
+  }).filter(q=>q.index);
+}
+function qExtractPlots(payload){
+  const text=payload.data?.scenario?.text || payload.data?.scenario?.lines?.join('\n') || '';
+  const plots={};
+  const regions=['하남성','소림사','섬서성'];
+  regions.forEach((name,idx)=>{
+    const startRe=new RegExp('(?:^|\\n)\\s*'+(idx+1)+'\\.\\s*'+name+'[\\s\\S]*?#플롯\\s*\\n','m');
+    const m=text.match(startRe); if(!m){plots[name]='';return;}
+    const start=(m.index||0)+m[0].length;
+    const rest=text.slice(start);
+    const end=rest.search(/\n\s*(?:\d+\.\s*[^\n]+\n\d+-1\)|\d+\.\s*(?:하남성|소림사|섬서성|호북성|사천))/);
+    plots[name]=(end>=0?rest.slice(0,end):rest).trim();
+  });
+  return plots;
+}
+function questBuildModel(payload){
+  const names=qBuildNameMap(payload), quests=qParseQuests(payload), plots=qExtractPlots(payload);
+  const contentQuests=quests.filter(q=>q.type===0||q.type===1);
+  const systemQuests=quests.filter(q=>q.type===8||q.type===9);
+  const regions=['하남성','소림사','섬서성'];
+  const regionData={}; regions.forEach((r,i)=>regionData[r]={id:i,quests:contentQuests.filter(q=>q.tab===i),plot:plots[r]||'',counts:{}});
+  const usage=[]; const usageMap=new Map();
+  function addUsage(region,id,kind,quest,source){ if(!id||id>=10000)return; const key=region+'|'+id+'|'+kind; if(!usageMap.has(key)) usageMap.set(key,{region,id,kind,name:names[id]||('ID '+id),quests:[],sources:new Set()}); const u=usageMap.get(key); if(!u.quests.some(q=>q.index===quest.index))u.quests.push(quest); u.sources.add(source); }
+  contentQuests.forEach(q=>{
+    const region=QUEST_TAB_LABEL[q.tab]||'기타';
+    if(q.offerNpc) addUsage(region,q.offerNpc,'npc',q,'OfferNPC'); if(q.rewardNpc) addUsage(region,q.rewardNpc,'npc',q,'RewardNPC');
+    q.objects.forEach(o=>{ if(o.type===2)addUsage(region,o.target,'npc',q,'Object'); else if(o.type===452||o.type===453)addUsage(region,o.target,'monster',q,'Object'); else if(o.type===454)addUsage(region,o.location,'monster',q,'DropTarget'); });
+  });
+  usageMap.forEach(v=>{v.sources=[...v.sources]; v.quests.sort((a,b)=>a.index-b.index); usage.push(v);});
+  usage.sort((a,b)=>(a.region.localeCompare(b.region,'ko')||a.id-b.id));
+  const subChains=qBuildSubChains(contentQuests.filter(q=>q.type===1));
+  const issues=qBuildIssues(quests, names);
+  return {payload, names, quests, contentQuests, systemQuests, regionData, usage, subChains, issues, plots, generatedAt:payload.generatedAt};
+}
+function qBuildSubChains(subs){
+  const by=new Map(subs.map(q=>[q.index,q])); const pointed=new Set(); subs.forEach(q=>{ if(by.has(q.next)) pointed.add(q.next); if(q.condType1===1&&by.has(q.condValue1)) pointed.add(q.index); if(q.condType2===1&&by.has(q.condValue2)) pointed.add(q.index); });
+  const starts=subs.filter(q=>!pointed.has(q.index)).sort((a,b)=>a.index-b.index); const visited=new Set(), chains=[];
+  function walk(start){const arr=[]; let q=start; const guard=new Set(); while(q&&!guard.has(q.index)){guard.add(q.index); visited.add(q.index); arr.push(q); q=by.get(q.next);} return arr;}
+  starts.forEach(s=>{const c=walk(s); if(c.length) chains.push({id:c[0].index,title:c[0].title,quests:c});});
+  subs.filter(q=>!visited.has(q.index)).sort((a,b)=>a.index-b.index).forEach(q=>chains.push({id:q.index,title:q.title,quests:walk(q)}));
+  return chains;
+}
+function qBuildIssues(quests,names){
+  const issues=[]; quests.forEach(q=>{
+    if((q.type===8||q.type===9) && q.tab>=0) issues.push({level:'warn',title:'던전/인스턴스 Tab 값 보존',body:`${q.index} ${q.title}: Type=${q.type}, Tab=${q.tab}(${QUEST_TAB_LABEL[q.tab]||'기타'}). 지역 요약에는 제외합니다.`});
+    [q.offerNpc,q.rewardNpc].forEach(id=>{if(id&&!names[id])issues.push({level:'warn',title:'NPC 이름 매핑 없음',body:`Quest ${q.index}에서 ID ${id} 이름을 찾지 못했습니다.`});});
+    q.objects.forEach(o=>{const id=(o.type===454?o.location:o.target); if((o.type===2||o.type===452||o.type===453||o.type===454)&&id&&!names[id]) issues.push({level:'warn',title:'목표 ID 이름 매핑 없음',body:`Quest ${q.index} / Object${o.slot} / ID ${id} 이름을 찾지 못했습니다.`});});
+  });
+  return issues.slice(0,120);
+}
+function qNavCounts(m){return {summary:m.contentQuests.length,regions:Object.keys(m.regionData).length,quests:m.quests.length,usage:m.usage.length,chains:m.subChains.length,issues:m.issues.length};}
+function questRender(){ const m=questState.model; if(!m){questRenderEmpty();return;} const c=qNavCounts(m); const nav=[['summary','요약',c.summary],['regions','지역 플롯',c.regions],['quests','퀘스트 리스트',c.quests],['usage','사용 빈도',c.usage],['chains','서브 체인',c.chains],['issues','데이터 이슈',c.issues],['docs','데이터 문서',''],['verify','검증',''],['raw','원문 전체','']]; document.getElementById('qnav').innerHTML=nav.map(n=>`<button class="${questState.active===n[0]?'active':''}" onclick="questShow('${n[0]}')">${n[1]}<span>${n[2]}</span></button>`).join(''); document.getElementById('qsourcebox').innerHTML=`Sources<br>Docs ${qesc(m.payload.sources?.doc?.title||'')}<br>Sheets ${qesc(m.payload.sources?.sheet?.title||'')}<br>동기화 ${qesc(m.generatedAt||'')}`; const render={summary:qRenderSummary,regions:qRenderRegions,quests:qRenderQuests,usage:qRenderUsage,chains:qRenderChains,issues:qRenderIssues,docs:qRenderDocs,verify:qRenderVerify,raw:qRenderRaw}[questState.active]||qRenderSummary; document.getElementById('qcontent').innerHTML=render(m); }
+function questShow(tab){questState.active=tab; questRender(); setTimeout(()=>document.getElementById('qmain')?.scrollTo(0,0),0);}
+function questRenderEmpty(){document.getElementById('qnav').innerHTML='<button class="active">요약<span>0</span></button>'; document.getElementById('qcontent').innerHTML=`<section class="qsection"><h2>동기화 필요</h2><p class="qdesc">좌측의 동기화 버튼을 눌러 Google Docs와 Google Sheets의 최신 데이터를 읽어오세요.</p></section>`;}
+function qRenderSummary(m){const main=m.contentQuests.filter(q=>q.type===0), sub=m.contentQuests.filter(q=>q.type===1); const stats=[['전체 판단 대상',m.contentQuests.length,'메인/서브 Type=0/1'],['메인 퀘스트',main.length,'지역 흐름 기준'],['서브 퀘스트',sub.length,`${m.subChains.length}개 체인`],['사용 엔티티',m.usage.length,'ID 10000 미만'],['보존 퀘스트',m.systemQuests.length,'던전/인스턴스 제외']]; return `<section class="qsection"><h2>요약</h2><div class="qgrid qstats">${stats.map(s=>`<div class="qcard"><div class="qnum">${s[1]}</div><div class="qlabel"><b>${s[0]}</b><br>${s[2]}</div></div>`).join('')}</div></section><section class="qsection"><h2>지역별 상세 퀘스트 요약</h2>${Object.entries(m.regionData).map(([r,d])=>qRegionSummaryCard(r,d,m)).join('')}</section>`;}
+function qRegionSummaryCard(r,d,m){ const qs=d.quests, main=qs.filter(q=>q.type===0), sub=qs.filter(q=>q.type===1); const npcIds=new Set(), monIds=new Set(); m.usage.filter(u=>u.region===r).forEach(u=>(u.kind==='npc'?npcIds:monIds).add(u.id)); const typeCount={}; main.forEach(q=>q.objects.forEach(o=>{typeCount[o.label]=(typeCount[o.label]||0)+1;})); const max=Math.max(1,...Object.values(typeCount)); return `<article class="qregion-card" id="q-region-${d.id}"><div class="qregion-head"><div><h3>${r}</h3><p class="qmuted">${qesc((d.plot||'').split('\n').filter(Boolean).slice(0,2).join(' ').slice(0,220))}</p></div><div class="qpillrow"><span class="qpill gold">NPC ${npcIds.size}종</span><span class="qpill gold">몬스터 ${monIds.size}종</span><span class="qpill">메인 ${main.length}</span><span class="qpill">서브 ${sub.length}</span></div></div><div class="qtwocol"><div><div class="qmini-title">메인 퀘스트 타입 분포</div><div class="qbars">${Object.entries(typeCount).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="qbar"><span>${qesc(k)}</span><div class="qbar-track"><div class="qbar-fill" style="width:${Math.round(v/max*100)}%"></div></div><b>${v}</b></div>`).join('')||'<p class="qmuted">데이터 없음</p>'}</div></div><div><div class="qmini-title">지역 진행 흐름</div><div class="qflow">${qs.slice(0,28).map(q=>`<span class="qnode" onclick="questPopup(${q.index},event)">${q.index}. ${qesc(q.title)}</span>`).join('')}</div></div></div></article>`;}
+function qRenderRegions(m){return `<section class="qsection"><h2>지역 플롯</h2><p class="qdesc">[AI_Data] 문서의 각 지역 #플롯 본문을 기준으로 표시합니다.</p>${Object.entries(m.regionData).map(([r,d])=>`<article class="qregion-card"><div class="qregion-head"><div><h3>${r}</h3><p class="qmuted">퀘스트 ${d.quests.length}개</p></div><button class="qbtn" onclick="questShow('quests')">퀘스트 보기</button></div><div class="qstorybox">${qesc(d.plot||'플롯 본문을 찾지 못했습니다.')}</div></article>`).join('')}</section>`;}
+function qRenderQuests(m){const groups={}; m.quests.forEach(q=>{const key=(q.type===8||q.type===9)?'시스템/던전 보존':(QUEST_TAB_LABEL[q.tab]||'기타'); (groups[key]||(groups[key]=[])).push(q);}); return `<section class="qsection"><h2>퀘스트 리스트 전체</h2><div class="qsearchline"><input class="qinput" id="qQuestSearch" placeholder="퀘스트명, Index, 목표 검색" oninput="qFilterTable('qQuestSearch','qQuestTable')"></div>${Object.entries(groups).map(([g,qs])=>`<details class="qdetails" open><summary>${g} · ${qs.length}개</summary><div class="qinside"><div class="qtable-wrap"><table class="qtable" id="qQuestTable"><thead><tr><th>Index</th><th>Type</th><th>지역</th><th>제목</th><th>목표</th><th>NPC</th><th>Objects</th><th>Talk</th></tr></thead><tbody>${qs.map(q=>`<tr><td>${q.index}</td><td>${QUEST_TYPE_LABEL[q.type]||q.type}</td><td>${QUEST_TAB_LABEL[q.tab]||q.section||'-'}</td><td><b>${qesc(q.title)}</b><br><span class="qmuted">Next ${q.next||'-'}</span></td><td>${qesc(q.detail||q.desc||'')}</td><td>제공 ${q.offerNpc?`${q.offerNpc} ${qesc(m.names[q.offerNpc]||'')}`:'-'}<br>완료 ${q.rewardNpc?`${q.rewardNpc} ${qesc(m.names[q.rewardNpc]||'')}`:'-'}</td><td>${q.objects.map(o=>`${o.slot}. ${qesc(o.label)} / T:${o.target||'-'} L:${o.location||'-'} V:${o.value||'-'}`).join('<br>')}</td><td>${q.offerTalk||'-'} / ${q.rewardTalk||'-'}</td></tr>`).join('')}</tbody></table></div></div></details>`).join('')}</section>`;}
+function qRenderUsage(m){const regs=[...new Set(m.usage.map(u=>u.region))]; return `<section class="qsection"><h2>사용 빈도</h2><p class="qdesc">메인/서브 Type=0/1에서 실제 사용된 ID 10000 미만 엔티티만 표시합니다. 지역별, ID 오름차순입니다.</p>${regs.map(r=>{const us=m.usage.filter(u=>u.region===r); const npcs=us.filter(u=>u.kind==='npc'), mons=us.filter(u=>u.kind==='monster'); return `<div class="qfreq-region"><div class="qfreq-head"><h3>${r}</h3><span class="qpill">NPC ${npcs.length} · 몬스터 ${mons.length}</span></div><div class="qmini-title">NPC</div><div class="qfreq-grid">${npcs.map(u=>qEntityCard(u)).join('')||'<p class="qmuted">없음</p>'}</div><div class="qmini-title" style="margin-top:18px">몬스터 도감형 사용 카드</div><div class="qfreq-grid">${mons.map(u=>qEntityCard(u,true)).join('')||'<p class="qmuted">없음</p>'}</div></div>`}).join('')}</section>`;}
+function qEntityCard(u,monster){return `<div class="qentity ${monster?'monster':''}"><div class="qid">ID ${u.id}</div><div class="qname">${qesc(u.name)}</div><div class="qcount">${u.quests.length}회 사용</div><div class="qchips">${u.quests.slice(0,8).map(q=>`<span class="qchip" onclick="questPopup(${q.index},event)">${q.index}</span>`).join('')}</div></div>`;}
+function qRenderChains(m){return `<section class="qsection"><h2>서브 퀘스트 체인</h2><p class="qdesc">개별 퀘스트가 아니라 NextQuest와 선행 조건 연결 기준으로 묶은 체인입니다.</p>${m.subChains.map(ch=>`<article class="qchain-card"><h3>${qesc(ch.title)} <span class="qpill">${ch.quests.length}단계</span></h3><div class="qchain-meta">${ch.quests.map(q=>q.index).join(' → ')}</div><div class="qflow">${ch.quests.map(q=>`<span class="qnode" onclick="questPopup(${q.index},event)">${q.index}. ${qesc(q.title)}</span>`).join('')}</div></article>`).join('')}</section>`;}
+function qRenderIssues(m){return `<section class="qsection"><h2>데이터 이슈</h2><p class="qdesc">자동 추정하지 않고 확인이 필요한 항목만 표시합니다.</p>${m.issues.map(i=>`<div class="qissue ${i.level==='warn'?'warn':''}"><b>${qesc(i.title)}</b><br>${qesc(i.body)}</div>`).join('')||'<div class="qcard">표시할 이슈가 없습니다.</div>'}</section>`;}
+function qRenderDocs(m){return `<section class="qsection"><h2>데이터 문서</h2><div class="qgrid qstats"><div class="qcard"><h3>Docs</h3><p>${qesc(m.payload.sources?.doc?.title||'')}</p><p class="qmuted">${m.payload.sources?.doc?.lineCount||0} lines</p></div><div class="qcard"><h3>Sheets</h3><p>${qesc(m.payload.sources?.sheet?.title||'')}</p><p class="qmuted">${m.payload.sources?.sheet?.totalRows||0} rows</p></div></div></section>`;}
+function qRenderVerify(m){return `<section class="qsection"><h2>검증</h2><div class="qcard"><pre class="qraw">${qesc(JSON.stringify({quests:m.quests.length,content:m.contentQuests.length,system:m.systemQuests.length,usage:m.usage.length,chains:m.subChains.length,issues:m.issues.length,generatedAt:m.generatedAt},null,2))}</pre></div></section>`;}
+function qRenderRaw(m){const lines=m.payload.data?.scenario?.lines||[];return `<section class="qsection"><h2>원문 전체</h2><div class="qstorybox qraw">${qesc(lines.map((l,i)=>String(i+1).padStart(4,'0')+'  '+l).join('\n'))}</div></section>`;}
+function qFilterTable(inputId,tableId){const q=(document.getElementById(inputId)?.value||'').toLowerCase(); document.querySelectorAll('#'+tableId+' tbody tr').forEach(tr=>{tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none';});}
+function questPopup(index,ev){ const m=questState.model; if(!m)return; const q=m.quests.find(x=>x.index===index); if(!q)return; document.querySelectorAll('.qpop').forEach(e=>e.remove()); const p=document.createElement('div'); p.className='qpop'; p.innerHTML=`<button class="close" onclick="this.parentElement.remove()">×</button><h4>${q.index}. ${qesc(q.title)}</h4><p><b>Type</b> ${QUEST_TYPE_LABEL[q.type]||q.type} / <b>지역</b> ${QUEST_TAB_LABEL[q.tab]||q.section||'-'}</p><p><b>목표</b> ${qesc(q.detail||q.desc||'')}</p><p><b>Next</b> ${q.next||'-'} / <b>Talk</b> ${q.offerTalk||'-'} → ${q.rewardTalk||'-'}</p>`; document.body.appendChild(p); const x=ev?.clientX||innerWidth/2,y=ev?.clientY||innerHeight/2; p.style.left=Math.min(x+12,innerWidth-440)+'px'; p.style.top=Math.min(y+12,innerHeight-220)+'px';}
+function openQuestRegion(regionId){switchGlobalTab('quest'); questState.active='regions'; questRender(); setTimeout(()=>{document.getElementById('q-region-'+regionId)?.scrollIntoView({behavior:'smooth',block:'start'});},100);}
 
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
+  loadGhCfg();
+  loadStoryDocs();
+
+  // iframe 이벤트 — 인라인 속성 대신 JS에서 등록
+  const iframe = document.getElementById('ssp-iframe');
+  iframe.addEventListener('load', onIframeLoad);
+  iframe.addEventListener('error', onIframeError);
+
+  // 패널 드래그 리사이즈 초기화
+  initPanelResize();
+  Object.assign(mapData, JSON.parse(JSON.stringify(DEFAULT_MAP_DATA)));
+  activeTypeFilters = new Set(Object.keys(typeMeta));
+  activeTypeFilters.delete(DUNGEON_TYPE_KEY);
+  renderFilterBar();
+  if (isGhOk()) await loadFromGithub();
+  const img = document.getElementById('world-image');
+  img.onload = () => { mapImgW=img.naturalWidth||1920; mapImgH=img.naturalHeight||1080; initViewport(); renderAll(); };
+  if (img.complete && img.naturalWidth > 0) { mapImgW=img.naturalWidth; mapImgH=img.naturalHeight; initViewport(); renderAll(); }
+  setupPanZoom();
+});
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey||e.metaKey) && e.key==='k') { e.preventDefault(); openSearchModal(); }
+  if (e.key === 'Escape') {
+    const fsModal = document.getElementById('story-fullscreen-modal');
+    if (fsModal.classList.contains('open')) { closeStoryFullscreen(); return; }
+    if (storyPanelOpen) { closeStoryPanel(); return; }
+    closeSearchModal(); closeLightbox(); closeSettings();
+    document.getElementById('story-manager-modal').classList.remove('open');
+  }
+  if ((e.ctrlKey||e.metaKey) && e.key==='s') { e.preventDefault(); if(hasUnsavedChanges) saveToGithub(); }
+});
+
+// ─────────────────────────────────────────────
+//  MAP / VIEWPORT
+// ─────────────────────────────────────────────
+function initViewport(){const vp=document.getElementById('map-viewport'),img=document.getElementById('world-image'),c=document.getElementById('map-container');img.style.width=mapImgW+'px';img.style.height=mapImgH+'px';vp.style.width=mapImgW+'px';vp.style.height=mapImgH+'px';scale=Math.min(c.clientWidth/mapImgW,c.clientHeight/mapImgH)*0.9;panX=(c.clientWidth-mapImgW*scale)/2;panY=(c.clientHeight-mapImgH*scale)/2;applyTransform();}
+function applyTransform(){document.getElementById('map-viewport').style.transform=`translate(${panX}px,${panY}px) scale(${scale})`;document.getElementById('zoom-level').textContent=Math.round(scale*100)+'%';}
+function setupPanZoom(){const c=document.getElementById('map-container');c.addEventListener('pointerdown',e=>{if(e.button===1||(e.button===0&&!isMarkerEl(e.target))){if(mode==='editor'&&isMarkerEl(e.target))return;isPanning=true;panStartX=e.clientX;panStartY=e.clientY;panStartPanX=panX;panStartPanY=panY;c.classList.add('panning');c.setPointerCapture(e.pointerId);}});c.addEventListener('pointermove',e=>{if(isPanning){panX=panStartPanX+(e.clientX-panStartX);panY=panStartPanY+(e.clientY-panStartY);applyTransform();return;}if(dragTarget)handleDragMove(e);});c.addEventListener('pointerup',e=>{if(isPanning){isPanning=false;c.classList.remove('panning');}if(dragTarget)handleDragEnd(e);});c.addEventListener('wheel',e=>{e.preventDefault();const r=c.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,old=scale;scale=Math.min(MAX_SCALE,Math.max(MIN_SCALE,scale*(e.deltaY>0?0.9:1.1)));panX=mx-(mx-panX)*(scale/old);panY=my-(my-panY)*(scale/old);applyTransform();},{passive:false});}
+function isMarkerEl(el){return el.closest('.map-marker')!==null;}
+function zoomIn(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.min(MAX_SCALE,scale*1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
+function zoomOut(){const c=document.getElementById('map-container'),cx=c.clientWidth/2,cy=c.clientHeight/2,o=scale;scale=Math.max(MIN_SCALE,scale/1.3);panX=cx-(cx-panX)*(scale/o);panY=cy-(cy-panY)*(scale/o);applyTransform();}
+function zoomReset(){initViewport();}
+
+// ─────────────────────────────────────────────
+//  FILTER / MARKERS / CONNECTIONS
+// ─────────────────────────────────────────────
+function renderFilterBar(){const bar=document.getElementById('filter-bar');bar.innerHTML='';Object.entries(typeMeta).forEach(([k,v])=>{if(k===DUNGEON_TYPE_KEY)return;const btn=document.createElement('button');btn.className=`filter-btn ${activeTypeFilters.has(k)?'active':''}`;btn.style.setProperty('--c',v.color);btn.textContent=v.label;btn.onclick=()=>{if(activeTypeFilters.has(k))activeTypeFilters.delete(k);else activeTypeFilters.add(k);btn.classList.toggle('active',activeTypeFilters.has(k));renderMarkers();renderConnections();};bar.appendChild(btn);});}
+function renderAll(){renderFilterBar();renderMarkers();renderConnections();updateStats();if(selectedId&&!mapData[selectedId])selectedId=null;renderDetail();}
+function renderMarkers(){const layer=document.getElementById('markers-layer');layer.innerHTML='';Object.values(mapData).forEach(region=>{if(region.type===DUNGEON_TYPE_KEY)return;if(!activeTypeFilters.has(region.type))return;const el=document.createElement('div');el.className='map-marker'+(region.id===selectedId?' selected':'');el.dataset.id=region.id;el.style.left=(region.x/100*mapImgW)+'px';el.style.top=(region.y/100*mapImgH)+'px';const col=typeMeta[region.type]?.color||'#555d74';el.innerHTML=`<div class="marker-pin"><svg viewBox="0 0 28 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.268 21.732 0 14 0z" fill="${col}"/><circle cx="14" cy="13" r="6" fill="rgba(0,0,0,0.3)"/><circle cx="14" cy="13" r="4" fill="#fff" opacity="0.9"/></svg></div><div class="marker-label">${region.name}</div>`;el.addEventListener('pointerdown',e=>{if(mode==='editor'){e.stopPropagation();handleDragStart(e,region.id);}});el.addEventListener('click',()=>{if(!dragTarget){if(selectedId===region.id){selectedId=null;renderAll();}else{selectRegion(region.id);}}});layer.appendChild(el);});}
+function renderConnections(){const svg=document.getElementById('connections-svg');svg.setAttribute('width',mapImgW);svg.setAttribute('height',mapImgH);svg.style.width=mapImgW+'px';svg.style.height=mapImgH+'px';svg.innerHTML='';const drawn=new Set();Object.values(mapData).forEach(r=>{if(r.type===DUNGEON_TYPE_KEY)return;if(!activeTypeFilters.has(r.type))return;(r.connected||[]).forEach(tid=>{const t=mapData[tid];if(!t||t.type===DUNGEON_TYPE_KEY||!activeTypeFilters.has(t.type))return;const k=[r.id,tid].sort().join('|');if(drawn.has(k))return;drawn.add(k);const line=document.createElementNS('http://www.w3.org/2000/svg','line');line.setAttribute('x1',r.x/100*mapImgW);line.setAttribute('y1',r.y/100*mapImgH);line.setAttribute('x2',t.x/100*mapImgW);line.setAttribute('y2',t.y/100*mapImgH);if(selectedId&&(r.id===selectedId||tid===selectedId))line.classList.add('highlight');svg.appendChild(line);});});}
+function selectRegion(id){selectedId=id;renderMarkers();renderConnections();renderDetail();}
 
 // ─────────────────────────────────────────────
 //  DETAIL PANEL
@@ -1600,14 +1753,23 @@ function renderViewerDetail(){
   const r=mapData[selectedId],body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
   const tMeta=typeMeta[r.type]||{label:'알 수 없음',color:'#555d74'};
   const fBadges=(r.factions||[]).map(fId=>{const fm=factionMeta[fId];return fm?`<div class="info-badge" style="border-color:var(--border-dim);color:var(--text-secondary)">🛡 ${fm.label}</div>`:'';}).join('');
-  const conn=(r.connected||[]).map(cid=>{const cr=mapData[cid];if(!cr)return'';return`<button class="connected-btn" onclick="switchGlobalTab('map');selectRegion('${cid}')">${cr.name}${cr.type===DUNGEON_TYPE_KEY?' 🏰':''}</button>`;}).join('');
+  const conn=(r.connected||[]).map(cid=>{const cr=mapData[cid];if(!cr)return'';if(cr.type===DUNGEON_TYPE_KEY)return`<button class="connected-btn" onclick="switchGlobalTab('dungeon');setTimeout(()=>selectDungeon('${cid}'),50);">${cr.name} 🏰</button>`;return`<button class="connected-btn" onclick="switchGlobalTab('map');selectRegion('${cid}')">${cr.name}</button>`;}).join('');
 
-  // Quest plot view: [AI_Data] 문서의 해당 지역 플롯으로 이동
-  const storyBtn = `<button class="story-link-btn" onclick="questOpenRegionPlotFromMap('${r.name}')">
+  // Check if this region has a story doc
+  const hasStory = storyDocs.some(d =>
+    d.name && r.name && (
+      d.name.toLowerCase() === r.name.toLowerCase() ||
+      r.name.toLowerCase().includes(d.name.toLowerCase()) ||
+      d.name.toLowerCase().includes(r.name.toLowerCase())
+    )
+  );
+  const storyBtn = hasStory
+    ? `<button class="story-link-btn" onclick="openStoryForRegion('${r.name}')">
         <span class="slb-icon">📖</span>
-        <span class="slb-text">${r.name} 플롯 보기</span>
+        <span class="slb-text">${r.name} 스토리 보기</span>
         <span class="slb-arrow">→</span>
-       </button>`;
+       </button>`
+    : '';
 
   const editBtn=(currentGlobalTab==='dungeon')?`<div class="separator"></div><button class="btn btn-ghost btn-block" onclick="switchGlobalTab('map');setMode('editor');selectRegion('${r.id}');">✏️ 에디터에서 열기</button>`:'';
   body.innerHTML=`${r.image?`<div class="detail-image-wrap" onclick="openLightbox('${r.image}')"><img src="${r.image}" alt="${r.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=no-image>No Image</div>'"></div>`:''}<div class="detail-name">${r.name}</div><div class="detail-id">ID: ${r.id}</div><div class="badge-row"><div class="info-badge" style="border-color:${tMeta.color};color:${tMeta.color}"><div class="faction-dot" style="background:${tMeta.color}"></div>${tMeta.label}</div>${r.pvp?`<div class="info-badge" style="border-color:var(--accent-red-dim);color:var(--accent-red)">⚔ ${r.pvp}</div>`:''}${fBadges}</div>${storyBtn}<div class="detail-section"><div class="detail-label">시나리오 / 특징</div><div class="detail-value">${r.scenario||'—'}</div></div><div class="detail-section"><div class="detail-label">등장 몬스터</div>${generateTable(r.monsters)}</div><div class="detail-section"><div class="detail-label">등장 NPC</div>${generateTable(r.npcs)}</div><div class="detail-section"><div class="detail-label">연결된 지역</div><div class="connected-list">${conn||'<span class="detail-value">없음</span>'}</div></div>${editBtn}`;
