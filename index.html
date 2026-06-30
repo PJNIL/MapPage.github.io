@@ -521,8 +521,9 @@
 
 
   /* ─────────── QUEST DASHBOARD VIEW ─────────── */
-  #quest-view { width:100%; height:100%; display:none; flex-direction:column; background:var(--bg-secondary); overflow:hidden; }
+  #quest-view { position:absolute; inset:0; width:100%; height:100%; display:none; flex-direction:column; background:var(--bg-secondary); overflow:hidden; min-width:0; min-height:0; z-index:30; }
   #quest-view.visible { display:flex; }
+  #quest-frame { position:absolute; inset:0; width:100%; height:100%; flex:1 1 auto; min-width:0; min-height:0; border:0; display:block; background:#080c14; overflow:hidden; }
   .qv-header { padding:18px 28px 14px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:1px solid var(--border-dim); background:linear-gradient(180deg,rgba(251,191,36,0.05) 0%,transparent 100%); }
   .qv-header-left { display:flex; align-items:center; gap:14px; min-width:0; }
   .qv-header-icon { width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,rgba(251,191,36,0.2),rgba(74,158,255,0.12)); border:1px solid rgba(251,191,36,0.25); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
@@ -1352,40 +1353,32 @@ function updateSvDocCount() {
 //  GLOBAL TAB SWITCH
 // ─────────────────────────────────────────────
 function switchGlobalTab(tab) {
+  if (tab === 'dungeon' || tab === 'story') tab = 'map';
   currentGlobalTab = tab;
-  document.getElementById('gtab-map').className = 'gtab-btn' + (tab === 'map' ? ' active' : '');
-  document.getElementById('gtab-dungeon').className = 'gtab-btn' + (tab === 'dungeon' ? ' dungeon-active' : '');
-  document.getElementById('gtab-story').className = 'gtab-btn' + (tab === 'story' ? ' story-active' : '');
-  document.getElementById('gtab-quest').className = 'gtab-btn' + (tab === 'quest' ? ' story-active' : '');
+  ['map','quest'].forEach(function(k){
+    var b=document.getElementById('gtab-'+k);
+    if(b) b.className='gtab-btn' + (tab===k ? (k==='quest' ? ' story-active' : ' active') : '');
+  });
+  var db=document.getElementById('gtab-dungeon'); if(db) db.className='gtab-btn';
+  var sb=document.getElementById('gtab-story'); if(sb) sb.className='gtab-btn';
 
-  const mv = document.getElementById('map-view'),
-        dv = document.getElementById('dungeon-view'),
-        sv = document.getElementById('story-view'),
-        qv = document.getElementById('quest-view'),
-        dp = document.getElementById('detail-panel');
+  var map=document.getElementById('map-view');
+  var quest=document.getElementById('quest-view');
+  var detail=document.getElementById('detail-panel');
+  var dungeon=document.getElementById('dungeon-view');
+  var story=document.getElementById('story-view');
 
-  mv.classList.add('hidden');
-  dv.classList.remove('visible');
-  sv.classList.remove('visible');
-  qv.classList.remove('visible');
-  dp.style.display = 'flex';
+  if(map) map.classList.toggle('hidden', tab !== 'map');
+  if(dungeon) dungeon.classList.remove('visible');
+  if(story) story.classList.remove('visible');
+  if(quest) quest.classList.toggle('visible', tab === 'quest');
+  if(detail) detail.style.display = (tab === 'quest') ? 'none' : 'flex';
 
-  if (tab === 'map') {
-    mv.classList.remove('hidden');
-    document.getElementById('panel-title').textContent = mode === 'viewer' ? 'Region Details' : 'Region Editor';
-    selectedId = null; renderDetail();
-  } else if (tab === 'dungeon') {
-    dv.classList.add('visible');
-    document.getElementById('panel-title').textContent = 'Dungeon Details';
-    selectedId = null; renderDungeonBrowser(); renderDetail();
-  } else if (tab === 'story') {
-    sv.classList.add('visible');
-    dp.style.display = 'none';
-    renderStoryView();
-  } else if (tab === 'quest') {
-    qv.classList.add('visible');
-    dp.style.display = 'none';
+  if(tab === 'quest') {
     questInitDashboard();
+  } else {
+    renderDetail();
+    setTimeout(function(){ fitMapToView && fitMapToView(); renderConnections && renderConnections(); }, 60);
   }
 }
 
@@ -1607,7 +1600,7 @@ function renderViewerDetail(){
   const r=mapData[selectedId],body=document.getElementById('panel-body'),actions=document.getElementById('panel-actions');
   const tMeta=typeMeta[r.type]||{label:'알 수 없음',color:'#555d74'};
   const fBadges=(r.factions||[]).map(fId=>{const fm=factionMeta[fId];return fm?`<div class="info-badge" style="border-color:var(--border-dim);color:var(--text-secondary)">🛡 ${fm.label}</div>`:'';}).join('');
-  const conn=(r.connected||[]).map(cid=>{const cr=mapData[cid];if(!cr)return'';if(cr.type===DUNGEON_TYPE_KEY)return`<button class="connected-btn" onclick="switchGlobalTab('dungeon');setTimeout(()=>selectDungeon('${cid}'),50);">${cr.name} 🏰</button>`;return`<button class="connected-btn" onclick="switchGlobalTab('map');selectRegion('${cid}')">${cr.name}</button>`;}).join('');
+  const conn=(r.connected||[]).map(cid=>{const cr=mapData[cid];if(!cr)return'';return`<button class="connected-btn" onclick="switchGlobalTab('map');selectRegion('${cid}')">${cr.name}${cr.type===DUNGEON_TYPE_KEY?' 🏰':''}</button>`;}).join('');
 
   // Quest plot view: [AI_Data] 문서의 해당 지역 플롯으로 이동
   const storyBtn = `<button class="story-link-btn" onclick="questOpenRegionPlotFromMap('${r.name}')">
