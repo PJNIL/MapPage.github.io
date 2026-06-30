@@ -1160,7 +1160,162 @@
       "connected": [
         "Hanam1001"
       ],
-      "monsters": [],
+      "monsters": [
+        {
+          "idx": "2065",
+          "name": "파문 낭인",
+          "type": "일반 몬스터",
+          "file": "Npc_2065_ExiledRonin",
+          "img": ""
+        },
+        {
+          "idx": "2066",
+          "name": "벽력조",
+          "type": "일반 몬스터",
+          "file": "Npc_2066_ByeokRyeokJo",
+          "img": ""
+        },
+        {
+          "idx": "2067",
+          "name": "백봉",
+          "type": "일반 몬스터",
+          "file": "Npc_2067_Baekbong",
+          "img": ""
+        },
+        {
+          "idx": "2068",
+          "name": "벽안독섬",
+          "type": "일반 몬스터",
+          "file": "Npc_2068_BlueEyedVenomToad",
+          "img": ""
+        },
+        {
+          "idx": "2069",
+          "name": "단천악괴",
+          "type": "일반 몬스터",
+          "file": "Npc_2069_DanCheonAgGoe",
+          "img": ""
+        },
+        {
+          "idx": "2070",
+          "name": "검종 창수",
+          "type": "일반 몬스터",
+          "file": "NPC_2070_SwordSectSpearsman",
+          "img": ""
+        },
+        {
+          "idx": "2071",
+          "name": "검종 광신도",
+          "type": "일반 몬스터",
+          "file": "NPC_2071_SwordSectFanatic",
+          "img": ""
+        },
+        {
+          "idx": "2072",
+          "name": "위장 검수",
+          "type": "일반 몬스터",
+          "file": "NPC_2072_DisguisedSwordsman",
+          "img": ""
+        },
+        {
+          "idx": "2073",
+          "name": "심마 수괴",
+          "type": "일반 몬스터",
+          "file": "NPC_2073_InnerDemonBrute",
+          "img": ""
+        },
+        {
+          "idx": "2074",
+          "name": "심마 도인",
+          "type": "일반 몬스터",
+          "file": "NPC_2074_InnerDemonAdept",
+          "img": ""
+        },
+        {
+          "idx": "2075",
+          "name": "당산호",
+          "type": "일반 몬스터",
+          "file": "Npc_2075_Tiger",
+          "img": ""
+        },
+        {
+          "idx": "2076",
+          "name": "기종 도사",
+          "type": "일반 몬스터",
+          "file": "NPC_2076_QiSectdosa",
+          "img": ""
+        },
+        {
+          "idx": "2077",
+          "name": "기종 광도",
+          "type": "일반 몬스터",
+          "file": "NPC_2077_QiSectGuangdo",
+          "img": ""
+        },
+        {
+          "idx": "2078",
+          "name": "방계 궁수",
+          "type": "일반 몬스터",
+          "file": "NPC_2078_BranchClanArcher",
+          "img": ""
+        },
+        {
+          "idx": "2079",
+          "name": "방계 창병",
+          "type": "일반 몬스터",
+          "file": "NPC_2079_BranchClanSpearman",
+          "img": ""
+        },
+        {
+          "idx": "2080",
+          "name": "혼원 호법",
+          "type": "일반 몬스터",
+          "file": "NPC_2080_PrimordialGuardian",
+          "img": ""
+        },
+        {
+          "idx": "2081",
+          "name": "한수 야차",
+          "type": "일반 몬스터",
+          "file": "NPC_2081_ColdwaterYaksha",
+          "img": ""
+        },
+        {
+          "idx": "2082",
+          "name": "방계 살수",
+          "type": "일반 몬스터",
+          "file": "NPC_2082_BranchClanAssassin",
+          "img": ""
+        },
+        {
+          "idx": "2083",
+          "name": "흑위 호위",
+          "type": "일반 몬스터",
+          "file": "NPC_2083_BlackguardEscort",
+          "img": ""
+        },
+        {
+          "idx": "2084",
+          "name": "토인",
+          "type": "일반 몬스터",
+          "file": "NPC_2084_Golem",
+          "img": ""
+        },
+        {
+          "idx": "2085",
+          "name": "혈령토인",
+          "type": "일반 몬스터",
+          "file": "NPC_2085_BloodStoneGolem",
+          "img": ""
+        },
+        {
+          "idx": "1004",
+          "name": "제갈영",
+          "type": "보스 몬스터",
+          "file": "Npc_1004_ZegalYoung",
+          "img": ""
+        }
+      ],
       "npcs": []
     },
     "Sichuan1005": {
